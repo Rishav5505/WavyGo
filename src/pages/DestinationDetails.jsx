@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Calendar, Clock, ArrowRight, Sun, Star, Car, Mountain, Heart, Zap, Shield, HelpCircle, FileText } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
@@ -8,17 +8,102 @@ import CTA from '../components/layout/CTA';
 import Button from '../components/common/Button';
 import Reveal from '../components/common/Reveal';
 import { destinationsData } from '../data/destinations';
+import API from '../utils/api';
+import { Loader } from 'lucide-react';
 
 const DestinationDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('overview');
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    // Get destination data based on URL parameter
-    const data = destinationsData[id];
+    useEffect(() => {
+        const fetchDetails = async () => {
+            setLoading(true);
+            try {
+                // First check static data
+                if (destinationsData[id]) {
+                    setData(destinationsData[id]);
+                } else {
+                    // Try fetching from API
+                    const { data: pkgData } = await API.get(`/packages/${id}`);
 
-    // If destination not found, redirect to packages page
+                    // Determine enrichment key
+                    const titleLower = pkgData.title.toLowerCase();
+                    let enrichKey = null;
+                    if (titleLower.includes('chakrata')) enrichKey = 'chakrata';
+                    else if (titleLower.includes('spiti')) enrichKey = 'shimla';
+                    else if (titleLower.includes('manali')) enrichKey = 'manali';
+                    else if (titleLower.includes('ladakh')) enrichKey = 'ladakh';
+                    else if (titleLower.includes('kashmir')) enrichKey = 'kashmir';
+                    else if (titleLower.includes('sikkim')) enrichKey = 'sikkim';
+
+                    const staticInfo = enrichKey ? destinationsData[enrichKey] : {};
+
+                    // Map API fields and merge with static if available
+                    const mergedData = {
+                        ...staticInfo,
+                        ...pkgData,
+                        name: pkgData.title,
+                        state: pkgData.location,
+                        images: {
+                            hero: pkgData.image || staticInfo.images?.hero || "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=1600",
+                        },
+                        packageSummary: {
+                            duration: pkgData.duration || staticInfo.packageSummary?.duration,
+                            price: pkgData.price,
+                            destinations: pkgData.location,
+                        },
+                        itinerary: (pkgData.itinerary && pkgData.itinerary.length > 0)
+                            ? pkgData.itinerary.map(item => ({
+                                day: item.day,
+                                title: item.title,
+                                desc: item.activity || item.description
+                            }))
+                            : (staticInfo.itinerary || [
+                                { day: 1, title: "Arrival", desc: "Arrival and local sightseeing." },
+                                { day: 2, title: "Exploration", desc: "Full day of adventure and sightseeing." },
+                                { day: 3, title: "Departure", desc: "Return journey with beautiful memories." }
+                            ]),
+                        inclusions: (pkgData.inclusions && pkgData.inclusions.length > 0) ? pkgData.inclusions : (staticInfo.inclusions || ["Stay", "Meals", "Transfers"]),
+                        exclusions: (pkgData.exclusions && pkgData.exclusions.length > 0) ? pkgData.exclusions : (staticInfo.exclusions || ["Personal expenses", "Tips"]),
+                        faqs: staticInfo.faqs || [
+                            { question: "Is this trip safe?", answer: "Yes, we providing experienced guides and 24/7 support." }
+                        ],
+                        packages: [{ price: pkgData.price }]
+                    };
+
+                    setData(mergedData);
+                }
+            } catch (error) {
+                console.error("Failed to fetch destination details", error);
+                navigate('/packages');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDetails();
+    }, [id, navigate]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-white">
+                <Loader className="w-10 h-10 text-primary animate-spin" />
+            </div>
+        );
+    }
+
     if (!data) {
-        return <Navigate to="/packages" replace />;
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-white p-4 text-center">
+                <h2 className="text-2xl font-bold mb-4">Destination Not Found</h2>
+                <Link to="/packages">
+                    <Button>Back to Packages</Button>
+                </Link>
+            </div>
+        );
     }
 
     return (
@@ -26,15 +111,22 @@ const DestinationDetails = () => {
             <Navbar />
 
             {/* Simple Hero */}
-            <section className="relative h-[60vh] flex items-center justify-center bg-slate-900">
-                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${data.images.hero})` }}>
+            <section className="relative h-[60vh] flex items-center justify-center bg-slate-900 overflow-hidden">
+                <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-[2s] scale-105"
+                    style={{ backgroundImage: `url("${data.images.hero}")` }}
+                >
                     <div className="absolute inset-0 bg-slate-900/40"></div>
                 </div>
-                <div className="relative z-10 text-center text-white mt-16">
-                    <Reveal center width="100%">
-                        <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-tight">{data.title || data.name}</h1>
-                    </Reveal>
-                    <p className="text-lg md:text-xl text-slate-200">{data.state}, India</p>
+                <div className="relative z-10 text-center text-white mt-16 px-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        <h1 className="text-4xl md:text-7xl font-bold mb-4 tracking-tight drop-shadow-lg">{data.title || data.name}</h1>
+                        <p className="text-lg md:text-2xl text-slate-200 font-medium">{data.state}, India</p>
+                    </motion.div>
                 </div>
             </section>
 
