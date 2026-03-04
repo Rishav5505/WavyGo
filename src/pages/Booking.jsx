@@ -93,7 +93,7 @@ const Booking = () => {
     const handleWhatsAppRedirect = () => {
         const selectedPackage = packages.find(p => p._id === formData.packageId);
         const message = `Booking Inquiry for ${selectedPackage?.title}. Name: ${formData.userName}, Phone: ${formData.phone}, Guests: ${formData.guests}`;
-        window.open(`https://wa.me/918171379469?text=${encodeURIComponent(message)}`, '_blank');
+        window.open(`https://wa.me/919508287609?text=${encodeURIComponent(message)}`, '_blank');
     };
 
     return (

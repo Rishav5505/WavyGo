@@ -163,7 +163,7 @@ export const chakrataData = {
 
     contact: {
         email: "info@wavygo.com",
-        phone: "+91 8171379469",
-        whatsapp: "918171379469"
+        phone: "+91 9508287609",
+        whatsapp: "919508287609"
     }
 };

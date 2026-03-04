@@ -65,8 +65,8 @@ const Profile = () => {
                                         key={item.id}
                                         onClick={() => setActiveTab(item.id)}
                                         className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all duration-300 font-bold text-sm ${activeTab === item.id
-                                                ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                                                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                                            ? 'bg-primary text-white shadow-lg shadow-primary/20'
+                                            : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                                             }`}
                                     >
                                         <div className="flex items-center gap-3">
@@ -139,7 +139,7 @@ const Profile = () => {
                                         </div>
                                         <div>
                                             <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Phone Number</p>
-                                            <p className="text-lg font-bold text-slate-900 leading-none">+91 9508287609</p>
+                                            <p className="text-lg font-bold text-slate-900 leading-none">+91 95082 87609</p>
                                         </div>
                                     </div>
                                 </div>

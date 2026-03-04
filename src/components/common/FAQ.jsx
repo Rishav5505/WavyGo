@@ -91,7 +91,7 @@ const FAQ = () => {
                                 <p className="text-slate-500 font-medium text-sm">Our elite concierges are standing by to assist.</p>
                             </div>
                         </div>
-                        <a href="https://wa.me/918171379469" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto">
+                        <a href="https://wa.me/919508287609" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto">
                             <Button className="w-full px-8 h-12 rounded-xl bg-slate-900 text-white shadow-lg hover:bg-primary transition-all flex items-center justify-center gap-2">
                                 <span className="text-[9px] font-black uppercase tracking-[0.2em]">Ignite A Chat</span>
                                 <ArrowRight className="w-4 h-4" />

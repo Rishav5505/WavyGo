@@ -37,7 +37,6 @@ const Contact = () => {
                         {/* Info */}
                         <div className="lg:col-span-4 space-y-6">
                             {[
-                                { icon: Phone, title: "Call Us", details: ["+91 81713 79469"], color: "bg-primary/10 text-primary" },
                                 { icon: Mail, title: "Email Us", details: ["hello@wavygo.com"], color: "bg-primary/10 text-primary" },
                                 { icon: MapPin, title: "Visit Us", details: ["New Delhi, India"], color: "bg-primary/10 text-primary" }
                             ].map((item, i) => (

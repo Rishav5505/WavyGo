@@ -45,7 +45,7 @@ const Chakrata = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const message = `Hi, I want to book Chakrata package for ${formData.guests} guests on ${formData.date}. Name: ${formData.name}, Phone: ${formData.phone}`;
-        window.open(`https://wa.me/918171379469?text=${encodeURIComponent(message)}`, '_blank');
+        window.open(`https://wa.me/919508287609?text=${encodeURIComponent(message)}`, '_blank');
     };
 
     const handleChange = (e) => {
@@ -255,15 +255,6 @@ const Chakrata = () => {
                             <h2 className="text-4xl font-bold mb-6">Ready for the Adventure?</h2>
                             <p className="text-slate-400 mb-10 leading-relaxed text-lg">Leave your details and our trip captains will reach out to you within 30 minutes to finalize.</p>
                             <div className="space-y-6">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center">
-                                        <Phone className="w-6 h-6 text-primary" />
-                                    </div>
-                                    <div>
-                                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Call or WhatsApp</p>
-                                        <p className="text-lg font-bold">{chakrataData.contact.phone}</p>
-                                    </div>
-                                </div>
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center">
                                         <Mail className="w-6 h-6 text-primary" />

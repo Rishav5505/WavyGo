@@ -93,7 +93,7 @@ const App = () => {
 
               {/* WhatsApp Float */}
               <a
-                href="https://wa.me/918171379469"
+                href="https://wa.me/919508287609"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-[#25D366]/40 hover:scale-105 transition-all group"
