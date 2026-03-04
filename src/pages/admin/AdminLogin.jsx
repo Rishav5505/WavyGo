@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Lock, Mail, ArrowRight, Loader2, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import API from '../../utils/api';
 import Button from '../../components/common/Button';
 import Logo from '../../components/common/Logo';
 
@@ -27,26 +28,21 @@ const AdminLogin = () => {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('https://api.wavygo.com/api/users/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+            const response = await API.post('/users/login', {
+                email,
+                password
             });
 
-            const data = await response.json();
+            const data = response.data;
 
-            if (response.ok) {
-                if (data.isAdmin) {
-                    login(data);
-                    navigate('/admin/dashboard');
-                } else {
-                    setError('Not authorized as admin');
-                }
+            if (data.isAdmin) {
+                login(data);
+                navigate('/admin/dashboard');
             } else {
-                setError(data.message || 'Login failed');
+                setError('Not authorized as admin');
             }
         } catch (err) {
-            setError('Could not connect to server');
+            setError(err.response?.data?.message || 'Login failed or could not connect to server');
         } finally {
             setIsSubmitting(false);
         }
