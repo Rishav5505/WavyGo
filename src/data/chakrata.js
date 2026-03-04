@@ -1,11 +1,3 @@
-import heroImg from '../assets/IMG_2235.JPG.jpeg';
-import other1 from '../assets/IMG_2237.JPG.jpeg';
-import other2 from '../assets/IMG_2239.JPG.jpeg';
-import other3 from '../assets/IMG_3175.JPG.jpeg';
-import other4 from '../assets/IMG_5983.JPG.jpeg';
-import other5 from '../assets/IMG_7994.JPG.jpeg';
-import other6 from '../assets/IMG_8022.JPG.jpeg';
-
 export const chakrataData = {
     id: "chakrata",
     name: "Chakrata",
@@ -19,14 +11,14 @@ export const chakrataData = {
     winterTemp: "0°C to 10°C (Dec-Feb)",
 
     images: {
-        hero: heroImg,
+        hero: "https://images.unsplash.com/photo-1589363354966-22a36d2994e4?auto=format&fit=crop&q=80&w=1200",
         others: [
-            other1,
-            other2,
-            other3,
-            other4,
-            other5,
-            other6
+            "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=800"
         ]
     },
 
@@ -145,7 +137,7 @@ export const chakrataData = {
     ],
 
     reviews: [
-        { user: "Priya Sharma", rating: 5, comment: "Amazing experience! The Tiger Falls trek was breathtaking. Safar Chaska team made everything so smooth." },
+        { user: "Priya Sharma", rating: 5, comment: "Amazing experience! The Tiger Falls trek was breathtaking. WavyGo team made everything so smooth." },
         { user: "Rahul Verma", rating: 5, comment: "Perfect getaway from city chaos. Loved the peaceful environment and professional service." },
         { user: "Anjali Gupta", rating: 4, comment: "Great package! Food was delicious and hotels were comfortable. Highly recommended." }
     ],
@@ -170,7 +162,7 @@ export const chakrataData = {
     ],
 
     contact: {
-        email: "info@safarchaska.com",
+        email: "info@wavygo.com",
         phone: "+91 8171379469",
         whatsapp: "918171379469"
     }

@@ -85,7 +85,7 @@ const AdminLayout = () => {
                         <div className="w-12 h-12 bg-slate-900 rounded-[1.2rem] flex items-center justify-center shadow-xl shadow-slate-900/10">
                             <PackageIcon className="w-6 h-6 text-primary" />
                         </div>
-                        <h1 className="text-2xl font-black text-slate-900 tracking-tighter">Safar<span className="text-secondary">Pro</span></h1>
+                        <h1 className="text-2xl font-black text-slate-900 tracking-tighter">Wavy<span className="text-primary">Go Pro</span></h1>
                     </div>
 
                     <nav className="space-y-2">
@@ -130,7 +130,7 @@ const AdminLayout = () => {
                         <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
                             <PackageIcon className="w-4 h-4 text-primary" />
                         </div>
-                        <span className="font-black text-lg tracking-tighter">Safar<span className="text-secondary">Admin</span></span>
+                        <span className="font-black text-lg tracking-tighter">Wavy<span className="text-primary">Go Admin</span></span>
                     </div>
 
                     <button

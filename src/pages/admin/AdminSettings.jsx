@@ -202,11 +202,11 @@ const AdminSettings = () => {
                                 <div className="space-y-6 max-w-xl">
                                     <div className="flex flex-col gap-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Admin Display Name</label>
-                                        <input type="text" readOnly value="Safar Chaska Master" className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 font-bold text-slate-800" />
+                                        <input type="text" readOnly value="WavyGo Master" className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 font-bold text-slate-800" />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Primary Email Node</label>
-                                        <input type="email" readOnly value="admin@safarchaska.com" className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 font-bold text-slate-800" />
+                                        <input type="email" readOnly value="admin@wavygo.com" className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 font-bold text-slate-800" />
                                     </div>
                                 </div>
                             </motion.div>

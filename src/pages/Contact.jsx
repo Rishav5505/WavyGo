@@ -13,10 +13,10 @@ const Contact = () => {
             <Navbar />
 
             {/* Header */}
-            <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 bg-slate-900 text-center text-white overflow-hidden">
+            <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 bg-[#035c3e] flex items-center justify-center text-center overflow-hidden">
                 <div className="container-custom relative z-10">
                     <Reveal center width="100%">
-                        <h1 className="text-5xl md:text-8xl font-bold mb-6 tracking-tight drop-shadow-2xl text-white">
+                        <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-4 tracking-[-0.05em] uppercase italic leading-none">
                             Contact Us
                         </h1>
                     </Reveal>
@@ -24,15 +24,10 @@ const Contact = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.8 }}
-                        className="text-lg text-slate-400 max-w-2xl mx-auto font-medium"
+                        className="text-xs md:text-sm text-white/80 max-w-2xl mx-auto font-bold uppercase tracking-[0.4em]"
                     >
-                        Have questions? We're just a message away.
+                        Elite Support for Elite Riders.
                     </motion.p>
-                </div>
-                {/* Background Decor */}
-                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full blur-[120px]"></div>
-                    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary rounded-full blur-[120px]"></div>
                 </div>
             </section>
 
@@ -42,9 +37,9 @@ const Contact = () => {
                         {/* Info */}
                         <div className="lg:col-span-4 space-y-6">
                             {[
-                                { icon: Phone, title: "Call Us", details: ["+91 81713 79469"], color: "bg-blue-50 text-blue-600" },
-                                { icon: Mail, title: "Email Us", details: ["hello@safarchaska.com"], color: "bg-primary/10 text-primary" },
-                                { icon: MapPin, title: "Visit Us", details: ["Chakrata, Uttarakhand, India"], color: "bg-amber-50 text-amber-600" }
+                                { icon: Phone, title: "Call Us", details: ["+91 81713 79469"], color: "bg-primary/10 text-primary" },
+                                { icon: Mail, title: "Email Us", details: ["hello@wavygo.com"], color: "bg-primary/10 text-primary" },
+                                { icon: MapPin, title: "Visit Us", details: ["New Delhi, India"], color: "bg-primary/10 text-primary" }
                             ].map((item, i) => (
                                 <div key={i} className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex items-start gap-6">
                                     <div className={`w-12 h-12 ${item.color} rounded-xl flex items-center justify-center shrink-0`}>
@@ -78,7 +73,7 @@ const Contact = () => {
                                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Message</label>
                                         <textarea rows="5" className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-6 text-slate-900 focus:outline-none focus:border-primary font-medium resize-none" placeholder="Tell us how we can help..."></textarea>
                                     </div>
-                                    <Button className="w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2">
+                                    <Button className="w-full py-5 rounded-xl font-black text-lg flex items-center justify-center gap-3 bg-primary hover:bg-[#024a32] transition-colors shadow-lg shadow-primary/20 uppercase tracking-widest">
                                         Send Message <Send className="w-5 h-5" />
                                     </Button>
                                 </form>
@@ -94,8 +89,8 @@ const Contact = () => {
                     <h2 className="text-3xl font-bold text-slate-900 mb-12">Connect With Us</h2>
                     <div className="flex justify-center gap-8">
                         {[Instagram, Facebook, Twitter].map((Icon, i) => (
-                            <a key={i} href="#" className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center hover:bg-primary hover:text-white transition-all text-slate-400">
-                                <Icon className="w-8 h-8" />
+                            <a key={i} href="#" className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center hover:bg-primary hover:text-white transition-all text-slate-400 group shadow-sm border border-slate-100">
+                                <Icon className="w-8 h-8 group-hover:scale-110 transition-transform" />
                             </a>
                         ))}
                     </div>

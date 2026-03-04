@@ -1,0 +1,15 @@
+{
+    "name": "WavyGo",
+    "short_name": "WavyGo",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#035c3e",
+    "icons": [
+        {
+            "src": "/wavygo-brand-logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mountain } from 'lucide-react';
+import { Bike } from 'lucide-react';
 
 const Loader = () => {
     return (
@@ -38,7 +38,7 @@ const Loader = () => {
                     className="flex flex-col items-center"
                 >
                     <div className="w-24 h-24 bg-primary/20 rounded-[2rem] flex items-center justify-center mb-6 border border-primary/30 backdrop-blur-xl">
-                        <Mountain className="w-12 h-12 text-white" />
+                        <Bike className="w-12 h-12 text-white" />
                     </div>
 
                     <motion.h2
@@ -46,7 +46,7 @@ const Loader = () => {
                         animate={{ opacity: [0.5, 1, 0.5] }}
                         transition={{ duration: 2, repeat: Infinity }}
                     >
-                        Safar<span className="text-secondary">Chaska</span>
+                        Wavy<span className="text-primary">Go</span>
                     </motion.h2>
 
                     <div className="mt-8 w-48 h-1 bg-white/5 rounded-full overflow-hidden relative">
@@ -63,7 +63,7 @@ const Loader = () => {
                         transition={{ delay: 0.5 }}
                         className="mt-4 text-slate-500 font-bold uppercase tracking-[0.3em] text-xs"
                     >
-                        Mapping Your Adventure...
+                        Igniting Your Ride...
                     </motion.p>
                 </motion.div>
             </div>

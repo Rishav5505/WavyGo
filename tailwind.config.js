@@ -8,19 +8,19 @@ export default {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: "#0F766E", // Teal 700
-                    light: "#2DD4BF",   // Teal 400
-                    dark: "#042F2E",    // Teal 950
+                    DEFAULT: "#035c3e", // Success Green (Premium)
+                    light: "#047d54",
+                    dark: "#023d29",
                 },
                 secondary: {
-                    DEFAULT: "#F59E0B", // Amber 500
-                    light: "#FCD34D",   // Amber 300
-                    dark: "#B45309",    // Amber 700
+                    DEFAULT: "#facc15", // Golden Yellow (Accent)
+                    light: "#fde047",
+                    dark: "#a16207",
                 },
                 slate: {
                     950: "#020617",
                 },
-                accent: "#6366f1",
+                accent: "#10b981", // Emerald 500
             },
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],

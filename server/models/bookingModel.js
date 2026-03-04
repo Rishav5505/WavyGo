@@ -11,6 +11,7 @@ const bookingSchema = mongoose.Schema({
     phone: { type: String, required: true },
     travelDate: { type: Date, required: true },
     guests: { type: Number, required: true },
+    totalPrice: { type: Number, default: 0 },
     status: {
         type: String,
         enum: ['pending', 'confirmed', 'cancelled'],

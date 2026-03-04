@@ -25,7 +25,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/campaigns', campaignRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Safar Chaska API is running...');
+    res.send('WavyGo API is running...');
 });
 
 const PORT = process.env.PORT || 5000;

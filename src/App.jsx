@@ -8,8 +8,12 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Packages from './pages/Packages';
 import DestinationDetails from './pages/DestinationDetails';
+import Auth from './pages/Auth';
+import Profile from './pages/Profile';
+import ProtectedRoute from './components/common/ProtectedRoute';
 import { MessageCircle } from 'lucide-react';
 import Loader from './components/common/Loader';
+import CustomCursor from './components/common/CustomCursor';
 import ScrollToTop from './components/common/ScrollToTop';
 import BackToTop from './components/common/BackToTop';
 import { AuthProvider } from './context/AuthContext';
@@ -25,9 +29,15 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Disable automatic scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     // Shorter loader for a snappier feel
     const timer = setTimeout(() => {
       setLoading(false);
+      window.scrollTo(0, 0);
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
@@ -43,12 +53,29 @@ const App = () => {
 
           {!loading && (
             <>
+              <CustomCursor />
               <BackToTop />
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/chakrata" element={<Chakrata />} />
                 <Route path="/destination/:id" element={<DestinationDetails />} />
-                <Route path="/booking" element={<Booking />} />
+                <Route
+                  path="/booking"
+                  element={
+                    <ProtectedRoute>
+                      <Booking />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/auth" element={<Auth />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/packages" element={<Packages />} />

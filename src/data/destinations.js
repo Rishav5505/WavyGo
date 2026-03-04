@@ -253,7 +253,7 @@ export const destinationsData = {
         title: "Kashmir - The Paradise on Earth",
         state: "Jammu & Kashmir",
         tagline: "Paradise on Earth",
-        description: "Experience the mesmerizing beauty of Kashmir with Safar Chaska. From the Dal Lake in Srinagar to the snow-capped peaks of Gulmarg and the lush valleys of Pahalgam, this journey is a glimpse of heaven.",
+        description: "Experience the mesmerizing beauty of Kashmir with WavyGo. From the Dal Lake in Srinagar to the snow-capped peaks of Gulmarg and the lush valleys of Pahalgam, this journey is a glimpse of heaven.",
         altitude: "1,585 meters",
         winterTemp: "-2°C to 10°C",
         images: {

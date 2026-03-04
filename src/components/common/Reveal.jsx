@@ -2,47 +2,45 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 
 const Reveal = ({ children, width = "fit-content", delay = 0.25, center = false }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
-
-    const mainControls = useAnimation();
-    const slideControls = useAnimation();
-
-    useEffect(() => {
-        if (isInView) {
-            mainControls.start("visible");
-            slideControls.start("visible");
-        }
-    }, [isInView, mainControls, slideControls]);
-
     return (
-        <div ref={ref} style={{ position: "relative", width, overflow: "hidden", margin: center ? "0 auto" : "0" }}>
+        <div
+            style={{
+                position: "relative",
+                width: center ? "100%" : width,
+                overflow: "hidden",
+                margin: center ? "0 auto" : "0",
+                display: center ? "flex" : "block",
+                justifyContent: center ? "center" : "flex-start"
+            }}
+        >
             <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
                 variants={{
-                    hidden: { opacity: 0, y: 75 },
+                    hidden: { opacity: 0, y: 30 },
                     visible: { opacity: 1, y: 0 },
                 }}
-                initial="hidden"
-                animate={mainControls}
-                transition={{ duration: 1, delay }}
+                transition={{ duration: 0.8, delay }}
             >
                 {children}
             </motion.div>
             <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
                 variants={{
                     hidden: { left: 0 },
                     visible: { left: "100%" },
                 }}
-                initial="hidden"
-                animate={slideControls}
-                transition={{ duration: 1, ease: "easeIn" }}
+                transition={{ duration: 0.8, ease: "easeIn", delay }}
                 style={{
                     position: "absolute",
                     top: 4,
                     bottom: 4,
                     left: 0,
                     right: 0,
-                    background: "var(--primary, #0F766E)",
+                    background: "#035c3e",
                     zIndex: 20,
                 }}
             />

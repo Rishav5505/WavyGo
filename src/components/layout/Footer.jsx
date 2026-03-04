@@ -1,88 +1,115 @@
 import React from 'react';
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, Send, Youtube, Mountain, ArrowUpRight } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, MessageCircle, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="bg-slate-900 text-white pt-20 pb-10">
+        <footer className="bg-[#035c3e] text-white pt-24 pb-12 relative font-sans">
             <div className="container-custom">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-                    {/* Brand */}
-                    <div className="space-y-6">
-                        <Link to="/" className="flex items-center space-x-3">
-                            <div className="w-10 h-10 rounded-lg overflow-hidden border border-white/10">
-                                <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover" />
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8 mb-20">
+                    {/* Brand & Address Section */}
+                    <div className="md:col-span-4 space-y-8">
+                        <Link to="/" className="inline-block group transition-transform duration-500 hover:scale-105">
+                            <div className="flex items-baseline">
+                                <span className="font-black italic tracking-tighter text-5xl text-white">Wavy</span>
+                                <span className="font-black italic tracking-tighter text-5xl text-white -ml-0.5">Go</span>
                             </div>
-                            <span className="text-xl font-bold tracking-tight">Safar<span className="text-secondary">Chaska.</span></span>
+                            <div className="mt-1">
+                                <span className="bg-white text-[#035c3e] px-2 py-0.5 text-[8px] font-black uppercase tracking-widest leading-none">
+                                    Rent · Ride · Explore
+                                </span>
+                            </div>
                         </Link>
-                        <p className="text-slate-400 leading-relaxed text-sm">
-                            Handcrafting raw and premium mountain experiences for the modern soul. Founded in the trails of Chakrata.
-                        </p>
-                        <div className="flex items-center space-x-4">
-                            {[Instagram, Facebook, Twitter, Youtube].map((Icon, i) => (
-                                <a key={i} href="#" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-primary transition-colors border border-white/10">
-                                    <Icon className="w-5 h-5" />
+
+                        <div className="space-y-4 max-w-sm">
+                            <p className="text-white font-bold text-sm leading-relaxed max-w-[280px]">
+                                C/o- Ramchandra Mehta, Ward No-08, Bishunpur, Daullatpur, Raghopur, Supaul-852215, Bihar
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Company Section */}
+                    <div className="md:col-span-2">
+                        <h4 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-b-2 border-white/20 pb-2 w-fit">Company</h4>
+                        <ul className="space-y-4 text-white font-bold text-sm">
+                            <li><Link to="/about" className="hover:opacity-70 transition-opacity">About Us</Link></li>
+                            <li><Link to="/contact" className="hover:opacity-70 transition-opacity">Contact Us</Link></li>
+                            <li><Link to="/privacy" className="hover:opacity-70 transition-opacity">Privacy Policy</Link></li>
+                            <li><Link to="/terms" className="hover:opacity-70 transition-opacity">Terms & Condition</Link></li>
+                            <li><Link to="/blogs" className="hover:opacity-70 transition-opacity">Blogs</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Follow Us Section */}
+                    <div className="md:col-span-2">
+                        <h4 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-b-2 border-white/20 pb-2 w-fit">Follow Us</h4>
+                        <div className="flex gap-3">
+                            {[
+                                { Icon: Instagram, link: "#" },
+                                { Icon: Facebook, link: "#" },
+                                { Icon: Linkedin, link: "#" },
+                                { Icon: MessageCircle, link: "#" }
+                            ].map((item, i) => (
+                                <a key={i} href={item.link} className="w-9 h-9 bg-white rounded-full flex items-center justify-center text-[#035c3e] hover:scale-110 transition-transform shadow-md">
+                                    <item.Icon className="w-5 h-5 fill-current" />
                                 </a>
                             ))}
                         </div>
                     </div>
 
-                    {/* Quick Links */}
-                    <div>
-                        <h4 className="text-lg font-bold mb-6">Quick Trails</h4>
-                        <ul className="space-y-4 text-slate-400 text-sm">
-                            <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
-                            <li><Link to="/packages" className="hover:text-white transition-colors">Expeditions</Link></li>
-                            <li><Link to="/about" className="hover:text-white transition-colors">Our Story</Link></li>
-                            <li><Link to="/contact" className="hover:text-white transition-colors">Get Help</Link></li>
-                        </ul>
-                    </div>
-
-                    {/* Contact */}
-                    <div>
-                        <h4 className="text-lg font-bold mb-6">Reach Out</h4>
-                        <ul className="space-y-4 text-slate-400 text-sm">
-                            <li className="flex items-center space-x-3">
-                                <Phone className="w-4 h-4 text-primary" />
-                                <span>+91 81713 79469</span>
-                            </li>
-                            <li className="flex items-center space-x-3">
-                                <Mail className="w-4 h-4 text-primary" />
-                                <span>ops@safarchaska.com</span>
-                            </li>
-                            <li className="flex items-center space-x-3">
-                                <MapPin className="w-4 h-4 text-primary" />
-                                <span>Chakrata, Uttarakhand</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Newsletter */}
-                    <div>
-                        <h4 className="text-lg font-bold mb-6">Join The Tribe</h4>
-                        <p className="text-slate-400 text-sm mb-6 leading-relaxed">Subscribe to get monthly trail updates and private deals.</p>
-                        <form className="relative">
-                            <input
-                                type="email"
-                                placeholder="Your Email"
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3 text-sm focus:outline-none focus:border-primary"
-                            />
-                            <button className="absolute right-2 top-2 p-1.5 bg-primary rounded-lg hover:bg-primary-dark transition-colors">
-                                <Send className="w-4 h-4" />
-                            </button>
-                        </form>
+                    {/* Mobile App Section */}
+                    <div className="md:col-span-4 md:pl-8">
+                        <h4 className="text-white text-4xl md:text-5xl font-black leading-[1.1] mb-10 tracking-tight">
+                            WavyGo - Bike <br />
+                            Rental Mobile <br />
+                            Application
+                        </h4>
+                        <div className="flex flex-wrap gap-4">
+                            <a href="#" className="transition-transform hover:scale-105">
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+                                    alt="Download on the App Store"
+                                    className="h-12 w-auto shadow-lg rounded-lg transition-all"
+                                />
+                            </a>
+                            <a href="#" className="transition-transform hover:scale-105">
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                                    alt="Get it on Google Play"
+                                    className="h-12 w-auto shadow-lg rounded-lg transition-all"
+                                />
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-slate-500 text-xs">
-                    <p>© 2026 SafarChaska. All Rights Reserved.</p>
-                    <div className="flex items-center space-x-6">
-                        <a href="#" className="hover:text-white transition-colors">Privacy</a>
-                        <a href="#" className="hover:text-white transition-colors">Terms</a>
-                        <a href="#" className="hover:text-white transition-colors">Credits</a>
-                        <Link to="/admin/login" className="hover:text-white transition-colors">Admin Login</Link>
-                    </div>
+                {/* Bottom Copyright Bar */}
+                <div className="pt-10 border-t border-white/10 text-center">
+                    <p className="text-white/90 font-bold text-sm tracking-tight">
+                        @ Copyright 2025 wavyGo. All rights Reserved.
+                    </p>
                 </div>
+            </div>
+
+            {/* Floating Contact Buttons (WhatsApp and Email) */}
+            <div className="fixed bottom-6 right-6 flex flex-row gap-4 z-[999]">
+                {/* WhatsApp Button */}
+                <a
+                    href="https://wa.me/918171379469"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-14 h-14 md:w-16 md:h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_10px_40px_rgba(0,0,0,0.2)] hover:scale-110 active:scale-95 transition-all group"
+                >
+                    <MessageCircle className="w-8 h-8 md:w-9 md:h-9 fill-white" />
+                </a>
+
+                {/* Email Button */}
+                <a
+                    href="mailto:hello@wavygo.in"
+                    className="w-14 h-14 md:w-16 md:h-16 bg-white text-[#035c3e] rounded-full flex items-center justify-center shadow-[0_10px_40px_rgba(0,0,0,0.1)] hover:scale-110 active:scale-95 transition-all group"
+                >
+                    <Mail className="w-8 h-8 md:w-9 md:h-9 fill-current" />
+                </a>
             </div>
         </footer>
     );

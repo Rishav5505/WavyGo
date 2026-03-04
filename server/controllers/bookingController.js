@@ -1,4 +1,5 @@
 const Booking = require('../models/bookingModel');
+const Package = require('../models/packageModel');
 
 // @desc    Create new booking
 // @route   POST /api/bookings
@@ -6,11 +7,20 @@ const Booking = require('../models/bookingModel');
 const addBookingItems = async (req, res) => {
     try {
         const { packageId, userName, email, phone, travelDate, guests } = req.body;
-        const booking = new Booking({
-            packageId, userName, email, phone, travelDate, guests
-        });
+
+        // Basic validation for ObjectId
+        const mongoose = require('mongoose');
+        if (!mongoose.Types.ObjectId.isValid(packageId)) {
+            return res.status(400).json({ message: 'Invalid bike selection. Please select a bike from the list.' });
+        }
+
+        const booking = new Booking({ packageId, userName, email, phone, travelDate, guests });
         const createdBooking = await booking.save();
-        res.status(201).json(createdBooking);
+        // calculate total price based on package price
+        const pkg = await Package.findById(packageId);
+        const totalPrice = pkg ? pkg.price * guests : 0;
+        const response = { ...createdBooking.toObject(), totalPrice };
+        res.status(201).json(response);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

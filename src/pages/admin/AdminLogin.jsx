@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Lock, Mail, ArrowRight, Loader2, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import Button from '../../components/common/Button';
+import Logo from '../../components/common/Logo';
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ const AdminLogin = () => {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('https://safar-chaska.onrender.com/api/users/login', {
+            const response = await fetch('https://api.wavygo.com/api/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -59,11 +60,11 @@ const AdminLogin = () => {
                 className="w-full max-w-md bg-white rounded-[2.5rem] p-10 shadow-2xl shadow-slate-200 border border-slate-100"
             >
                 <div className="text-center mb-10">
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <Lock className="w-8 h-8 text-primary" />
+                    <div className="flex items-center justify-center mb-8">
+                        <Logo className="items-center" />
                     </div>
                     <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Admin Portal</h1>
-                    <p className="text-slate-500 mt-2">Sign in to manage Safar Chaska</p>
+                    <p className="text-slate-500 mt-2">Sign in to manage WavyGo</p>
                 </div>
 
                 {error && (
@@ -74,7 +75,7 @@ const AdminLogin = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 block ml-1">Email Address</label>
+                        <label className="text-sm font-bold text-slate-700 mb-2 block ml-1">Email Address</label>
                         <div className="relative">
                             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                             <input
@@ -82,14 +83,14 @@ const AdminLogin = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary focus:bg-white transition-all font-medium"
-                                placeholder="admin@safarchaska.com"
+                                placeholder="admin@wavygo.com"
                                 required
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 block ml-1">Password</label>
+                        <label className="text-sm font-bold text-slate-700 mb-2 block ml-1">Password</label>
                         <div className="relative">
                             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                             <input

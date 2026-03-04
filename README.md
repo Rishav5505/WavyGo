@@ -1,16 +1,48 @@
-# React + Vite
+# WavyGo - Modern Bike Rental Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WavyGo is a premium, modern bike rental platform built with React, Tailwind CSS, and Framer Motion. It allows users to rent premium bikes like Royal Enfield, KTM, and more across India through verified local vendors.
 
-Currently, two official plugins are available:
+## 🚀 Features
+- **Premium Fleet**: Modern bikes including Cruisers, Sports, and Commuters.
+- **Verified Vendors**: 20-point quality checks for every machine.
+- **24/7 Support**: Dedicated on-road assistance.
+- **Secure Booking**: Seamless online reservation and payment flow.
+- **Admin Suite**: Advanced management portal for active campaigns and fleet control.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Technology Stack
+- **Frontend**: React 19, Vite, Tailwind CSS, Framer Motion, Lucide React.
+- **Backend (API)**: Node.js, Express, MongoDB.
+- **State Management**: React Context API.
 
-## React Compiler
+## 📦 Installation & Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/Rishav5505/Safar-Chaska.git
+   cd Wavygo-WEB
+   ```
 
-## Expanding the ESLint configuration
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Start the backend server** (Optional, if running locally):
+   ```bash
+   cd server
+   npm install
+   npm start
+   ```
+
+## 🔒 Admin Access
+The management portal is available at `/admin/login`. Default credentials for demonstration (if set in seeder):
+- **Email**: `admin@wavygo.com`
+- **Password**: `password123`
+
+## 📄 License
+Copyright © 2026 WavyGo. All Rights Reserved.
