@@ -22,7 +22,7 @@ const PopularPackages = () => {
                 image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/183389/classic-350-right-side-view-50.jpeg?isig=0&q=80",
                 duration: "Self-Drive",
                 tag: "Bestseller",
-                link: "/booking"
+                link: "/bike/65e5a2e1f1a2b3c4d5e6f001"
             },
             {
                 _id: "2",
@@ -33,7 +33,7 @@ const PopularPackages = () => {
                 image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/148323/duke-390-right-side-view-14.png?isig=0&q=80",
                 duration: "Self-Drive",
                 tag: "Modern",
-                link: "/booking"
+                link: "/bike/65e5a2e1f1a2b3c4d5e6f002"
             },
             {
                 _id: "3",
@@ -44,7 +44,7 @@ const PopularPackages = () => {
                 image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/44686/activa-6g-right-side-view-2.png?isig=0&q=80",
                 duration: "Self-Drive",
                 tag: "Economical",
-                link: "/booking"
+                link: "/bike/65e5a2e1f1a2b3c4d5e6f003"
             },
             {
                 _id: "4",
@@ -55,7 +55,7 @@ const PopularPackages = () => {
                 image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/45481/shine-right-side-view-12.jpeg?isig=0&q=100",
                 duration: "Self-Drive",
                 tag: "Bestseller",
-                link: "/booking"
+                link: "/bike/65e5a2e1f1a2b3c4d5e6f004"
             }
         ];
 

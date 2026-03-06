@@ -126,7 +126,7 @@ const Navbar = () => {
             {/* Main Navbar */}
             <nav className={`fixed left-0 right-0 z-[100] transition-all duration-700 pointer-events-none ${scrolled ? 'top-4 md:top-6' : 'top-0'}`}>
                 <div className={`container-custom pointer-events-auto transition-all duration-700 ${scrolled ? 'max-w-5xl' : 'max-w-7xl'}`}>
-                    <div className={`relative flex items-center justify-between transition-all duration-700 px-6 md:px-10 ${scrolled ? 'bg-white/90 backdrop-blur-2xl py-4 rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100' : 'py-6 md:py-10'}`}>
+                    <div className={`relative flex items-center justify-between transition-all duration-700 px-4 md:px-10 rounded-[2rem] md:rounded-[2.5rem] border ${scrolled ? 'bg-white/90 backdrop-blur-2xl py-3 md:py-4 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border-slate-100' : 'py-4 md:py-10 border-transparent bg-transparent'}`}>
                         <Logo />
 
                         {/* Desktop Menu */}
@@ -223,25 +223,25 @@ const Navbar = () => {
                         {/* Mobile Menu Button - Premium Hamburger */}
                         <motion.button
                             whileTap={{ scale: 0.9 }}
-                            className={`lg:hidden w-14 h-14 rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all relative z-[110] ${isOpen
-                                ? 'bg-primary text-white shadow-2xl'
+                            className={`lg:hidden w-11 h-11 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex flex-col items-center justify-center gap-1 md:gap-1.5 transition-all relative z-[110] ${isOpen
+                                ? 'bg-primary text-white shadow-xl'
                                 : scrolled || location.pathname !== '/'
-                                    ? 'bg-white text-slate-900 shadow-xl border border-slate-100'
+                                    ? 'bg-white text-slate-900 shadow-md border border-slate-100'
                                     : 'bg-white/10 text-white backdrop-blur-md border border-white/10'
                                 }`}
                             onClick={() => setIsOpen(!isOpen)}
                         >
                             <motion.span
-                                animate={isOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }}
-                                className="w-7 h-1 bg-current rounded-full"
+                                animate={isOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+                                className="w-5 h-[2px] md:w-7 md:h-1 bg-current rounded-full"
                             />
                             <motion.span
                                 animate={isOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }}
-                                className="w-7 h-1 bg-current rounded-full"
+                                className="w-5 h-[2px] md:w-7 md:h-1 bg-current rounded-full"
                             />
                             <motion.span
-                                animate={isOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }}
-                                className="w-7 h-1 bg-current rounded-full"
+                                animate={isOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+                                className="w-5 h-[2px] md:w-7 md:h-1 bg-current rounded-full"
                             />
                         </motion.button>
                     </div>
@@ -264,15 +264,15 @@ const Navbar = () => {
                             <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-600 rounded-full blur-[120px]" />
                         </div>
 
-                        <div className="relative z-10 flex flex-col h-full pt-24 p-6 overflow-y-auto">
+                        <div className="relative z-10 flex flex-col h-full pt-16 px-6 pb-6 overflow-y-auto">
                             <motion.p
                                 variants={itemVariants}
-                                className="text-xs font-black text-primary uppercase tracking-[0.2em] mb-8 border-l-2 border-primary pl-3"
+                                className="text-sm font-black text-primary uppercase tracking-[0.2em] mb-5 border-l-4 border-primary pl-3 py-1"
                             >
-                                Menu
+                                WavyGo Hub
                             </motion.p>
 
-                            <div className="space-y-2">
+                            <div className="space-y-1">
                                 {navLinks.map((link) => (
                                     <motion.div key={link.name} variants={itemVariants}>
                                         <Link
@@ -280,35 +280,34 @@ const Navbar = () => {
                                             className="group block"
                                             onClick={() => setIsOpen(false)}
                                         >
-                                            <div className={`flex items-center justify-between p-3 rounded-2xl transition-all ${location.pathname === link.path ? 'bg-slate-50' : 'hover:bg-slate-50'}`}>
-                                                <div className="flex items-center gap-4">
-                                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${location.pathname === link.path ? 'bg-primary text-white shadow-md' : 'bg-white border border-slate-100 text-slate-400 group-hover:border-primary/20 group-hover:text-primary'}`}>
-                                                        <link.icon className="w-4 h-4" />
+                                            <div className={`flex items-center justify-between p-2.5 rounded-xl transition-all ${location.pathname === link.path ? 'bg-slate-50' : 'hover:bg-slate-50'}`}>
+                                                <div className="flex items-center gap-3">
+                                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${location.pathname === link.path ? 'bg-primary text-white shadow-md' : 'bg-white border border-slate-100 text-slate-400 group-hover:border-primary/20 group-hover:text-primary'}`}>
+                                                        <link.icon className="w-3.5 h-3.5" />
                                                     </div>
-                                                    <h3 className={`text-lg font-bold transition-colors ${location.pathname === link.path ? 'text-slate-900' : 'text-slate-600 group-hover:text-primary'}`}>
+                                                    <h3 className={`text-base font-bold transition-colors ${location.pathname === link.path ? 'text-slate-900' : 'text-slate-600 group-hover:text-primary'}`}>
                                                         {link.name}
                                                     </h3>
                                                 </div>
-                                                <ChevronRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${location.pathname === link.path ? 'text-primary' : 'text-slate-300'}`} />
+                                                <ChevronRight className={`w-3.5 h-3.5 transition-transform group-hover:translate-x-1 ${location.pathname === link.path ? 'text-primary' : 'text-slate-300'}`} />
                                             </div>
                                         </Link>
                                     </motion.div>
                                 ))}
 
                                 {user ? (
-                                    <motion.div variants={itemVariants}>
-                                        <div className="w-full h-px bg-slate-100 my-4" />
+                                    <motion.div variants={itemVariants} className="pt-3 mt-3 border-t border-slate-100 space-y-1">
                                         <Link to="/profile" className="group block" onClick={() => setIsOpen(false)}>
-                                            <div className="flex items-center justify-between p-3 rounded-2xl hover:bg-slate-50 transition-all">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-100 text-slate-400 flex items-center justify-center group-hover:border-primary/20 group-hover:text-primary transition-all">
-                                                        <User className="w-4 h-4" />
+                                            <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-all">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 text-slate-400 flex items-center justify-center group-hover:border-primary/20 group-hover:text-primary transition-all">
+                                                        <User className="w-3.5 h-3.5" />
                                                     </div>
-                                                    <h3 className="text-lg font-bold text-slate-600 group-hover:text-primary transition-colors">
+                                                    <h3 className="text-base font-bold text-slate-600 group-hover:text-primary transition-colors">
                                                         My Profile
                                                     </h3>
                                                 </div>
-                                                <ChevronRight className="w-4 h-4 text-slate-300 transition-transform group-hover:translate-x-1" />
+                                                <ChevronRight className="w-3.5 h-3.5 text-slate-300 transition-transform group-hover:translate-x-1" />
                                             </div>
                                         </Link>
                                         <button
@@ -318,12 +317,12 @@ const Navbar = () => {
                                             }}
                                             className="w-full group block text-left"
                                         >
-                                            <div className="flex items-center justify-between p-3 rounded-2xl hover:bg-red-50 transition-all">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-100 text-red-400 flex items-center justify-center group-hover:border-red-200 group-hover:text-red-500 transition-all">
-                                                        <ArrowRight className="w-4 h-4" />
+                                            <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-red-50 transition-all">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 text-red-400 flex items-center justify-center group-hover:border-red-200 group-hover:text-red-500 transition-all">
+                                                        <ArrowRight className="w-3.5 h-3.5" />
                                                     </div>
-                                                    <h3 className="text-lg font-bold text-slate-600 group-hover:text-red-500 transition-colors">
+                                                    <h3 className="text-base font-bold text-slate-600 group-hover:text-red-500 transition-colors">
                                                         Sign Out
                                                     </h3>
                                                 </div>

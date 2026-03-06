@@ -296,7 +296,7 @@ const Packages = () => {
                                                             </div>
                                                         </div>
 
-                                                        <Link to={`/booking?packageId=${pkg._id}`}>
+                                                        <Link to={`/bike/${pkg._id}`}>
                                                             <Button className="w-full h-12 rounded-xl bg-slate-950 text-white shadow-xl hover:bg-primary transition-all duration-300 flex items-center justify-center gap-3 group/btn">
                                                                 <span className="text-[10px] font-black uppercase tracking-[0.2em]">Book This Bike</span>
                                                                 <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />

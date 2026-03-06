@@ -8,6 +8,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Packages from './pages/Packages';
 import DestinationDetails from './pages/DestinationDetails';
+import BikeDetails from './pages/BikeDetails';
 import Auth from './pages/Auth';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -59,6 +60,7 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/chakrata" element={<Chakrata />} />
                 <Route path="/destination/:id" element={<DestinationDetails />} />
+                <Route path="/bike/:id" element={<BikeDetails />} />
                 <Route
                   path="/booking"
                   element={
