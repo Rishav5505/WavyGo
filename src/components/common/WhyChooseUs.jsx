@@ -51,8 +51,7 @@ const WhyChooseUs = () => {
     }, [selectedId]);
 
     return (
-        <section className="py-20 bg-slate-50 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-[600px] bg-white pointer-events-none -z-10"></div>
+        <section className="py-20 relative overflow-hidden bg-slate-50">
             <div className="container-custom">
                 <div className="text-left mb-16">
                     <Reveal>
@@ -70,13 +69,13 @@ const WhyChooseUs = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.1 }}
                             transition={{ duration: 0.8, delay: i * 0.1 }}
-                            className="bg-white/40 backdrop-blur-md p-10 rounded-[4rem] border border-white/60 group hover:bg-primary transition-all duration-500 cursor-pointer relative overflow-hidden shadow-xl shadow-slate-200/50"
+                            className="bg-white/40 backdrop-blur-md p-6 md:p-10 rounded-[2.5rem] md:rounded-[4rem] border border-white/60 group hover:bg-primary transition-all duration-500 cursor-pointer relative overflow-hidden shadow-xl shadow-slate-200/50"
                         >
-                            <div className={`w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-primary/20 group-hover:scale-110 group-hover:bg-white transition-all duration-500`}>
-                                <usp.icon className="w-7 h-7 text-white group-hover:text-primary transition-colors" />
+                            <div className={`w-12 h-12 md:w-16 md:h-16 bg-primary rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 shadow-lg shadow-primary/20 group-hover:scale-110 group-hover:bg-white transition-all duration-500`}>
+                                <usp.icon className="w-5 h-5 md:w-7 md:h-7 text-white group-hover:text-primary transition-colors" />
                             </div>
-                            <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-white tracking-tighter transition-colors">{usp.title}</h3>
-                            <p className="text-slate-500 group-hover:text-slate-400 leading-relaxed font-medium transition-colors mb-10 text-sm">{usp.desc}</p>
+                            <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-3 md:mb-4 group-hover:text-white tracking-tighter transition-colors">{usp.title}</h3>
+                            <p className="text-slate-500 group-hover:text-slate-400 leading-relaxed font-medium transition-colors mb-6 md:mb-10 text-sm">{usp.desc}</p>
 
                             <div className="inline-flex items-center gap-3 text-primary group-hover:text-white font-bold text-[10px] uppercase tracking-widest mt-auto border-b-2 border-primary/20 group-hover:border-white/20 pb-2 transition-all">
                                 Discover More <ArrowRight className="w-4 h-4" />

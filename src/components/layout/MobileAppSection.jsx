@@ -4,7 +4,7 @@ import partnerBanner from '../../assets/images/list-your-bike.png';
 
 const MobileAppSection = () => {
     return (
-        <section className="py-24 bg-white relative overflow-hidden">
+        <section className="pt-2 pb-16 md:py-24 bg-slate-50 relative overflow-hidden">
             {/* Background Decorative Elements */}
             <motion.div
                 animate={{
@@ -47,7 +47,7 @@ const MobileAppSection = () => {
                     />
 
                     {/* Image with Inner Navigation Animation */}
-                    <div className="overflow-hidden bg-slate-100 aspect-[21/9] md:aspect-auto">
+                    <div className="overflow-hidden bg-slate-100 flex items-center justify-center">
                         <motion.img
                             initial={{ scale: 1.1, filter: "blur(10px)" }}
                             whileInView={{ scale: 1, filter: "blur(0px)" }}
@@ -59,7 +59,7 @@ const MobileAppSection = () => {
                             }}
                             src={partnerBanner}
                             alt="List Your Bike - Become a Partner"
-                            className="w-full h-full object-cover block origin-center"
+                            className="w-full h-auto object-contain block origin-center"
                         />
                     </div>
 

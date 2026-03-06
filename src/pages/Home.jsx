@@ -108,7 +108,7 @@ const Home = () => {
     ];
 
     return (
-        <div className="bg-white min-h-screen flex flex-col selection:bg-primary selection:text-white overflow-x-hidden">
+        <div className="bg-slate-50 min-h-screen flex flex-col selection:bg-primary selection:text-white overflow-x-hidden">
             <Navbar />
 
             {/* Premium Cinematic Hero - Website style with Clear Visuals */}
@@ -137,7 +137,7 @@ const Home = () => {
                 </div>
 
                 {/* Content Container - Kona Mode (Extreme Side Alignment) */}
-                <div className="w-full relative z-10 py-12 md:py-20 px-6 md:px-16 lg:px-24">
+                <div className="w-full relative z-10 pt-32 pb-12 md:pt-40 md:pb-20 px-6 md:px-16 lg:px-24">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full max-w-[1800px] mx-auto" style={{ perspective: '2000px' }}>
 
                         {/* Kona Left: Refined Premium Search Card */}
@@ -265,14 +265,14 @@ const Home = () => {
             </section>
 
             {/* Fleet Section */}
-            <div className="pt-16 pb-12 bg-white relative z-10 -mt-20">
+            <div className="pt-16 pb-12 bg-slate-50 relative z-10 -mt-20">
                 <div className="container-custom">
                     <div className="text-center mb-10">
                         <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">
                             Find Your <span className="text-primary">Perfect Style</span>
                         </h2>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-8">
                         {categories.map((cat, i) => (
                             <Link key={i} to="/packages" className="group">
                                 <motion.div
@@ -281,16 +281,16 @@ const Home = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1, duration: 0.6 }}
                                     whileHover={{ y: -12, scale: 1.02 }}
-                                    className="bg-slate-50 rounded-[3rem] p-6 flex flex-col items-center justify-center gap-2 border border-slate-100 hover:bg-primary/5 transition-all duration-700 shadow-xl shadow-slate-100/50 group"
+                                    className="bg-white rounded-3xl md:rounded-[3rem] p-4 md:p-6 flex flex-col items-center justify-center gap-2 border border-slate-100 hover:border-primary/20 transition-all duration-700 shadow-xl shadow-slate-200/50 group h-full"
                                 >
-                                    <h4 className="text-lg font-black text-slate-900 tracking-tight capitalize">{cat.title}</h4>
-                                    <div className="relative w-full h-40 flex items-center justify-center">
+                                    <h4 className="text-base md:text-lg font-black text-slate-900 tracking-tight capitalize text-center">{cat.title}</h4>
+                                    <div className="relative w-full h-24 md:h-40 flex items-center justify-center mt-auto">
                                         <motion.img
                                             initial={{ rotate: 0 }}
                                             whileHover={{ rotate: [-2, 2, 0] }}
                                             transition={{ duration: 0.5 }}
                                             src={cat.img}
-                                            className="max-w-full h-36 object-contain group-hover:scale-110 transition-transform duration-700"
+                                            className="max-w-full h-20 md:h-36 object-contain group-hover:scale-110 transition-transform duration-700"
                                             alt={cat.title}
                                         />
                                     </div>
@@ -308,7 +308,7 @@ const Home = () => {
             <section className="py-12 bg-primary overflow-hidden relative border-y border-white/10">
                 <div className="absolute inset-0 bg-black/10 pointer-events-none"></div>
                 <div className="container-custom">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-2 md:gap-8 lg:gap-12">
                         {stats.map((stat, i) => (
                             <motion.div
                                 key={i}
@@ -316,7 +316,7 @@ const Home = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8, delay: i * 0.1 }}
-                                className="text-center group border-r border-white/10 last:border-none p-2 hover:bg-white/5 transition-all duration-500 rounded-2xl"
+                                className="text-center group p-2 hover:bg-white/5 transition-all duration-500 rounded-2xl relative"
                             >
                                 <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-3 transition-all group-hover:scale-110 group-hover:bg-white group-hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)]">
                                     <stat.icon className="w-4 h-4 text-white group-hover:text-primary transition-colors" />

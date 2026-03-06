@@ -66,13 +66,13 @@ const SocialSection = () => {
     const infiniteLocations = [...locations, ...locations];
 
     return (
-        <section className="py-20 md:py-32 bg-white relative overflow-hidden">
+        <section className="py-20 md:py-32 bg-slate-50 relative overflow-hidden">
             <div className="container-custom">
                 {/* Section Header */}
-                <div className="text-center mb-16 px-4">
+                <div className="text-center mb-10 md:mb-16 px-4">
                     <Reveal center>
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-none mb-6">
-                            WavyGo around <span className="text-primary italic">all over India</span>
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-tight md:leading-none mb-6">
+                            WavyGo around <br className="block md:hidden" /> <span className="text-primary italic">all over India</span>
                         </h2>
                     </Reveal>
                 </div>
@@ -101,7 +101,7 @@ const SocialSection = () => {
                         {infiniteLocations.map((loc, i) => (
                             <motion.div
                                 key={i}
-                                className="group relative flex-shrink-0 w-[280px] md:w-[320px] aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-700 cursor-pointer border border-slate-100"
+                                className="group relative flex-shrink-0 w-[260px] md:w-[320px] aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-700 cursor-pointer border border-slate-100"
                             >
                                 {/* Image Overlay */}
                                 <img

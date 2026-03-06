@@ -8,21 +8,21 @@ const Footer = () => {
             <div className="container-custom">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-x-8 mb-20">
                     {/* Brand & Address Section */}
-                    <div className="md:col-span-4 space-y-8">
+                    <div className="md:col-span-4 flex flex-col items-start gap-6 md:gap-8">
                         <Link to="/" className="inline-block group transition-transform duration-500 hover:scale-105">
                             <div className="flex items-baseline">
-                                <span className="font-black italic tracking-tighter text-5xl text-white">Wavy</span>
-                                <span className="font-black italic tracking-tighter text-5xl text-white -ml-0.5">Go</span>
+                                <span className="font-black italic tracking-tighter text-4xl md:text-5xl text-white">Wavy</span>
+                                <span className="font-black italic tracking-tighter text-4xl md:text-5xl text-white -ml-0.5">Go</span>
                             </div>
-                            <div className="mt-1">
-                                <span className="bg-white text-[#035c3e] px-2 py-0.5 text-[8px] font-black uppercase tracking-widest leading-none">
+                            <div className="mt-2">
+                                <span className="bg-white text-[#035c3e] px-2 py-0.5 text-[8px] md:text-[10px] font-black uppercase tracking-widest leading-none">
                                     Rent · Ride · Explore
                                 </span>
                             </div>
                         </Link>
 
-                        <div className="space-y-4 max-w-sm">
-                            <p className="text-white font-bold text-sm leading-relaxed max-w-[280px]">
+                        <div className="max-w-sm">
+                            <p className="text-white/80 font-medium text-xs md:text-sm leading-relaxed max-w-[280px]">
                                 C/o- Ramchandra Mehta, Ward No-08, Bishunpur, Daullatpur, Raghopur, Supaul-852215, Bihar
                             </p>
                         </div>
@@ -30,8 +30,8 @@ const Footer = () => {
 
                     {/* Company Section */}
                     <div className="md:col-span-2">
-                        <h4 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-b-2 border-white/20 pb-2 w-fit">Company</h4>
-                        <ul className="space-y-4 text-white font-bold text-sm">
+                        <h4 className="text-white font-black uppercase tracking-widest text-xs mb-6 md:mb-8 border-b-2 border-white/20 pb-2 w-fit">Company</h4>
+                        <ul className="space-y-3 md:space-y-4 text-white/90 font-medium text-sm md:text-base">
                             <li><Link to="/about" className="hover:opacity-70 transition-opacity">About Us</Link></li>
                             <li><Link to="/contact" className="hover:opacity-70 transition-opacity">Contact Us</Link></li>
                             <li><Link to="/privacy" className="hover:opacity-70 transition-opacity">Privacy Policy</Link></li>
@@ -42,7 +42,7 @@ const Footer = () => {
 
                     {/* Follow Us Section */}
                     <div className="md:col-span-2">
-                        <h4 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-b-2 border-white/20 pb-2 w-fit">Follow Us</h4>
+                        <h4 className="text-white font-black uppercase tracking-widest text-xs mb-6 md:mb-8 border-b-2 border-white/20 pb-2 w-fit">Follow Us</h4>
                         <div className="flex gap-3">
                             {[
                                 { Icon: Instagram, link: "#" },
@@ -59,7 +59,7 @@ const Footer = () => {
 
                     {/* Mobile App Section */}
                     <div className="md:col-span-4 md:pl-8">
-                        <h4 className="text-white text-4xl md:text-5xl font-black leading-[1.1] mb-10 tracking-tight">
+                        <h4 className="text-white text-3xl md:text-5xl font-black leading-[1.1] mb-6 md:mb-10 tracking-tight">
                             WavyGo - Bike <br />
                             Rental Mobile <br />
                             Application

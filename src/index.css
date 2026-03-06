@@ -15,7 +15,7 @@
   }
 
   body {
-    @apply font-sans antialiased text-slate-900 bg-white selection:bg-primary selection:text-white;
+    @apply font-sans antialiased text-slate-900 bg-slate-50 selection:bg-primary selection:text-white;
   }
 
   /* Hide default cursor on desktop to use custom cursor */
@@ -83,6 +83,10 @@
 
   .perspective-1000 {
     perspective: 1000px;
+  }
+
+  .bg-brand-accent {
+    background-color: rgba(3, 92, 62, 0.03);
   }
 }
 
