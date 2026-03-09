@@ -77,7 +77,7 @@ const PopularPackages = () => {
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-10">
                     <div className="text-left space-y-4">
                         <Reveal>
-                            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-none">Most Wanted <br /><span className="text-primary">Machines</span></h2>
+                            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-none uppercase">Most Popular <br /><span className="text-primary">Ride</span></h2>
                         </Reveal>
                         <p className="max-w-xl text-slate-500 font-medium text-sm md:text-base leading-relaxed">The most powerful and stylish rides in the city, verified for performance and ready for your next adventure.</p>
                     </div>
@@ -107,9 +107,9 @@ const PopularPackages = () => {
                                 </div>
                             </div>
 
-                            <div className="relative h-28 md:h-48 overflow-hidden bg-slate-50 flex items-center justify-center p-2 md:p-4">
-                                <img src={pkg.image} className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-1000" alt={pkg.title} />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                            <div className="relative h-28 md:h-48 overflow-hidden bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] flex items-center justify-center p-4 md:p-6">
+                                <img src={pkg.image} className="max-w-full max-h-full object-contain scale-110 group-hover:scale-125 transition-transform duration-1000 mix-blend-multiply" alt={pkg.title} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                             </div>
 
                             <div className="p-3 md:p-6 flex-grow flex flex-col">

@@ -37,8 +37,8 @@ const FAQ = () => {
                     {/* Section Header */}
                     <div className="text-center mb-10 md:mb-12 px-4">
                         <Reveal center>
-                            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-tight md:leading-none mb-4 italic">
-                                Elite <span className="text-primary italic">Intelligence</span>
+                            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-tight md:leading-none mb-4">
+                                Elite <span className="text-primary">Intelligence</span>
                             </h2>
                         </Reveal>
                         <p className="text-slate-500 font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] text-[9px] md:text-[10px] whitespace-normal">Everything you need to know before you ignite</p>
@@ -70,7 +70,7 @@ const FAQ = () => {
                                             exit={{ height: 0, opacity: 0 }}
                                             transition={{ duration: 0.4, ease: "circOut" }}
                                         >
-                                            <div className="px-5 md:px-7 pb-5 md:pb-7 text-sm md:text-base text-slate-400 font-medium leading-relaxed italic">
+                                            <div className="px-5 md:px-7 pb-5 md:pb-7 text-sm md:text-base text-slate-400 font-medium leading-relaxed">
                                                 {faq.answer}
                                             </div>
                                         </motion.div>

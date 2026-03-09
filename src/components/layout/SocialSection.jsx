@@ -72,7 +72,7 @@ const SocialSection = () => {
                 <div className="text-center mb-10 md:mb-16 px-4">
                     <Reveal center>
                         <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-tight md:leading-none mb-6">
-                            WavyGo around <br className="block md:hidden" /> <span className="text-primary italic">all over India</span>
+                            WavyGo around <br className="block md:hidden" /> <span className="text-primary">all over India</span>
                         </h2>
                     </Reveal>
                 </div>

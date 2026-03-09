@@ -39,7 +39,7 @@ const Testimonials = () => {
             <div className="container-custom">
                 <div className="text-center mb-10 md:mb-16 px-4">
                     <Reveal center>
-                        <h2 className="text-3xl md:text-6xl font-extrabold text-slate-900 tracking-tighter leading-none mb-4">Voices of <br /><span className="text-primary italic">Elite Mobility</span></h2>
+                        <h2 className="text-3xl md:text-6xl font-extrabold text-slate-900 tracking-tighter leading-none mb-4">Voices of <br /><span className="text-primary">Elite Mobility</span></h2>
                     </Reveal>
                     <p className="text-slate-500 font-bold uppercase tracking-[0.1em] md:tracking-[0.3em] text-[10px] whitespace-normal">What the community is saying</p>
                 </div>

@@ -36,7 +36,7 @@ const BlogSection = () => {
                 <div className="text-center mb-12 md:mb-16 px-4">
                     <Reveal center>
                         <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight md:leading-none mb-4">
-                            Explore Our <span className="text-primary italic">Latest Blogs</span>
+                            Explore Our <span className="text-primary">Latest Blogs</span>
                         </h2>
                         <p className="text-slate-500 font-medium uppercase tracking-[0.1em] md:tracking-[0.2em] text-[9px] md:text-[10px] whitespace-normal">
                             Stay updated with the newest trends and stories from the world of two‑wheelers.

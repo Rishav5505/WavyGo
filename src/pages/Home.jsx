@@ -70,6 +70,63 @@ const Home = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
 
+    const [destination, setDestination] = useState("");
+    const [suggestions, setSuggestions] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+    // Date & Time State
+    const [pickupDate, setPickupDate] = useState(() => {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        return now.toISOString().slice(0, 16);
+    });
+
+    const [dropoffDate, setDropoffDate] = useState(() => {
+        const nextDay = new Date();
+        nextDay.setDate(nextDay.getDate() + 1);
+        nextDay.setMinutes(nextDay.getMinutes() - nextDay.getTimezoneOffset());
+        return nextDay.toISOString().slice(0, 16);
+    });
+
+    const INDIAN_CITIES = [
+        "Agra, Uttar Pradesh", "Ahmedabad, Gujarat", "Ajmer, Rajasthan", "Aligarh, Uttar Pradesh", "Allahabad, Uttar Pradesh",
+        "Amritsar, Punjab", "Aurangabad, Maharashtra", "Bangalore, Karnataka", "Bhopal, Madhya Pradesh", "Bhubaneswar, Odisha",
+        "Chandigarh, Chandigarh", "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Dehradun, Uttarakhand", "Delhi, Delhi",
+        "Faridabad, Haryana", "Ghaziabad, Uttar Pradesh", "Goa, Goa", "Gurgaon, Haryana", "Guwahati, Assam",
+        "Gwalior, Madhya Pradesh", "Hyderabad, Telangana", "Indore, Madhya Pradesh", "Jabalpur, Madhya Pradesh", "Jaipur, Rajasthan",
+        "Jalandhar, Punjab", "Jammu, Jammu & Kashmir", "Jodhpur, Rajasthan", "Kanpur, Uttar Pradesh", "Kochi, Kerala",
+        "Kolkata, West Bengal", "Kota, Rajasthan", "Lucknow, Uttar Pradesh", "Ludhiana, Punjab", "Madurai, Tamil Nadu",
+        "Meerut, Uttar Pradesh", "Mumbai, Maharashtra", "Mysore, Karnataka", "Nagpur, Maharashtra", "Nashik, Maharashtra",
+        "Noida, Uttar Pradesh", "Patna, Bihar", "Pune, Maharashtra", "Raipur, Chhattisgarh", "Rajkot, Gujarat",
+        "Ranchi, Jharkhand", "Surat, Gujarat", "Thiruvananthapuram, Kerala", "Udaipur, Rajasthan", "Vadodara, Gujarat",
+        "Varanasi, Uttar Pradesh", "Visakhapatnam, Andhra Pradesh", "Manali, Himachal Pradesh", "Shimla, Himachal Pradesh",
+        "Leh, Ladakh", "Rishikesh, Uttarakhand", "Haridwar, Uttarakhand", "Nainital, Uttarakhand", "Mussoorie, Uttarakhand",
+        "Dharamshala, Himachal Pradesh", "Dalhousie, Himachal Pradesh", "Spiti Valley, Himachal Pradesh", "Kasol, Himachal Pradesh",
+        "Chakrata, Uttarakhand", "Auli, Uttarakhand", "Tawang, Arunachal Pradesh", "Gangtok, Sikkim", "Darjeeling, West Bengal",
+        "Shillong, Meghalaya", "Munnar, Kerala", "Wayanad, Kerala", "Ooty, Tamil Nadu", "Kodaikanal, Tamil Nadu",
+        "Coorg, Karnataka", "Gokarna, Karnataka", "Hampi, Karnataka", "Pondicherry, Puducherry", "Andaman",
+        "Srinagar, Jammu & Kashmir", "Gulmarg, Jammu & Kashmir", "Pahalgam, Jammu & Kashmir"
+    ];
+
+    useEffect(() => {
+        if (destination.length < 1) {
+            setSuggestions([]);
+            return;
+        }
+
+        setIsSearching(true);
+        const term = destination.toLowerCase().trim();
+        const matches = INDIAN_CITIES.filter(city => city.toLowerCase().includes(term));
+
+        const formattedMatches = matches.slice(0, 5).map(city => ({
+            display_name: city
+        }));
+
+        setSuggestions(formattedMatches);
+        setIsSearching(false);
+    }, [destination]);
+
     // 4 Premium Cinematic Hero Images (Website Style)
     const heroImages = [
         "https://www.athensbikerentals.in/assets/web/assets/images/main-slider-01.jpg",
@@ -93,7 +150,7 @@ const Home = () => {
     ];
 
     const categories = [
-        { title: "e-bike", img: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/40710/rv-400-right-side-view-12.png?isig=0&q=80" },
+        { title: "e-bike", img: "/ebike_matte.png" },
         { title: "Commuter", img: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/45481/shine-right-side-view-12.jpeg?isig=0&q=100" },
         { title: "Scooter", img: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/44686/activa-6g-right-side-view-2.png?isig=0&q=80" },
         { title: "Cruiser", img: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/183389/classic-350-right-side-view-50.jpeg?isig=0&q=80" },
@@ -164,40 +221,122 @@ const Home = () => {
                             <p className="text-primary font-bold uppercase tracking-[0.3em] text-[8px] md:text-[9px] mb-8 md:mb-10 pl-2 border-l-4 border-primary/30">Book Self-Drive Adventure</p>
 
                             <form className="space-y-4 md:space-y-6">
-                                <div className="space-y-1 group">
+                                <div className="space-y-1 group relative z-[100]">
                                     <label className="text-[10px] font-black uppercase text-slate-400 tracking-wider ml-1">Destination</label>
-                                    <div className="relative overflow-hidden rounded-2xl">
+                                    <div className="relative rounded-2xl">
                                         <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors z-10" />
                                         <input
                                             type="text"
                                             placeholder="Pick Your City..."
+                                            value={destination}
+                                            onChange={(e) => {
+                                                setDestination(e.target.value);
+                                                setShowSuggestions(true);
+                                            }}
+                                            onFocus={() => setShowSuggestions(true)}
+                                            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                                             className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 md:py-4.5 pl-14 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm hover:shadow-inner"
                                         />
-                                        <motion.div
-                                            initial={{ x: "-100%" }}
-                                            whileFocus={{ x: "0%" }}
-                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                                        />
+                                        <div className="absolute bottom-0 left-0 right-0 h-0.5 overflow-hidden rounded-b-2xl">
+                                            <motion.div
+                                                initial={{ x: "-100%" }}
+                                                whileFocus={{ x: "0%" }}
+                                                className="w-full h-full bg-primary"
+                                            />
+                                        </div>
+
+                                        {/* Dropdown Suggestions */}
+                                        <AnimatePresence>
+                                            {showSuggestions && suggestions.length > 0 && (
+                                                <motion.ul
+                                                    initial={{ opacity: 0, y: 5 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: 5 }}
+                                                    className="absolute top-full mt-2 w-full bg-white border border-slate-100 rounded-xl shadow-2xl overflow-hidden z-[100]"
+                                                >
+                                                    {isSearching ? (
+                                                        <li className="px-4 py-3 text-xs text-slate-500 text-center">Searching...</li>
+                                                    ) : (
+                                                        suggestions.map((s, i) => (
+                                                            <li
+                                                                key={i}
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    const cityName = s.display_name.split(',')[0];
+                                                                    setDestination(cityName);
+                                                                    setShowSuggestions(false);
+                                                                }}
+                                                                className="px-4 py-3 hover:bg-slate-50 cursor-pointer border-b last:border-0 border-slate-50 transition-colors"
+                                                            >
+                                                                <div className="flex items-start gap-3">
+                                                                    <MapPin className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                                                                    <div className="flex flex-col">
+                                                                        <span className="text-xs font-bold text-slate-800 line-clamp-1">{s.display_name.split(',')[0]}</span>
+                                                                        <span className="text-[10px] text-slate-400 line-clamp-1">{s.display_name.split(',').slice(1).join(',')}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        ))
+                                                    )}
+                                                </motion.ul>
+                                            )}
+                                        </AnimatePresence>
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-3 md:gap-4">
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] font-black uppercase text-slate-400 tracking-wider ml-1">Pickup</label>
-                                        <div className="relative">
-                                            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
-                                            <button type="button" className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 md:py-4.5 pl-10 md:pl-12 pr-2 md:pr-4 text-left text-[10px] md:text-[11px] font-bold text-slate-700 hover:border-primary/30 transition-all">
-                                                02/03/26
-                                            </button>
+                                {/* Date Picker Section - Custom Format for Date + Time Visibility */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-1.5">
+                                        <label className="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-1">Pickup</label>
+                                        <div className="relative group overflow-hidden">
+                                            <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none z-10" />
+
+                                            {/* Hidden Native Picker */}
+                                            <input
+                                                type="datetime-local"
+                                                value={pickupDate}
+                                                onChange={(e) => setPickupDate(e.target.value)}
+                                                className="absolute inset-0 opacity-0 cursor-pointer z-20"
+                                            />
+
+                                            {/* Visible Custom Formatted Display */}
+                                            <div className="w-full bg-white border border-slate-300 rounded-xl py-4 pl-14 pr-4 text-xs md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
+                                                {new Date(pickupDate).toLocaleString('en-IN', {
+                                                    day: '2-digit',
+                                                    month: '2-digit',
+                                                    year: 'numeric',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit',
+                                                    hour12: true
+                                                }).toUpperCase().replace(',', '')}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] font-black uppercase text-slate-400 tracking-wider ml-1">Dropoff</label>
-                                        <div className="relative">
-                                            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
-                                            <button type="button" className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 md:py-4.5 pl-10 md:pl-12 pr-2 md:pr-4 text-left text-[10px] md:text-[11px] font-bold text-slate-700 hover:border-primary/30 transition-all">
-                                                03/03/26
-                                            </button>
+
+                                    <div className="space-y-1.5">
+                                        <label className="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-1">Dropoff</label>
+                                        <div className="relative group overflow-hidden">
+                                            <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none z-10" />
+
+                                            {/* Hidden Native Picker */}
+                                            <input
+                                                type="datetime-local"
+                                                value={dropoffDate}
+                                                onChange={(e) => setDropoffDate(e.target.value)}
+                                                className="absolute inset-0 opacity-0 cursor-pointer z-20"
+                                            />
+
+                                            {/* Visible Custom Formatted Display */}
+                                            <div className="w-full bg-white border border-slate-300 rounded-xl py-4 pl-14 pr-4 text-xs md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
+                                                {new Date(dropoffDate).toLocaleString('en-IN', {
+                                                    day: '2-digit',
+                                                    month: '2-digit',
+                                                    year: 'numeric',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit',
+                                                    hour12: true
+                                                }).toUpperCase().replace(',', '')}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -225,7 +364,7 @@ const Home = () => {
                                 className="space-y-8 md:space-y-12 text-center lg:text-left"
                             >
                                 <div className="hidden lg:block">
-                                    <h2 className="text-5xl md:text-6xl font-black uppercase text-primary tracking-tighter leading-none mb-1 shadow-primary/10">Explore</h2>
+                                    <h2 className="text-5xl md:text-6xl font-black uppercase text-white tracking-tighter leading-none mb-1 shadow-primary/10">Explore</h2>
                                     <h3 className="text-3xl md:text-4xl font-black uppercase text-white tracking-widest leading-none mb-6">WITHOUT LIMITS</h3>
                                     <div className="h-1 w-20 bg-primary shadow-lg shadow-primary/30 ml-auto lg:ml-0"></div>
                                 </div>
@@ -280,17 +419,17 @@ const Home = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1, duration: 0.6 }}
-                                    whileHover={{ y: -12, scale: 1.02 }}
-                                    className="bg-white rounded-3xl md:rounded-[3rem] p-4 md:p-6 flex flex-col items-center justify-center gap-2 border border-slate-100 hover:border-primary/20 transition-all duration-700 shadow-xl shadow-slate-200/50 group h-full"
+                                    whileHover={{ y: -8, scale: 1.02 }}
+                                    className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-5 flex flex-col items-start gap-2 border border-white hover:border-primary/20 transition-all duration-700 shadow-lg shadow-slate-200/50 group"
                                 >
-                                    <h4 className="text-base md:text-lg font-black text-slate-900 tracking-tight capitalize text-center">{cat.title}</h4>
-                                    <div className="relative w-full h-24 md:h-40 flex items-center justify-center mt-auto">
+                                    <h4 className="text-sm md:text-base font-black text-slate-900 tracking-tight uppercase opacity-80">{cat.title}</h4>
+                                    <div className="relative w-full h-20 md:h-28 flex items-center justify-center overflow-hidden">
                                         <motion.img
-                                            initial={{ rotate: 0 }}
-                                            whileHover={{ rotate: [-2, 2, 0] }}
+                                            initial={{ rotate: 0, scale: 1.3 }}
+                                            whileHover={{ rotate: [-1, 1, 0], scale: 1.5 }}
                                             transition={{ duration: 0.5 }}
                                             src={cat.img}
-                                            className="max-w-full h-20 md:h-36 object-contain group-hover:scale-110 transition-transform duration-700"
+                                            className="max-w-full h-16 md:h-24 object-contain transition-transform duration-700 mix-blend-multiply"
                                             alt={cat.title}
                                         />
                                     </div>

@@ -239,10 +239,14 @@ const Packages = () => {
                                                     </div>
                                                 </div>
 
-                                                {/* Image Container */}
-                                                <div className="relative h-56 overflow-hidden bg-slate-50 flex items-center justify-center p-6" style={{ transform: "translateZ(20px)" }}>
-                                                    <img src={pkg.image} className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-1000" alt={pkg.title} />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                                {/* Image Container - Premium Gradient + Blend Mode */}
+                                                <div className="relative h-56 overflow-hidden bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] flex items-center justify-center p-2" style={{ transform: "translateZ(20px)" }}>
+                                                    <img
+                                                        src={pkg.image}
+                                                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-1000 mix-blend-multiply"
+                                                        alt={pkg.title}
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-[#035c3e]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                                 </div>
 
                                                 <div className="p-6 flex-grow flex flex-col" style={{ transform: "translateZ(25px)" }}>

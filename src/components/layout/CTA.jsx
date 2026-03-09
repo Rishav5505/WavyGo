@@ -18,7 +18,7 @@ const CTA = () => {
                             <span className="text-white text-[7px] md:text-[9px] font-bold uppercase tracking-wider md:tracking-[0.3em] leading-tight text-center">Limited Edition Fleet Launch</span>
                         </div>
 
-                        <h2 className="text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 tracking-tighter uppercase leading-tight md:leading-[0.9] italic">
+                        <h2 className="text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 tracking-tighter uppercase leading-tight md:leading-[0.9]">
                             Ignite Your <br className="block" /><span className="text-white/60">Freedom</span>
                         </h2>
 

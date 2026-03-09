@@ -55,7 +55,7 @@ const WhyChooseUs = () => {
             <div className="container-custom">
                 <div className="text-left mb-16">
                     <Reveal>
-                        <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-none mb-6">The WavyGo <br /><span className="text-primary italic">Advantage</span></h2>
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-none mb-6">The WavyGo <br /><span className="text-primary">Advantage</span></h2>
                     </Reveal>
                     <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-[10px] pl-1">Why elite riders choose our network</p>
                 </div>
@@ -117,7 +117,7 @@ const WhyChooseUs = () => {
                                         {React.createElement(usps[selectedId].icon, { className: "w-10 h-10" })}
                                     </div>
                                     <h3 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 tracking-tighter leading-none">{usps[selectedId].title}</h3>
-                                    <p className="text-slate-600 leading-relaxed font-medium text-xl mb-12 border-l-4 border-primary/20 pl-8 italic">
+                                    <p className="text-slate-600 leading-relaxed font-medium text-xl mb-12 border-l-4 border-primary/20 pl-8">
                                         {usps[selectedId].detail}
                                     </p>
                                     <Button

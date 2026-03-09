@@ -25,7 +25,7 @@ const Newsletter = () => {
                     <div className="lg:w-1/2 text-center lg:text-left">
                         <Reveal>
                             <span className="text-primary font-bold uppercase tracking-[0.5em] text-[10px] mb-6 block">Member Access</span>
-                            <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-none italic uppercase">Elite <br /><span className="text-primary">Insiders</span></h2>
+                            <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-none uppercase">Elite <br /><span className="text-primary">Insiders</span></h2>
                         </Reveal>
                         <p className="text-slate-400 leading-relaxed font-medium text-xl max-w-lg">Join the inner circle. Get priority access to new fleet arrivals, exclusive cross-country routes, and elite community events.</p>
                     </div>

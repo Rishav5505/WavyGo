@@ -91,26 +91,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* Floating Contact Buttons (WhatsApp and Email) */}
-            <div className="fixed bottom-6 right-6 flex flex-row gap-4 z-[999]">
-                {/* WhatsApp Button */}
-                <a
-                    href="https://wa.me/919508287609"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-14 h-14 md:w-16 md:h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_10px_40px_rgba(0,0,0,0.2)] hover:scale-110 active:scale-95 transition-all group"
-                >
-                    <MessageCircle className="w-8 h-8 md:w-9 md:h-9 fill-white" />
-                </a>
 
-                {/* Email Button */}
-                <a
-                    href="mailto:hello@wavygo.in"
-                    className="w-14 h-14 md:w-16 md:h-16 bg-white text-[#035c3e] rounded-full flex items-center justify-center shadow-[0_10px_40px_rgba(0,0,0,0.1)] hover:scale-110 active:scale-95 transition-all group"
-                >
-                    <Mail className="w-8 h-8 md:w-9 md:h-9 fill-current" />
-                </a>
-            </div>
         </footer>
     );
 };

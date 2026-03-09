@@ -115,6 +115,15 @@ const Chakrata = () => {
                     <Separator variant="horizon" color="fill-white" height="h-16 md:h-32" />
                 </div>
             </section>
+            {/* E‑Bike showcase */}
+            <section className="py-20 bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] border-y border-white">
+                <div className="container-custom text-center">
+                    <h2 className="text-4xl font-black text-slate-900 mb-10 tracking-tighter uppercase">E‑Bike</h2>
+                    <div className="max-w-md mx-auto bg-white/40 backdrop-blur-xl p-10 rounded-[3rem] shadow-2xl border border-white">
+                        <img src="/ebike_matte.png" alt="E‑Bike" className="w-full h-auto object-contain hover:scale-110 transition-transform duration-700 mix-blend-multiply" />
+                    </div>
+                </div>
+            </section>
 
             {/* Quick Stats */}
             <section className="py-8 md:py-20 bg-white">

@@ -12,11 +12,11 @@ import BikeDetails from './pages/BikeDetails';
 import Auth from './pages/Auth';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/common/ProtectedRoute';
-import { MessageCircle } from 'lucide-react';
+
 import Loader from './components/common/Loader';
 import CustomCursor from './components/common/CustomCursor';
 import ScrollToTop from './components/common/ScrollToTop';
-import BackToTop from './components/common/BackToTop';
+import FloatingActions from './components/common/FloatingActions';
 import { AuthProvider } from './context/AuthContext';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminLayout from './components/admin/AdminLayout';
@@ -55,7 +55,7 @@ const App = () => {
           {!loading && (
             <>
               <CustomCursor />
-              <BackToTop />
+              <FloatingActions />
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/chakrata" element={<Chakrata />} />
@@ -93,19 +93,7 @@ const App = () => {
                 </Route>
               </Routes>
 
-              {/* WhatsApp Float */}
-              <a
-                href="https://wa.me/919508287609"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-[#25D366]/40 hover:scale-105 transition-all group"
-                aria-label="Chat on WhatsApp"
-              >
-                <MessageCircle className="w-6 h-6" />
-                <span className="absolute right-full mr-4 bg-slate-900 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap">
-                  Support
-                </span>
-              </a>
+
             </>
           )}
         </div>
