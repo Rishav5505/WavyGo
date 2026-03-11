@@ -37,8 +37,8 @@ const About = () => {
             <section className="relative pt-24 pb-32 md:pt-32 md:pb-40 bg-[#035c3e] flex items-center justify-center overflow-hidden">
                 <div className="relative z-10 text-center text-white px-4">
                     <Reveal center width="100%">
-                        <h1 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter leading-none italic uppercase">
-                            Our <span className="text-white NOT-italic">Story</span>
+                        <h1 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter leading-none uppercase">
+                            Our <span className="text-white">Story</span>
                         </h1>
                     </Reveal>
                     <motion.div
@@ -69,7 +69,7 @@ const About = () => {
                                 <p>
                                     Founded by motorcycle enthusiasts, we evolved from a small fleet into a professional rental boutique dedicated to creating seamless, safe, and powerful riding experiences across India.
                                 </p>
-                                <div className="border-l-4 border-secondary pl-6 py-2 bg-slate-50 dark:bg-[#035c3e] italic font-medium text-slate-800 dark:text-white shadow-sm dark:shadow-[#035c3e]/20 transition-colors duration-300">
+                                <div className="border-l-4 border-secondary pl-6 py-4 bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] italic font-medium text-slate-800 shadow-sm rounded-r-2xl">
                                     "We bridge the gap between heavy city traffic and the open highway freedom."
                                 </div>
                             </div>
@@ -81,7 +81,7 @@ const About = () => {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8 }}
-                                className="relative max-w-[440px] mx-auto rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group"
+                                className="relative max-w-[440px] mx-auto rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-[#035c3e]/10 bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] group"
                             >
                                 <video
                                     ref={videoRef}
@@ -90,7 +90,7 @@ const About = () => {
                                     loop
                                     muted={isMuted}
                                     playsInline
-                                    className="w-full h-auto aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105"
+                                    className="w-full h-auto aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105 mix-blend-multiply"
                                 />
                                 {/* Sound Toggle Button */}
                                 <button
@@ -112,7 +112,7 @@ const About = () => {
                                 </div>
                             </motion.div>
 
-                            <div className="absolute -bottom-10 -left-10 bg-white dark:bg-[#035c3e] p-8 rounded-2xl shadow-xl hidden xl:block border border-slate-100 dark:border-[#047d54] z-10 transition-colors duration-300">
+                            <div className="absolute -bottom-10 -left-10 bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] p-8 rounded-2xl shadow-xl hidden xl:block border border-[#035c3e]/10 z-10">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
                                         <Zap className="w-6 h-6 text-primary" />
@@ -129,11 +129,11 @@ const About = () => {
             </section>
 
             {/* Stats */}
-            <section className="py-8 md:py-24 bg-slate-50">
+            <section className="py-8 md:py-24 bg-gradient-to-b from-white to-[#f0f9f6]">
                 <div className="container-custom">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                         {stats.map((stat, i) => (
-                            <div key={i} className="bg-white p-10 rounded-3xl text-center border border-slate-100 shadow-sm">
+                            <div key={i} className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] p-10 rounded-3xl text-center border border-[#035c3e]/10 shadow-sm group hover:scale-105 transition-all duration-300">
                                 <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                                     <stat.icon className="w-8 h-8 text-primary" />
                                 </div>

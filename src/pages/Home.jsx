@@ -130,7 +130,7 @@ const Home = () => {
     // 4 Premium Cinematic Hero Images (Website Style)
     const heroImages = [
         "https://www.athensbikerentals.in/assets/web/assets/images/main-slider-01.jpg",
-        "https://www.balabikerental.shop/assets/hero-bikes-CmdOP9Iz.jpg",
+        "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=1920",
         "https://twowheelhimalayas.com/wp-content/uploads/2025/12/20230729_112918-scaled.jpg",
         "https://twowheelhimalayas.com/wp-content/uploads/2025/12/20230731_132747-scaled.jpg"
     ];
@@ -213,7 +213,7 @@ const Home = () => {
                                 },
                                 default: { duration: 1.2, ease: "circOut" }
                             }}
-                            className="w-full max-w-sm lg:max-w-[440px] bg-white/95 backdrop-blur-3xl rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-11 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/50"
+                            className="w-full max-w-sm lg:max-w-[440px] bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] backdrop-blur-3xl rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-11 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-[#035c3e]/10"
                         >
                             <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2 tracking-tighter leading-tight md:leading-none">
                                 Looking for <span className="text-primary">Best</span> <br />Bike Rentals?

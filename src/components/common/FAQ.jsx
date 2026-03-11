@@ -31,7 +31,7 @@ const FAQ = () => {
     const [activeIndex, setActiveIndex] = useState(null);
 
     return (
-        <section className="pt-20 pb-8 md:py-20 bg-slate-50 relative overflow-hidden">
+        <section className="pt-20 pb-8 md:py-20 bg-gradient-to-b from-white to-[#f0f9f6] relative overflow-hidden">
             <div className="container-custom">
                 <div className="max-w-3xl mx-auto">
                     {/* Section Header */}
@@ -49,7 +49,7 @@ const FAQ = () => {
                         {faqs.map((faq, i) => (
                             <div
                                 key={i}
-                                className={`rounded-[1.5rem] transition-all duration-500 border overflow-hidden ${activeIndex === i ? 'bg-slate-900 border-slate-900 shadow-xl' : 'bg-white border-slate-100 hover:border-primary/20 hover:bg-white'}`}
+                                className={`rounded-[1.5rem] transition-all duration-500 border overflow-hidden ${activeIndex === i ? 'bg-slate-900 border-slate-900 shadow-xl' : 'bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] border-[#035c3e]/10 shadow-sm hover:border-primary/30'}`}
                             >
                                 <button
                                     onClick={() => setActiveIndex(activeIndex === i ? null : i)}
@@ -80,8 +80,8 @@ const FAQ = () => {
                         ))}
                     </div>
 
-                    {/* Bottom CTA Box - More Compact */}
-                    <div className="mt-8 md:mt-12 p-6 md:p-10 rounded-3xl md:rounded-[2.5rem] bg-white border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl shadow-slate-200/40 relative overflow-hidden">
+                    {/* Bottom CTA Box - Premium Gradient */}
+                    <div className="mt-8 md:mt-12 p-6 md:p-10 rounded-3xl md:rounded-[2.5rem] bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] border border-[#035c3e]/10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl shadow-slate-200/40 relative overflow-hidden">
                         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left">
                             <div className="w-12 h-12 md:w-14 md:h-14 bg-primary/10 rounded-xl md:rounded-2xl flex items-center justify-center text-primary shrink-0">
                                 <MessageCircle className="w-6 h-6 md:w-7 md:h-7" />

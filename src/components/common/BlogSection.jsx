@@ -31,7 +31,7 @@ const blogs = [
 
 const BlogSection = () => {
     return (
-        <section className="pt-20 pb-8 md:py-20 bg-slate-50 relative overflow-hidden">
+        <section className="pt-20 pb-8 md:py-20 bg-gradient-to-b from-white to-[#f0f9f6] relative overflow-hidden">
             <div className="container-custom">
                 <div className="text-center mb-12 md:mb-16 px-4">
                     <Reveal center>
@@ -52,7 +52,7 @@ const BlogSection = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             whileHover={{ y: -10 }}
                             transition={{ duration: 0.5, delay: i * 0.1 }}
-                            className="bg-white rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-lg shadow-slate-200/50 hover:shadow-2xl transition-all duration-300 group border border-slate-100"
+                            className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-lg shadow-slate-200/50 hover:shadow-2xl transition-all duration-300 group border border-[#035c3e]/10"
                         >
                             <div className="relative w-full h-40 md:h-48 overflow-hidden">
                                 <img

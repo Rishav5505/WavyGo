@@ -18,19 +18,7 @@
     @apply font-sans antialiased text-slate-900 bg-slate-50 selection:bg-primary selection:text-white;
   }
 
-  /* Hide default cursor on desktop to use custom cursor */
-  @media (min-width: 1024px) {
 
-    body,
-    a,
-    button,
-    [role="button"],
-    input,
-    select,
-    textarea {
-      cursor: none !important;
-    }
-  }
 
   h1,
   h2,

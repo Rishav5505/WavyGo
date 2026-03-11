@@ -155,8 +155,8 @@ const Packages = () => {
             <section className="relative pt-20 pb-28 md:pt-32 md:pb-40 bg-[#035c3e] text-center text-white overflow-hidden">
                 <div className="container-custom relative z-10 px-4">
                     <Reveal center width="100%">
-                        <h1 className="text-4xl md:text-[5rem] font-black mb-3 md:mb-4 tracking-tighter leading-tight md:leading-none italic uppercase">
-                            Rental <span className="text-white NOT-italic">Fleet</span>
+                        <h1 className="text-4xl md:text-[5rem] font-black mb-3 md:mb-4 tracking-tighter leading-tight md:leading-none uppercase">
+                            Rental <span className="text-white">Fleet</span>
                         </h1>
                     </Reveal>
                     <motion.p

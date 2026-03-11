@@ -14,7 +14,6 @@ import Profile from './pages/Profile';
 import ProtectedRoute from './components/common/ProtectedRoute';
 
 import Loader from './components/common/Loader';
-import CustomCursor from './components/common/CustomCursor';
 import ScrollToTop from './components/common/ScrollToTop';
 import FloatingActions from './components/common/FloatingActions';
 import { AuthProvider } from './context/AuthContext';
@@ -54,7 +53,6 @@ const App = () => {
 
           {!loading && (
             <>
-              <CustomCursor />
               <FloatingActions />
               <Routes>
                 <Route path="/" element={<Home />} />

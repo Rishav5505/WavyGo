@@ -29,7 +29,7 @@ const Profile = () => {
     };
 
     return (
-        <div className="bg-slate-50 min-h-screen flex flex-col">
+        <div className="bg-gradient-to-b from-white to-[#f0f9f6] min-h-screen flex flex-col">
             <Navbar />
 
             <main className="flex-grow container-custom pt-32 pb-20">
@@ -100,7 +100,7 @@ const Profile = () => {
                         className="flex-1 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-slate-100"
                     >
                         <div className="mb-10 flex justify-between items-center">
-                            <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tight italic">
+                            <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tight">
                                 {activeTab === 'profile' ? 'Profile Details' : activeTab === 'bookings' ? 'My Bookings' : 'Wallet Status'}
                             </h1>
                             {activeTab === 'profile' && (
@@ -113,7 +113,7 @@ const Profile = () => {
                         {activeTab === 'profile' && (
                             <div className="space-y-6">
                                 <div className="grid grid-cols-1 gap-6">
-                                    <div className="p-6 bg-slate-50 rounded-2xl flex items-center gap-6 group hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all border border-transparent hover:border-slate-100">
+                                    <div className="p-6 bg-white/50 backdrop-blur-sm rounded-2xl flex items-center gap-6 group hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all border border-[#035c3e]/10">
                                         <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors shadow-sm">
                                             <User className="w-6 h-6" />
                                         </div>
@@ -123,7 +123,7 @@ const Profile = () => {
                                         </div>
                                     </div>
 
-                                    <div className="p-6 bg-slate-50 rounded-2xl flex items-center gap-6 group hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all border border-transparent hover:border-slate-100">
+                                    <div className="p-6 bg-white/50 backdrop-blur-sm rounded-2xl flex items-center gap-6 group hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all border border-[#035c3e]/10">
                                         <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors shadow-sm">
                                             <Mail className="w-6 h-6" />
                                         </div>
@@ -133,7 +133,7 @@ const Profile = () => {
                                         </div>
                                     </div>
 
-                                    <div className="p-6 bg-slate-50 rounded-2xl flex items-center gap-6 group hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all border border-transparent hover:border-slate-100">
+                                    <div className="p-6 bg-white/50 backdrop-blur-sm rounded-2xl flex items-center gap-6 group hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all border border-[#035c3e]/10">
                                         <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors shadow-sm">
                                             <Phone className="w-6 h-6" />
                                         </div>

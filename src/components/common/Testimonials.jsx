@@ -34,8 +34,8 @@ const Testimonials = () => {
     const prev = () => setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
     return (
-        <section className="py-16 bg-slate-50 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-full h-full bg-slate-50/50 pointer-events-none -z-10"></div>
+        <section className="py-16 bg-gradient-to-b from-white to-[#f0f9f6] relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-full h-full pointer-events-none -z-10"></div>
             <div className="container-custom">
                 <div className="text-center mb-10 md:mb-16 px-4">
                     <Reveal center>
@@ -45,7 +45,7 @@ const Testimonials = () => {
                 </div>
 
                 <div className="max-w-5xl mx-auto px-4 md:px-0">
-                    <div className="relative flex flex-col lg:flex-row items-center gap-8 lg:gap-16 bg-white p-6 md:p-12 rounded-[2rem] md:rounded-[3.5rem] shadow-2xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
+                    <div className="relative flex flex-col lg:flex-row items-center gap-8 lg:gap-16 bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] p-6 md:p-12 rounded-[2rem] md:rounded-[3.5rem] shadow-2xl shadow-slate-200/60 border border-[#035c3e]/10 overflow-hidden">
                         {/* Decorative Quote Mark */}
                         <div className="absolute top-4 right-4 md:top-8 md:right-8 text-6xl md:text-7xl font-black text-slate-50/10 pointer-events-none select-none italic tracking-tighter">"</div>
 
@@ -94,13 +94,13 @@ const Testimonials = () => {
                             <div className="flex gap-4 md:gap-6 justify-start">
                                 <button
                                     onClick={prev}
-                                    className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-xl hover:bg-primary hover:text-white transition-all duration-300 group"
+                                    className="w-12 h-12 flex items-center justify-center bg-white/60 backdrop-blur-sm border border-[#035c3e]/10 rounded-xl hover:bg-primary hover:text-white transition-all duration-300 group shadow-sm"
                                 >
                                     <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                                 </button>
                                 <button
                                     onClick={next}
-                                    className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-xl hover:bg-primary hover:text-white transition-all duration-300 group"
+                                    className="w-12 h-12 flex items-center justify-center bg-white/60 backdrop-blur-sm border border-[#035c3e]/10 rounded-xl hover:bg-primary hover:text-white transition-all duration-300 group shadow-sm"
                                 >
                                     <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </button>
