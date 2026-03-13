@@ -168,27 +168,33 @@ const Home = () => {
         <div className="bg-slate-50 min-h-screen flex flex-col selection:bg-primary selection:text-white overflow-x-hidden">
             <Navbar />
 
-            {/* Premium Cinematic Hero - Website style with Clear Visuals */}
-            <section className="relative md:min-h-[85vh] min-h-screen flex items-center justify-center overflow-hidden bg-[#011f15]">
-                {/* Fixed Slideshow Logic */}
+            {/* Premium Cinematic Hero - Seamless Cross-fade Style */}
+            <section className="relative md:min-h-[90vh] min-h-screen flex items-center justify-center overflow-hidden">
+                {/* Clean Slideshow Logic - Seamless Transitions */}
                 <div className="absolute inset-0 z-0">
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence>
                         <motion.div
                             key={currentHeroIndex}
-                            initial={{ opacity: 0, scale: 1.05 }}
-                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 1.8, ease: "easeInOut" }}
+                            transition={{ duration: 2, ease: "easeInOut" }}
                             className="absolute inset-0"
                         >
-                            <img
+                            <motion.img
+                                initial={{ scale: 1.1 }}
+                                animate={{ scale: 1 }}
+                                transition={{ duration: 6, ease: "linear" }}
                                 src={heroImages[currentHeroIndex]}
-                                className="w-full h-full object-cover pointer-events-none brightness-[0.85]"
+                                className="w-full h-full object-cover pointer-events-none brightness-110 contrast-[1.05]"
                                 alt={`WavyGo Experience ${currentHeroIndex + 1}`}
                             />
-                            {/* Pro-Grade Overlays: Lighter to show images but dark enough for text */}
-                            <div className="absolute inset-0 bg-[#011f15]/50 transition-all"></div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#011f15] via-[#011f15]/30 to-transparent"></div>
+                            {/* Cinematic Vignette - For better text readability */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/30 transition-all opacity-80"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                            
+                            {/* Premium Lens Flare Effect */}
+                            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[150px] pointer-events-none"></div>
                         </motion.div>
                     </AnimatePresence>
                 </div>
@@ -364,8 +370,8 @@ const Home = () => {
                                 className="space-y-8 md:space-y-12 text-center lg:text-left"
                             >
                                 <div className="hidden lg:block">
-                                    <h2 className="text-5xl md:text-6xl font-black uppercase text-white tracking-tighter leading-none mb-1 shadow-primary/10">Explore</h2>
-                                    <h3 className="text-3xl md:text-4xl font-black uppercase text-white tracking-widest leading-none mb-6">WITHOUT LIMITS</h3>
+                                    <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter leading-none mb-1 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] text-[#d1ede1]">Explore</h2>
+                                    <h3 className="text-3xl md:text-4xl font-black uppercase tracking-widest leading-none mb-6 drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)] text-[#d1ede1]/90">WITHOUT LIMITS</h3>
                                     <div className="h-1 w-20 bg-primary shadow-lg shadow-primary/30 ml-auto lg:ml-0"></div>
                                 </div>
 
