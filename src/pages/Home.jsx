@@ -169,7 +169,7 @@ const Home = () => {
             <Navbar />
 
             {/* Premium Cinematic Hero - Website style with Clear Visuals */}
-            <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#011f15]">
+            <section className="relative md:min-h-[85vh] min-h-screen flex items-center justify-center overflow-hidden bg-[#011f15]">
                 {/* Fixed Slideshow Logic */}
                 <div className="absolute inset-0 z-0">
                     <AnimatePresence mode="wait">
@@ -194,7 +194,7 @@ const Home = () => {
                 </div>
 
                 {/* Content Container - Kona Mode (Extreme Side Alignment) */}
-                <div className="w-full relative z-10 pt-32 pb-12 md:pt-40 md:pb-20 px-6 md:px-16 lg:px-24">
+                <div className="w-full relative z-10 pt-28 pb-20 md:pt-40 md:pb-20 px-6 md:px-16 lg:px-24">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full max-w-[1800px] mx-auto" style={{ perspective: '2000px' }}>
 
                         {/* Kona Left: Refined Premium Search Card */}
@@ -218,7 +218,7 @@ const Home = () => {
                             <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2 tracking-tighter leading-tight md:leading-none">
                                 Looking for <span className="text-primary">Best</span> <br />Bike Rentals?
                             </h1>
-                            <p className="text-primary font-bold uppercase tracking-[0.3em] text-[8px] md:text-[9px] mb-8 md:mb-10 pl-2 border-l-4 border-primary/30">Book Self-Drive Adventure</p>
+                            <p className="text-primary font-bold uppercase tracking-[0.3em] text-[8px] md:text-[9px] mb-5 md:mb-10 pl-2 border-l-4 border-primary/30">Book Self-Drive Adventure</p>
 
                             <form className="space-y-4 md:space-y-6">
                                 <div className="space-y-1 group relative z-[100]">
@@ -369,7 +369,7 @@ const Home = () => {
                                     <div className="h-1 w-20 bg-primary shadow-lg shadow-primary/30 ml-auto lg:ml-0"></div>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-x-6 md:gap-x-12 gap-y-10 md:gap-y-14">
+                                <div className="grid grid-cols-2 gap-x-4 md:gap-x-12 gap-y-6 md:gap-y-14">
                                     {[
                                         { icon: Bike, val: "10k+", label: "premium machines", color: "text-primary" },
                                         { icon: Globe, val: "Unlim.", label: "total freedom", color: "text-primary" },
@@ -388,7 +388,7 @@ const Home = () => {
                                                 <usp.icon className={`w-6 h-6 md:w-8 md:h-8 ${usp.color} group-hover:text-white transition-colors duration-300`} />
                                             </div>
                                             <div>
-                                                <h3 className="text-2xl md:text-3xl font-black tracking-tight text-white leading-none mb-2">{usp.val}</h3>
+                                                <h3 className="text-xl md:text-3xl font-black tracking-tight text-white leading-none mb-2">{usp.val}</h3>
                                                 <div className="flex items-center gap-2 justify-center lg:justify-start">
                                                     <div className="w-2 h-2 bg-primary rounded-full group-hover:scale-150 transition-transform hidden lg:block"></div>
                                                     <p className="text-white/60 font-medium text-[9px] md:text-[10px] uppercase tracking-[0.15em] leading-none">{usp.label}</p>
@@ -404,7 +404,7 @@ const Home = () => {
             </section>
 
             {/* Fleet Section */}
-            <div className="pt-16 pb-12 bg-slate-50 relative z-10 -mt-20">
+            <div className="pt-16 pb-12 bg-slate-50 relative z-10 md:-mt-20 -mt-10">
                 <div className="container-custom">
                     <div className="text-center mb-10">
                         <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">
