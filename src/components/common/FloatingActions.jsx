@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Smartphone, MessageCircle, ChevronUp } from 'lucide-react';
+import { Smartphone, MessageCircle, ChevronUp, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const FloatingActions = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [showScrollTop, setShowScrollTop] = useState(false);
+    const [deferredPrompt, setDeferredPrompt] = useState(null);
 
     useEffect(() => {
+        const handleBeforeInstallPrompt = (e) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+        };
+
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
@@ -28,8 +36,23 @@ const FloatingActions = () => {
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        return () => {
+             window.removeEventListener('scroll', handleScroll);
+             window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        };
     }, [lastScrollY]);
+
+    const handleInstallClick = async () => {
+        if (!deferredPrompt) {
+            // If not installable via UI prompt, you can redirect or show msg
+            return;
+        }
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            setDeferredPrompt(null);
+        }
+    };
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -97,14 +120,25 @@ const FloatingActions = () => {
                             </Link>
                         </motion.div>
 
-                        {/* Get App - Glass Design */}
-                        <motion.button 
-                            variants={itemVariants}
-                            className="h-12 md:h-14 px-6 md:px-8 bg-white/80 backdrop-blur-md text-[#035c3e] border-2 border-[#035c3e]/10 rounded-full shadow-xl hover:bg-white hover:border-[#035c3e]/30 transition-all font-black uppercase tracking-wider text-[10px] md:text-xs flex items-center gap-3 group"
-                        >
-                            <Smartphone className="w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
-                            Get App
-                        </motion.button>
+                        {/* Get App - Glass Design / PWA Install */}
+                        {deferredPrompt ? (
+                            <motion.button 
+                                variants={itemVariants}
+                                onClick={handleInstallClick}
+                                className="h-12 md:h-14 px-6 md:px-8 bg-primary backdrop-blur-md text-white border-2 border-white/20 rounded-full shadow-xl hover:bg-[#02442d] transition-all font-black uppercase tracking-wider text-[10px] md:text-xs flex items-center gap-3 group animate-pulse hover:animate-none"
+                            >
+                                <Download className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-y-1 transition-transform" />
+                                Install App
+                            </motion.button>
+                        ) : (
+                            <motion.button 
+                                variants={itemVariants}
+                                className="h-12 md:h-14 px-6 md:px-8 bg-white/80 backdrop-blur-md text-[#035c3e] border-2 border-[#035c3e]/10 rounded-full shadow-xl hover:bg-white hover:border-[#035c3e]/30 transition-all font-black uppercase tracking-wider text-[10px] md:text-xs flex items-center gap-3 group"
+                            >
+                                <Smartphone className="w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
+                                Get App
+                            </motion.button>
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>
