@@ -9,7 +9,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
-      includeAssets: ['wavygo-brand-logo.png', 'vite.svg'],
+      includeAssets: ['wavygo-brand-logo.png', 'vite.svg', 'icons/icon-192x192.png', 'icons/icon-512x512.png'],
       manifest: {
         name: 'WavyGo - Best Bike Rentals',
         short_name: 'WavyGo',
@@ -19,17 +19,13 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: '/wavygo-brand-logo.png',
+            src: '/icons/icon-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
-            src: '/wavygo-brand-logo.png',
-            sizes: '512x512',
-            type: 'image/png'
-          },
-          {
-            src: '/wavygo-brand-logo.png',
+            src: '/icons/icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
