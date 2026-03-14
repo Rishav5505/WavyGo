@@ -44,13 +44,22 @@ const FloatingActions = () => {
 
     const handleInstallClick = async () => {
         if (!deferredPrompt) {
-            // If not installable via UI prompt, you can redirect or show msg
+            handleFallbackInstallClick();
             return;
         }
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         if (outcome === 'accepted') {
             setDeferredPrompt(null);
+        }
+    };
+
+    const handleFallbackInstallClick = () => {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+            alert('To install WavyGo on iOS:\n\n1. Tap the Share button (square with arrow pointing up) at the bottom.\n2. Scroll down and tap "Add to Home Screen".');
+        } else {
+            alert('To install WavyGo:\n\nOpen this link directly in Google Chrome. Then tap "Install App" or check the browser menu (⋮) for "Add to Home screen".');
         }
     };
 
@@ -133,6 +142,7 @@ const FloatingActions = () => {
                         ) : (
                             <motion.button 
                                 variants={itemVariants}
+                                onClick={handleFallbackInstallClick}
                                 className="h-12 md:h-14 px-6 md:px-8 bg-white/80 backdrop-blur-md text-[#035c3e] border-2 border-[#035c3e]/10 rounded-full shadow-xl hover:bg-white hover:border-[#035c3e]/30 transition-all font-black uppercase tracking-wider text-[10px] md:text-xs flex items-center gap-3 group"
                             >
                                 <Smartphone className="w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
