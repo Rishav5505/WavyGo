@@ -11,7 +11,7 @@ export default defineConfig({
       injectRegister: 'auto',
       includeAssets: ['wavygo-brand-logo.png', 'vite.svg', 'icons/icon-192x192.png', 'icons/icon-512x512.png'],
       manifest: {
-        name: 'WavyGo - Best Bike Rentals',
+        name: 'WavyGo: Premium Bike Rentals',
         short_name: 'WavyGo',
         description: 'Book self-drive adventures with WavyGo.',
         theme_color: '#035c3e',
