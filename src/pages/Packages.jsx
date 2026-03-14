@@ -236,29 +236,29 @@ const Packages = () => {
                         </div>
 
                         {/* Smart Filters Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-slate-50">
-                            <div className="flex items-center gap-4">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 min-w-[70px]">Terrain:</span>
-                                <div className="flex gap-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-50">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 overflow-hidden">
+                                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 sm:min-w-[70px]">Terrain:</span>
+                                <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-hide">
                                     {['All', 'Mountains', 'Highway', 'City'].map(t => (
                                         <button 
                                             key={t}
                                             onClick={() => setActiveTerrain(t)}
-                                            className={`px-4 py-2 rounded-lg text-[9px] font-bold uppercase transition-all ${activeTerrain === t ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-slate-50 text-slate-400 border border-transparent hover:border-slate-100'}`}
+                                            className={`px-4 py-2 rounded-xl text-[9px] font-bold uppercase transition-all whitespace-nowrap ${activeTerrain === t ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-slate-50 text-slate-400 border border-transparent hover:border-slate-100'}`}
                                         >
                                             {t}
                                         </button>
                                     ))}
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 min-w-[70px]">Engine:</span>
-                                <div className="flex gap-2">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 overflow-hidden">
+                                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 sm:min-w-[70px]">Engine:</span>
+                                <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-hide">
                                     {['All', '0-200', '200-400', '400+'].map(c => (
                                         <button 
                                             key={c}
                                             onClick={() => setCcRange(c)}
-                                            className={`px-4 py-2 rounded-lg text-[9px] font-bold uppercase transition-all ${ccRange === c ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-slate-50 text-slate-400 border border-transparent hover:border-slate-100'}`}
+                                            className={`px-4 py-2 rounded-xl text-[9px] font-bold uppercase transition-all whitespace-nowrap ${ccRange === c ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-slate-50 text-slate-400 border border-transparent hover:border-slate-100'}`}
                                         >
                                             {c === 'All' ? 'Any CC' : c + ' CC'}
                                         </button>
@@ -398,28 +398,28 @@ const Packages = () => {
 
             {/* Sticky Compare Bar */}
             <AnimatePresence>
-                {selectedCompare.length > 0 && (
+                {selectedCompare.length > 0 && !showCompareModal && (
                     <motion.div 
                         initial={{ y: 100, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 100, opacity: 0 }}
-                        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[95%] max-w-xl"
+                        className="fixed bottom-[115px] md:bottom-10 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-[92%] md:max-w-xl z-[999]"
                     >
-                        <div className="bg-[#e2f3ee]/90 backdrop-blur-2xl rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex items-center justify-between shadow-[0_30px_60px_-15px_rgba(3,92,62,0.15)] border border-white/40">
-                            <div className="flex items-center gap-4">
-                                <div className="flex -space-x-3 pointer-events-none">
+                        <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-slate-100">
+                            <div className="flex items-center gap-3">
+                                <div className="flex -space-x-2 md:-space-x-3 pointer-events-none">
                                     {selectedCompare.map(b => (
                                         <motion.div 
                                             layoutId={`compare-${b._id}`}
                                             key={b._id} 
-                                            className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#e2f3ee] overflow-hidden bg-white shadow-lg"
+                                            className="w-8 h-8 md:w-12 md:h-12 rounded-full border-2 border-[#e2f3ee] overflow-hidden bg-white shadow-lg"
                                         >
                                             <img src={b.image} className="w-full h-full object-cover" alt={b.title} />
                                         </motion.div>
                                     ))}
                                     {selectedCompare.length < 2 && (
-                                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#e2f3ee] bg-white flex items-center justify-center border-dashed">
-                                            <Plus className="w-4 h-4 text-slate-300" />
+                                        <div className="w-8 h-8 md:w-12 md:h-12 rounded-full border-2 border-[#e2f3ee] bg-white flex items-center justify-center border-dashed">
+                                            <Plus className="w-3 h-3 text-slate-300" />
                                         </div>
                                     )}
                                 </div>
@@ -474,24 +474,26 @@ const Packages = () => {
                             className="bg-[#e2f3ee] w-full max-w-5xl max-h-[90vh] rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden relative shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/20 flex flex-col"
                         >
                             {/* Modal Header - Fixed */}
-                            <div className="p-6 md:p-8 flex justify-between items-center bg-[#e2f3ee] border-b border-slate-900/10 z-20">
+                            <div className="p-5 md:p-8 flex justify-between items-center bg-[#e2f3ee] border-b border-slate-900/10 z-20">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                                        <BarChart3 className="w-5 h-5 text-primary" />
+                                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                        <BarChart3 className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                                     </div>
-                                    <h2 className="text-xl font-black text-slate-900 uppercase tracking-tighter">Machine <span className="text-primary">Versus</span></h2>
+                                    <h2 className="text-lg md:text-2xl font-black text-slate-900 uppercase tracking-tighter leading-tight">
+                                        Machine <br className="sm:hidden" /> <span className="text-primary">Versus</span>
+                                    </h2>
                                 </div>
                                 <button 
                                     onClick={() => setShowCompareModal(false)}
-                                    className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-slate-100 flex items-center justify-center hover:bg-rose-500 hover:text-white transition-all shadow-sm group"
+                                    className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center text-slate-400 hover:text-rose-500 hover:rotate-90 transition-all duration-300 shadow-sm border border-slate-100"
                                 >
-                                    <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+                                    <X className="w-5 h-5 md:w-6 md:h-6" />
                                 </button>
                             </div>
 
                             {/* Scrollable Content */}
                             <div className="overflow-y-auto flex-grow custom-scrollbar">
-                                <div className="grid grid-cols-1 md:grid-cols-3 min-w-[700px] md:min-w-0">
+                                <div className="grid grid-cols-2 md:grid-cols-3 md:min-w-0">
                                     {/* Feature Labels Column (Desktop Only) */}
                                     <div className="hidden md:flex flex-col bg-slate-900/5 p-8 pt-[320px] gap-0 border-r border-slate-900/10">
                                         {[
@@ -509,59 +511,56 @@ const Packages = () => {
 
                                     {/* Comparison Bikes */}
                                     {selectedCompare.map((bike, idx) => (
-                                        <div key={bike._id} className={`p-6 md:p-8 text-center flex flex-col items-center ${idx === 0 && selectedCompare.length > 1 ? 'border-r border-slate-900/10' : ''}`}>
+                                        <div key={bike._id} className={`p-3 md:p-8 text-center flex flex-col items-center border-slate-900/10 ${idx === 0 ? 'border-r' : ''}`}>
                                             {/* Bike Profile Card */}
-                                            <div className="w-full mb-8">
-                                                <div className="relative aspect-video bg-white/50 backdrop-blur-sm rounded-[2rem] mb-6 flex items-center justify-center p-2 border border-white/40 group overflow-hidden shadow-inner">
+                                            <div className="w-full mb-4 md:mb-8">
+                                                <div className="relative aspect-[4/3] bg-white/50 backdrop-blur-sm rounded-xl md:rounded-[2rem] mb-3 md:mb-6 flex items-center justify-center p-2 md:p-8 border border-white/40 group overflow-hidden shadow-inner">
                                                     <img 
                                                         src={bike.image} 
-                                                        className="w-[120%] h-[120%] object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" 
+                                                        className="w-full h-full object-contain mix-blend-multiply scale-100 md:scale-110 group-hover:scale-125 transition-transform duration-700" 
                                                         alt={bike.title} 
                                                     />
-                                                    <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-md px-4 py-1.5 rounded-full text-[8px] font-black text-primary border border-primary/20 shadow-sm uppercase tracking-widest">
+                                                    <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-white/80 backdrop-blur-md px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[6px] md:text-[8px] font-black text-primary border border-primary/20 shadow-sm uppercase tracking-widest">
                                                         {bike.category}
                                                     </div>
                                                 </div>
-                                                <h3 className="text-xl md:text-2xl font-black text-slate-900 uppercase tracking-tighter mb-1 leading-none">{bike.title}</h3>
-                                                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em]">{bike.location}</p>
+                                                <h3 className="text-[10px] md:text-2xl font-black text-slate-900 uppercase tracking-tighter mb-0.5 leading-tight line-clamp-1">{bike.title}</h3>
+                                                <p className="text-[7px] md:text-[9px] font-bold text-slate-400 uppercase tracking-widest">{bike.location}</p>
                                             </div>
-
                                             {/* Specs Rows */}
-                                            <div className="w-full">
-                                                <div className="md:hidden h-px bg-slate-100 w-full mb-4"></div>
-                                                
+                                            <div className="w-full space-y-1 md:space-y-0">
                                                 {[
-                                                    { label: 'Engine', value: `${bike.specs.cc} CC`, type: 'text' },
-                                                    { label: 'Type', value: bike.specs.terrain, type: 'text' },
+                                                    { label: 'Engine', value: `${bike.specs.cc}`, type: 'text' },
+                                                    { label: 'Terrain', value: bike.specs.terrain, type: 'text' },
                                                     { label: 'Comfort', value: bike.specs.comfort, type: 'stars' },
-                                                    { label: 'Mileage', value: `${bike.specs.mileage} KMPL`, type: 'text' },
-                                                    { label: 'Rating', value: `${bike.rating} ★`, type: 'highlight' }
+                                                    { label: 'Mileage', value: `${bike.specs.mileage}`, type: 'text' },
+                                                    { label: 'Rating', value: `${bike.rating}`, type: 'highlight' }
                                                 ].map((row, i) => (
-                                                    <div key={i} className="h-16 flex flex-col md:flex-row items-center justify-center md:border-b border-slate-900/10 last:border-0 relative">
-                                                        <span className="md:hidden text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">{row.label}</span>
+                                                    <div key={i} className="h-12 md:h-16 flex flex-col md:flex-row items-center justify-center md:border-b border-slate-900/10 last:border-0 relative">
+                                                        <span className="md:hidden text-[6px] font-black text-slate-300 uppercase tracking-widest">{row.label}</span>
                                                         
                                                         {row.type === 'text' && (
-                                                            <span className="text-lg font-black text-slate-800 tracking-tight">{row.value}</span>
+                                                            <span className="text-xs md:text-lg font-black text-slate-800 tracking-tight">{row.value}</span>
                                                         )}
                                                         
                                                         {row.type === 'stars' && (
-                                                            <div className="flex gap-1">
+                                                            <div className="flex gap-0.5">
                                                                 {[...Array(5)].map((_, s) => (
-                                                                    <Star key={s} className={`w-3.5 h-3.5 ${s < row.value ? 'text-secondary fill-secondary' : 'text-slate-100 fill-slate-100'}`} />
+                                                                    <Star key={s} className={`w-2 h-2 md:w-3.5 md:h-3.5 ${s < row.value ? 'text-secondary fill-secondary' : 'text-slate-100 fill-slate-100'}`} />
                                                                 ))}
                                                             </div>
                                                         )}
                                                         
                                                         {row.type === 'highlight' && (
-                                                            <span className="text-lg font-black text-primary tracking-tight">{row.value}</span>
+                                                            <span className="text-xs md:text-lg font-black text-primary tracking-tight">{row.value}★</span>
                                                         )}
                                                     </div>
                                                 ))}
                                             </div>
 
-                                            <Link to={`/bike/${bike._id}`} className="mt-8 w-full">
-                                                <Button className="w-full h-14 rounded-2xl bg-slate-950 text-white shadow-xl hover:bg-primary transition-all font-black uppercase tracking-[0.2em] text-[9px] flex items-center justify-center gap-3">
-                                                    Book Now <Check className="w-4 h-4" />
+                                            <Link to={`/bike/${bike._id}`} className="mt-4 md:mt-8 w-full">
+                                                <Button className="w-full h-10 md:h-14 rounded-xl md:rounded-2xl bg-slate-950 text-white shadow-xl hover:bg-primary transition-all font-black uppercase tracking-widest text-[7px] md:text-[9px] flex items-center justify-center gap-2">
+                                                    Book <Check className="w-3 h-3" />
                                                 </Button>
                                             </Link>
                                         </div>
