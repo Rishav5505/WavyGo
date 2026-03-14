@@ -9,7 +9,9 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Button from '../components/common/Button';
 import Reveal from '../components/common/Reveal';
+import AIRoutePlanner from '../components/common/AIRoutePlanner';
 import API from '../utils/api';
+import { Sparkles as SparklesIcon } from 'lucide-react';
 
 const TiltCard = ({ children, className }) => {
     const x = useMotionValue(0);
@@ -83,6 +85,7 @@ const Packages = () => {
     const [showCompareModal, setShowCompareModal] = useState(false);
     const [activeTerrain, setActiveTerrain] = useState('All');
     const [ccRange, setCcRange] = useState('All');
+    const [showAiPlanner, setShowAiPlanner] = useState(false);
 
     useEffect(() => {
         const fetchPackages = async () => {
@@ -196,24 +199,26 @@ const Packages = () => {
 
                 {/* Background Decor */}
                 <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
-                    <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-primary rounded-full blur-[150px] opacity-20"></div>
-                    <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-indigo-600 rounded-full blur-[150px] opacity-10"></div>
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px] -mr-64 -mt-64"></div>
+                    <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -ml-64 -mb-64"></div>
                 </div>
             </section>
 
-            {/* Premium Filter & Search Bar - Pill Design */}
-            <section className="relative z-20 -mt-10 md:-mt-16 px-4">
-                <div className="container-custom max-w-6xl">
-                    <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-6 md:p-8 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] border border-slate-100">
-                        <div className="flex flex-col lg:flex-row items-center gap-6 justify-between mb-8">
+
+
+            {/* Compact Filter & Search Bar */}
+            <section className="relative z-20 -mt-8 md:-mt-12 px-4">
+                <div className="container-custom max-w-5xl">
+                    <div className="bg-white rounded-3xl p-4 md:p-6 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-slate-100">
+                        <div className="flex flex-col lg:flex-row items-center gap-4 justify-between mb-5">
                             {/* Categories Pills */}
-                            <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 order-2 lg:order-1">
+                            <div className="flex flex-wrap items-center justify-center gap-2 order-2 lg:order-1">
                                 {categories.map((cat) => (
                                     <button
                                         key={cat}
                                         onClick={() => setActiveCategory(cat)}
-                                        className={`px-4 py-2.5 md:px-7 md:py-3.5 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeCategory === cat
-                                            ? 'bg-[#035c3e] text-white shadow-lg shadow-[#035c3e]/20'
+                                        className={`px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-wider transition-all duration-300 ${activeCategory === cat
+                                            ? 'bg-primary text-white shadow-md shadow-primary/20'
                                             : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
                                             }`}
                                     >
@@ -223,42 +228,42 @@ const Packages = () => {
                             </div>
 
                             {/* Search Pill */}
-                            <div className="relative w-full lg:max-w-md group order-1 lg:order-2">
-                                <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-[#035c3e] z-10" />
+                            <div className="relative w-full lg:max-w-xs group order-1 lg:order-2">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-300 group-focus-within:text-primary z-10" />
                                 <input
                                     type="text"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    placeholder="Search machines..."
-                                    className="w-full bg-slate-50 border border-transparent hover:border-slate-200 rounded-full pl-14 pr-6 py-4 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#035c3e]/20 transition-all"
+                                    placeholder="Find your machine..."
+                                    className="w-full bg-slate-50 border border-transparent rounded-full pl-10 pr-4 py-2.5 text-xs font-semibold text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-slate-300"
                                 />
                             </div>
                         </div>
 
-                        {/* Smart Filters Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-50">
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 overflow-hidden">
-                                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 sm:min-w-[70px]">Terrain:</span>
-                                <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-hide">
+                        {/* Smart Filters Row */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-50">
+                            <div className="flex items-center gap-3">
+                                <span className="text-[9px] font-black uppercase tracking-widest text-slate-300 shrink-0">Terrain:</span>
+                                <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
                                     {['All', 'Mountains', 'Highway', 'City'].map(t => (
                                         <button 
                                             key={t}
                                             onClick={() => setActiveTerrain(t)}
-                                            className={`px-4 py-2 rounded-xl text-[9px] font-bold uppercase transition-all whitespace-nowrap ${activeTerrain === t ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-slate-50 text-slate-400 border border-transparent hover:border-slate-100'}`}
+                                            className={`px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase transition-all whitespace-nowrap ${activeTerrain === t ? 'bg-primary/10 text-primary' : 'bg-slate-50/50 text-slate-400 hover:text-slate-600'}`}
                                         >
                                             {t}
                                         </button>
                                     ))}
                                 </div>
                             </div>
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 overflow-hidden">
-                                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 sm:min-w-[70px]">Engine:</span>
-                                <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-hide">
+                            <div className="flex items-center gap-3">
+                                <span className="text-[9px] font-black uppercase tracking-widest text-slate-300 shrink-0">Engine:</span>
+                                <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
                                     {['All', '0-200', '200-400', '400+'].map(c => (
                                         <button 
                                             key={c}
                                             onClick={() => setCcRange(c)}
-                                            className={`px-4 py-2 rounded-xl text-[9px] font-bold uppercase transition-all whitespace-nowrap ${ccRange === c ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-slate-50 text-slate-400 border border-transparent hover:border-slate-100'}`}
+                                            className={`px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase transition-all whitespace-nowrap ${ccRange === c ? 'bg-primary/10 text-primary' : 'bg-slate-50/50 text-slate-400 hover:text-slate-600'}`}
                                         >
                                             {c === 'All' ? 'Any CC' : c + ' CC'}
                                         </button>
@@ -394,7 +399,7 @@ const Packages = () => {
                 </div>
             </section>
 
-            <Footer />
+
 
             {/* Sticky Compare Bar */}
             <AnimatePresence>
@@ -584,6 +589,44 @@ const Packages = () => {
                 )}
             </AnimatePresence>
 
+            {/* AI Route Planner Modal */}
+            <AnimatePresence>
+                {showAiPlanner && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[2000] bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            className="bg-white w-full max-w-6xl max-h-[90vh] rounded-[2.5rem] md:rounded-[4rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] overflow-hidden relative"
+                        >
+                            <AIRoutePlanner onClose={() => setShowAiPlanner(false)} />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* AI Planner Floating Button */}
+            {!showAiPlanner && (
+                <motion.button
+                    initial={{ x: 100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setShowAiPlanner(true)}
+                    className="fixed bottom-[180px] md:bottom-[100px] right-6 z-[900] bg-slate-950 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 border border-white/10 group overflow-hidden"
+                >
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <SparklesIcon className="w-5 h-5 text-primary animate-pulse" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] relative z-10">AI Trip Planner</span>
+                </motion.button>
+            )}
+
+            <Footer />
         </div>
     );
 };

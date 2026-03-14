@@ -6,6 +6,42 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Button from '../components/common/Button';
 import API from '../utils/api';
+import { Shield, Camera, HardHat, Wind, Trash2, Plus } from 'lucide-react';
+
+const GEAR_ITEMS = [
+    {
+        id: 'helmet',
+        name: 'Professional Helmet',
+        price: 200,
+        image: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=400',
+        icon: HardHat,
+        desc: 'ISI certified with anti-fog visor'
+    },
+    {
+        id: 'jacket',
+        name: 'Riding Jacket',
+        price: 350,
+        image: 'https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?q=80&w=400',
+        icon: Shield,
+        desc: 'Level 2 armor protection'
+    },
+    {
+        id: 'gloves',
+        name: 'Guarded Gloves',
+        price: 100,
+        image: 'https://images.unsplash.com/photo-1533038590840-1cde6e668a91?q=80&w=400',
+        icon: Wind,
+        desc: 'Leather mesh with knuckle guard'
+    },
+    {
+        id: 'gopro',
+        name: 'GoPro Hero 12',
+        price: 500,
+        image: 'https://images.unsplash.com/photo-1542614392-1c73ec541f53?q=80&w=400',
+        icon: Camera,
+        desc: '4K stabilized footage'
+    }
+];
 
 const Booking = () => {
     const navigate = useNavigate();
@@ -20,7 +56,8 @@ const Booking = () => {
         userName: '',
         email: '',
         phone: '',
-        specialRequests: ''
+        specialRequests: '',
+        selectedGear: []
     });
 
     useEffect(() => {
@@ -111,15 +148,15 @@ const Booking = () => {
                     {/* Stepper Header */}
                     {!isSubmitted && (
                         <div className="bg-white rounded-3xl p-6 md:p-8 mb-8 md:mb-10 shadow-sm border border-slate-100 flex justify-between items-center overflow-x-auto gap-4 no-scrollbar">
-                            {[1, 2, 3].map((s) => (
+                            {[1, 2, 3, 4].map((s) => (
                                 <div key={s} className="flex items-center gap-2 md:gap-3 shrink-0">
                                     <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-xs md:text-sm transition-colors ${step >= s ? 'bg-primary text-white' : 'bg-slate-100 text-slate-400'}`}>
                                         {s}
                                     </div>
                                     <span className={`text-[10px] md:text-sm font-bold uppercase tracking-widest ${step >= s ? 'text-slate-900' : 'text-slate-400'}`}>
-                                        {s === 1 ? 'Plan' : s === 2 ? 'Details' : 'Confirm'}
+                                        {s === 1 ? 'Trip' : s === 2 ? 'Gear' : s === 3 ? 'Details' : 'Confirm'}
                                     </span>
-                                    {s < 3 && <div className="hidden md:block w-10 h-px bg-slate-200 ml-2"></div>}
+                                    {s < 4 && <div className="hidden md:block w-10 h-px bg-slate-200 ml-2"></div>}
                                 </div>
                             ))}
                         </div>
@@ -196,12 +233,73 @@ const Booking = () => {
                                                 </div>
                                             </div>
                                             <div className="flex justify-end pt-6">
-                                                <Button onClick={nextStep} disabled={!formData.packageId || !formData.travelDate} className="px-10 py-4 rounded-xl font-bold flex items-center gap-3">Continue <ArrowRight className="w-5 h-5" /></Button>
+                                                <Button onClick={nextStep} disabled={!formData.packageId || !formData.travelDate} className="px-10 py-4 rounded-xl font-bold flex items-center gap-3">Continue to Gear <ArrowRight className="w-5 h-5" /></Button>
                                             </div>
                                         </div>
                                     )}
 
                                     {step === 2 && (
+                                        <div className="space-y-8">
+                                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b pb-6">
+                                                <div>
+                                                    <h2 className="text-2xl font-black text-slate-900 uppercase italic">Gear Marketplace</h2>
+                                                    <p className="text-sm text-slate-500 font-medium">Rent premium safety gear for your expedition.</p>
+                                                </div>
+                                                <div className="bg-primary/10 px-4 py-2 rounded-xl border border-primary/20">
+                                                    <span className="text-[10px] font-black text-primary uppercase tracking-widest">Selected: {formData.selectedGear.length} Items</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Gear Selection Grid/Carousel */}
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                                {GEAR_ITEMS.map((item) => {
+                                                    const isSelected = formData.selectedGear.includes(item.id);
+                                                    return (
+                                                        <motion.div
+                                                            key={item.id}
+                                                            whileHover={{ y: -5 }}
+                                                            onClick={() => {
+                                                                const newGear = isSelected 
+                                                                    ? formData.selectedGear.filter(id => id !== item.id)
+                                                                    : [...formData.selectedGear, item.id];
+                                                                setFormData({ ...formData, selectedGear: newGear });
+                                                            }}
+                                                            className={`relative group cursor-pointer rounded-[2rem] overflow-hidden border-2 transition-all p-4 ${isSelected ? 'border-primary bg-primary/5 shadow-xl shadow-primary/10' : 'border-slate-100 bg-white hover:border-slate-200'}`}
+                                                        >
+                                                            <div className="flex gap-4 items-center">
+                                                                <div className="w-24 h-24 rounded-2xl overflow-hidden bg-slate-100 shrink-0">
+                                                                    <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                                                </div>
+                                                                <div className="flex-1 space-y-1">
+                                                                    <div className="flex items-center gap-2">
+                                                                        <item.icon className={`w-3.5 h-3.5 ${isSelected ? 'text-primary' : 'text-slate-400'}`} />
+                                                                        <h4 className="font-bold text-slate-900">{item.name}</h4>
+                                                                    </div>
+                                                                    <p className="text-[10px] text-slate-500 font-medium leading-tight">{item.desc}</p>
+                                                                    <div className="pt-2">
+                                                                        <span className="text-primary font-black text-sm tracking-tight">₹{item.price}</span>
+                                                                        <span className="text-[9px] text-slate-400 font-bold uppercase ml-1">/ day</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            {/* Checkmark overlay */}
+                                                            <div className={`absolute top-4 right-4 w-6 h-6 rounded-full flex items-center justify-center transition-all ${isSelected ? 'bg-primary scale-110' : 'bg-slate-100 scale-100'}`}>
+                                                                {isSelected ? <Check className="w-3.5 h-3.5 text-white" /> : <Plus className="w-3.5 h-3.5 text-slate-300" />}
+                                                            </div>
+                                                        </motion.div>
+                                                    );
+                                                })}
+                                            </div>
+
+                                            <div className="flex justify-between pt-6 border-t">
+                                                <Button variant="outline" onClick={prevStep} className="px-8 py-4 rounded-xl font-bold flex items-center gap-3">Back</Button>
+                                                <Button onClick={nextStep} className="px-10 py-4 rounded-xl font-bold flex items-center gap-3">Next: Personal Info <ArrowRight className="w-5 h-5" /></Button>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {step === 3 && (
                                         <div className="space-y-8">
                                             <h2 className="text-2xl font-bold text-slate-900 mb-8 pb-4 border-b">Personal Information</h2>
                                             <div className="grid grid-cols-1 gap-6">
@@ -231,14 +329,35 @@ const Booking = () => {
                                         </div>
                                     )}
 
-                                    {step === 3 && (
+                                    {step === 4 && (
                                         <div className="space-y-8">
                                             <h2 className="text-2xl font-bold text-slate-900 mb-8 pb-4 border-b">Review & Confirm</h2>
                                             <div className="bg-slate-50 rounded-2xl p-8 space-y-4 text-left">
                                                 <div className="flex justify-between border-b border-slate-200 pb-4">
-                                                    <span className="text-slate-400 font-medium">Selected Journey</span>
+                                                    <span className="text-slate-400 font-medium tracking-tight">Selected Journey</span>
                                                     <span className="text-slate-900 font-bold">{packages.find(p => p._id === formData.packageId)?.title}</span>
                                                 </div>
+                                                
+                                                {/* Gear Summary */}
+                                                <div className="border-b border-slate-200 pb-4">
+                                                    <span className="text-slate-400 font-medium tracking-tight block mb-3">Add-on Gears</span>
+                                                    {formData.selectedGear.length > 0 ? (
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {formData.selectedGear.map(gid => {
+                                                                const gear = GEAR_ITEMS.find(g => g.id === gid);
+                                                                return (
+                                                                    <span key={gid} className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold text-slate-600 uppercase flex items-center gap-2">
+                                                                        <gear.icon className="w-3 h-3 text-primary" />
+                                                                        {gear.name}
+                                                                    </span>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-slate-300 italic text-xs">No extra gear selected</span>
+                                                    )}
+                                                </div>
+
                                                 <div className="flex justify-between border-b border-slate-200 pb-4">
                                                     <span className="text-slate-400 font-medium">Travel Date</span>
                                                     <span className="text-slate-900 font-bold">{formData.travelDate || 'TBD'}</span>

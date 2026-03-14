@@ -7,17 +7,23 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Button from '../components/common/Button';
 import WavyPride from '../components/common/WavyPride';
-import { Trophy } from 'lucide-react';
+import RideStats from '../components/profile/RideStats';
+import TripCanvas from '../components/profile/TripCanvas';
+import { Trophy, BarChart3, Map, ArrowLeft } from 'lucide-react';
 
 const Profile = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'profile');
+    const [showMobileMenu, setShowMobileMenu] = useState(!searchParams.get('tab')); // Show menu on mobile if no tab set
 
     useEffect(() => {
         const tab = searchParams.get('tab');
-        if (tab) setActiveTab(tab);
+        if (tab) {
+            setActiveTab(tab);
+            setShowMobileMenu(false);
+        }
     }, [searchParams]);
 
     if (!user) {
@@ -27,10 +33,17 @@ const Profile = () => {
 
     const menuItems = [
         { id: 'profile', label: 'Profile', icon: User },
+        { id: 'stats', label: 'Ride Stats', icon: BarChart3 },
+        { id: 'planner', label: 'Trip Planner', icon: Map },
         { id: 'bookings', label: 'My Bookings', icon: ShoppingBag },
         { id: 'wallet', label: 'Wallet', icon: Wallet },
         { id: 'loyalty', label: 'Wavy Pride', icon: Trophy },
     ];
+
+    const handleTabChange = (tabId) => {
+        setActiveTab(tabId);
+        setShowMobileMenu(false);
+    };
 
     const handleLogout = () => {
         logout();
@@ -48,7 +61,7 @@ const Profile = () => {
                     <motion.aside
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="w-full lg:w-80 space-y-6"
+                        className={`w-full lg:w-80 space-y-6 ${!showMobileMenu ? 'hidden lg:block' : 'block'}`}
                     >
                         <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100 p-8">
                             <div className="relative mb-6">
@@ -72,7 +85,7 @@ const Profile = () => {
                                 {menuItems.map((item) => (
                                     <button
                                         key={item.id}
-                                        onClick={() => setActiveTab(item.id)}
+                                        onClick={() => handleTabChange(item.id)}
                                         className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all duration-300 font-bold text-sm ${activeTab === item.id
                                             ? 'bg-primary text-white shadow-lg shadow-primary/20'
                                             : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
@@ -106,12 +119,22 @@ const Profile = () => {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex-1 bg-white rounded-[2rem] md:rounded-[2.5rem] p-4 md:p-12 shadow-sm border border-slate-100"
+                        className={`flex-1 bg-white rounded-[2rem] md:rounded-[2.5rem] p-4 md:p-12 shadow-sm border border-slate-100 ${showMobileMenu ? 'hidden lg:block' : 'block'}`}
                     >
                         <div className="mb-6 md:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                            <h1 className="text-xl md:text-2xl font-black text-slate-900 uppercase tracking-tight">
-                                {activeTab === 'profile' ? 'Profile Details' : activeTab === 'bookings' ? 'My Bookings' : activeTab === 'loyalty' ? 'Wavy Pride Rewards' : 'Wallet Status'}
-                            </h1>
+                            <div className="flex items-center gap-4">
+                                {!showMobileMenu && (
+                                    <button 
+                                        onClick={() => setShowMobileMenu(true)}
+                                        className="lg:hidden p-3 rounded-xl bg-slate-50 text-slate-500 hover:text-primary transition-all"
+                                    >
+                                        <ArrowLeft className="w-5 h-5" />
+                                    </button>
+                                )}
+                                <h1 className="text-xl md:text-2xl font-black text-slate-900 uppercase tracking-tight">
+                                    {activeTab === 'profile' ? 'Profile Details' : activeTab === 'bookings' ? 'My Bookings' : activeTab === 'loyalty' ? 'Rider Club Elite' : activeTab === 'stats' ? 'Ride Dashboard' : activeTab === 'planner' ? 'Trip Planner' : 'Wallet Status'}
+                                </h1>
+                            </div>
                             {activeTab === 'profile' && (
                                 <Button variant="outline" className="px-6 py-2 rounded-xl text-xs font-bold border-slate-200 flex items-center gap-2">
                                     <Edit className="w-3.5 h-3.5" /> Edit
@@ -188,6 +211,14 @@ const Profile = () => {
                             <div className="overflow-hidden rounded-[2rem]">
                                 <WavyPride />
                             </div>
+                        )}
+
+                        {activeTab === 'stats' && (
+                            <RideStats />
+                        )}
+
+                        {activeTab === 'planner' && (
+                            <TripCanvas />
                         )}
                     </motion.div>
                 </div>
