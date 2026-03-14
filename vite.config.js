@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: 'auto',
       includeAssets: ['wavygo-brand-logo.png', 'vite.svg'],
       manifest: {
         name: 'WavyGo - Best Bike Rentals',
@@ -34,6 +35,9 @@ export default defineConfig({
             purpose: 'any maskable'
           }
         ]
+      },
+      devOptions: {
+        enabled: true
       }
     })
   ],
