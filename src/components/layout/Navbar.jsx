@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sparkles, ArrowRight, User, ChevronRight, Compass, Map, Info, Phone, Bike, Smartphone } from 'lucide-react';
+import { Sparkles, ArrowRight, User, ChevronRight, Compass, Map, Info, Phone, Bike, Smartphone, Trophy } from 'lucide-react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import Button from '../common/Button';
@@ -124,7 +124,7 @@ const Navbar = () => {
             </AnimatePresence>
 
             {/* Main Navbar */}
-            <nav className={`fixed left-0 right-0 z-[100] transition-all duration-300 pointer-events-none ${scrolled ? 'top-3 md:top-6' : 'top-0'}`}>
+            <nav className={`fixed left-0 right-0 z-[100] transition-all duration-300 pointer-events-none ${scrolled ? 'top-3 md:top-6' : 'top-4 md:top-0'}`}>
                 <div className={`container-custom pointer-events-auto transition-all duration-300 ${scrolled ? 'max-w-5xl px-4' : 'max-w-7xl'}`}>
                     <div className={`relative flex items-center justify-between transition-all duration-300 px-6 md:px-10 rounded-[1.5rem] md:rounded-[2.5rem] border ${scrolled ? 'bg-white/95 md:bg-gradient-to-br md:from-[#d1ede1] md:to-[#f0f9f6] py-2 md:py-4 shadow-xl border-slate-100' : 'py-4 md:py-10 border-transparent bg-transparent'}`}>
                         <Logo />
@@ -193,16 +193,21 @@ const Navbar = () => {
 
                                                     <div className="space-y-1">
                                                         <Link to="/profile" onClick={() => setShowUserDropdown(false)}>
-                                                            <button className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-slate-600 hover:bg-slate-50 font-bold text-xs transition-all">
-                                                                <User className="w-4 h-4" /> My Profile
-                                                            </button>
-                                                        </Link>
+                                                             <button className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-slate-600 hover:bg-slate-50 font-bold text-xs transition-all text-left">
+                                                                 <User className="w-4 h-4" /> My Profile
+                                                             </button>
+                                                         </Link>
+                                                         <Link to="/profile?tab=loyalty" onClick={() => setShowUserDropdown(false)}>
+                                                             <button className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-slate-600 hover:bg-primary/5 hover:text-primary font-bold text-xs transition-all text-left group">
+                                                                 <Trophy className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" /> Wavy Pride
+                                                             </button>
+                                                         </Link>
                                                         <button
                                                             onClick={() => {
                                                                 logout();
                                                                 setShowUserDropdown(false);
                                                             }}
-                                                            className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-red-500 hover:bg-red-50 font-bold text-xs transition-all"
+                                                            className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-red-500 hover:bg-red-50 font-bold text-xs transition-all text-left"
                                                         >
                                                             <ArrowRight className="w-4 h-4" /> Sign Out
                                                         </button>
@@ -303,18 +308,31 @@ const Navbar = () => {
                                 {user ? (
                                     <motion.div variants={itemVariants} className="pt-3 mt-3 border-t border-slate-100 space-y-1">
                                         <Link to="/profile" className="group block" onClick={() => setIsOpen(false)}>
-                                            <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-all">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 text-slate-400 flex items-center justify-center group-hover:border-primary/20 group-hover:text-primary transition-all">
-                                                        <User className="w-3.5 h-3.5" />
-                                                    </div>
-                                                    <h3 className="text-base font-bold text-slate-600 group-hover:text-primary transition-colors">
-                                                        My Profile
-                                                    </h3>
-                                                </div>
-                                                <ChevronRight className="w-3.5 h-3.5 text-slate-300 transition-transform group-hover:translate-x-1" />
-                                            </div>
-                                        </Link>
+                                             <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-all">
+                                                 <div className="flex items-center gap-3">
+                                                     <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 text-slate-400 flex items-center justify-center group-hover:border-primary/20 group-hover:text-primary transition-all">
+                                                         <User className="w-3.5 h-3.5" />
+                                                     </div>
+                                                     <h3 className="text-base font-bold text-slate-600 group-hover:text-primary transition-colors">
+                                                         My Profile
+                                                     </h3>
+                                                 </div>
+                                                 <ChevronRight className="w-3.5 h-3.5 text-slate-300 transition-transform group-hover:translate-x-1" />
+                                             </div>
+                                         </Link>
+                                         <Link to="/profile?tab=loyalty" className="group block" onClick={() => setIsOpen(false)}>
+                                             <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-primary/5 transition-all">
+                                                 <div className="flex items-center gap-3">
+                                                     <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 text-primary flex items-center justify-center group-hover:border-primary/20 group-hover:bg-primary group-hover:text-white transition-all">
+                                                         <Trophy className="w-3.5 h-3.5" />
+                                                     </div>
+                                                     <h3 className="text-base font-bold text-slate-600 group-hover:text-primary transition-colors">
+                                                         Wavy Pride
+                                                     </h3>
+                                                 </div>
+                                                 <ChevronRight className="w-3.5 h-3.5 text-slate-300 transition-transform group-hover:translate-x-1" />
+                                             </div>
+                                         </Link>
                                         <button
                                             onClick={() => {
                                                 logout();

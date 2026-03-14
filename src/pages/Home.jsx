@@ -19,6 +19,7 @@ import BlogSection from '../components/common/BlogSection';
 import MobileAppSection from '../components/layout/MobileAppSection';
 import SocialSection from '../components/layout/SocialSection';
 import Lightbox from '../components/common/Lightbox';
+import WavyLabs from '../components/common/WavyLabs';
 
 const Counter = ({ value }) => {
     const [count, setCount] = useState(0);
@@ -185,13 +186,13 @@ const Home = () => {
                                 initial={{ scale: 1 }}
                                 animate={{ scale: 1 }}
                                 src={heroImages[currentHeroIndex]}
-                                className="w-full h-full object-cover pointer-events-none brightness-110 contrast-[1.05]"
+                                className="w-full h-full object-cover object-[center_35%] md:object-center pointer-events-none brightness-110 contrast-[1.05]"
                                 alt={`WavyGo Experience ${currentHeroIndex + 1}`}
                             />
                             {/* Cinematic Vignette - For better text readability */}
                             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/30 transition-all opacity-80"></div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                            
+
                             {/* Premium Lens Flare Effect */}
                             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[150px] pointer-events-none"></div>
                         </motion.div>
@@ -294,8 +295,7 @@ const Home = () => {
                                                 className="absolute inset-0 opacity-0 cursor-pointer z-20"
                                             />
 
-                                            {/* Visible Custom Formatted Display */}
-                                            <div className="w-full bg-white border border-slate-300 rounded-xl py-4 pl-14 pr-4 text-xs md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
+                                            <div className="w-full bg-white border border-slate-300 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[9px] md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
                                                 {new Date(pickupDate).toLocaleString('en-IN', {
                                                     day: '2-digit',
                                                     month: '2-digit',
@@ -322,7 +322,7 @@ const Home = () => {
                                             />
 
                                             {/* Visible Custom Formatted Display */}
-                                            <div className="w-full bg-white border border-slate-300 rounded-xl py-4 pl-14 pr-4 text-xs md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
+                                            <div className="w-full bg-white border border-slate-300 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[9px] md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
                                                 {new Date(dropoffDate).toLocaleString('en-IN', {
                                                     day: '2-digit',
                                                     month: '2-digit',
@@ -436,6 +436,7 @@ const Home = () => {
             </div>
 
             <PopularPackages />
+            <WavyLabs />
             <WhyChooseUs />
 
             {/* Analytics Section */}

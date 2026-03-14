@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Search, MapPin, Clock, Star, ArrowUpRight, Loader } from 'lucide-react';
+import { 
+    Search, MapPin, Clock, Star, ArrowUpRight, Loader, 
+    X, Check, Gauge, Mountain, Sofa, Info, BarChart3, Plus
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -76,6 +79,10 @@ const Packages = () => {
     const [activeCategory, setActiveCategory] = useState('All');
     const [packages, setPackages] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedCompare, setSelectedCompare] = useState([]);
+    const [showCompareModal, setShowCompareModal] = useState(false);
+    const [activeTerrain, setActiveTerrain] = useState('All');
+    const [ccRange, setCcRange] = useState('All');
 
     useEffect(() => {
         const fetchPackages = async () => {
@@ -97,7 +104,8 @@ const Packages = () => {
                         rating: "4.9",
                         category: "Cruiser",
                         image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/183389/classic-350-right-side-view-50.jpeg?isig=0&q=80",
-                        duration: "24 Hours"
+                        duration: "24 Hours",
+                        specs: { cc: 411, terrain: "Mountains", comfort: 5, mileage: 30 }
                     },
                     {
                         _id: "65e5a2e1f1a2b3c4d5e6f002",
@@ -107,7 +115,8 @@ const Packages = () => {
                         rating: "4.8",
                         category: "Sports",
                         image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/148323/duke-390-right-side-view-14.png?isig=0&q=80",
-                        duration: "24 Hours"
+                        duration: "24 Hours",
+                        specs: { cc: 373, terrain: "Highway", comfort: 3, mileage: 25 }
                     },
                     {
                         _id: "65e5a2e1f1a2b3c4d5e6f003",
@@ -117,7 +126,8 @@ const Packages = () => {
                         rating: "4.7",
                         category: "Commuter",
                         image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/44686/activa-6g-right-side-view-2.png?isig=0&q=80",
-                        duration: "24 Hours"
+                        duration: "24 Hours",
+                        specs: { cc: 110, terrain: "City", comfort: 4, mileage: 50 }
                     },
                     {
                         _id: "65e5a2e1f1a2b3c4d5e6f004",
@@ -127,7 +137,8 @@ const Packages = () => {
                         rating: "5.0",
                         category: "Premium",
                         image: "https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?q=80&w=800",
-                        duration: "24 Hours"
+                        duration: "24 Hours",
+                        specs: { cc: 398, terrain: "Highway", comfort: 4, mileage: 28 }
                     }
                 ];
                 setPackages(mockBikes);
@@ -142,10 +153,24 @@ const Packages = () => {
 
     const filteredPackages = packages.filter(pkg => {
         const matchesCategory = activeCategory === 'All' || pkg.category === activeCategory;
+        const matchesTerrain = activeTerrain === 'All' || (pkg.specs && pkg.specs.terrain === activeTerrain);
+        const matchesCC = ccRange === 'All' || (pkg.specs && (
+            ccRange === '0-200' ? pkg.specs.cc <= 200 :
+            ccRange === '200-400' ? (pkg.specs.cc > 200 && pkg.specs.cc <= 400) :
+            pkg.specs.cc > 400
+        ));
         const matchesSearch = pkg.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             pkg.location.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
+        return matchesCategory && matchesTerrain && matchesCC && matchesSearch;
     });
+
+    const toggleCompare = (bike) => {
+        if (selectedCompare.find(b => b._id === bike._id)) {
+            setSelectedCompare(selectedCompare.filter(b => b._id !== bike._id));
+        } else if (selectedCompare.length < 2) {
+            setSelectedCompare([...selectedCompare, bike]);
+        }
+    };
 
     return (
         <div className="bg-[#f8f9fa] min-h-screen selection:bg-primary selection:text-white">
@@ -179,33 +204,67 @@ const Packages = () => {
             {/* Premium Filter & Search Bar - Pill Design */}
             <section className="relative z-20 -mt-10 md:-mt-16 px-4">
                 <div className="container-custom max-w-6xl">
-                    <div className="bg-white rounded-[2.5rem] md:rounded-[3.5rem] p-4 md:p-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] border border-slate-100 flex flex-col md:flex-row items-center gap-4 md:gap-8 justify-between">
-                        {/* Categories Pills */}
-                        <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 order-2 md:order-1">
-                            {categories.map((cat) => (
-                                <button
-                                    key={cat}
-                                    onClick={() => setActiveCategory(cat)}
-                                    className={`px-5 py-3 md:px-9 md:py-4.5 rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.1em] md:tracking-[0.15em] transition-all duration-300 ${activeCategory === cat
-                                        ? 'bg-[#035c3e] text-white shadow-lg shadow-[#035c3e]/20 scale-105'
-                                        : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                                        }`}
-                                >
-                                    {cat}
-                                </button>
-                            ))}
+                    <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-6 md:p-8 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] border border-slate-100">
+                        <div className="flex flex-col lg:flex-row items-center gap-6 justify-between mb-8">
+                            {/* Categories Pills */}
+                            <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 order-2 lg:order-1">
+                                {categories.map((cat) => (
+                                    <button
+                                        key={cat}
+                                        onClick={() => setActiveCategory(cat)}
+                                        className={`px-4 py-2.5 md:px-7 md:py-3.5 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeCategory === cat
+                                            ? 'bg-[#035c3e] text-white shadow-lg shadow-[#035c3e]/20'
+                                            : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                                            }`}
+                                    >
+                                        {cat}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Search Pill */}
+                            <div className="relative w-full lg:max-w-md group order-1 lg:order-2">
+                                <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-[#035c3e] z-10" />
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Search machines..."
+                                    className="w-full bg-slate-50 border border-transparent hover:border-slate-200 rounded-full pl-14 pr-6 py-4 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#035c3e]/20 transition-all"
+                                />
+                            </div>
                         </div>
 
-                        {/* Search Pill */}
-                        <div className="relative w-full md:max-w-md group flex-grow order-1 md:order-2">
-                            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-slate-400 group-focus-within:text-[#035c3e] transition-colors z-10" />
-                            <input
-                                type="text"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                placeholder="Search machines..."
-                                className="w-full bg-slate-50 border border-transparent hover:border-slate-200 rounded-full pl-14 pr-6 py-4 md:py-5 text-sm md:text-base font-semibold text-slate-700 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#035c3e]/20 focus:bg-white transition-all shadow-inner"
-                            />
+                        {/* Smart Filters Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-slate-50">
+                            <div className="flex items-center gap-4">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 min-w-[70px]">Terrain:</span>
+                                <div className="flex gap-2">
+                                    {['All', 'Mountains', 'Highway', 'City'].map(t => (
+                                        <button 
+                                            key={t}
+                                            onClick={() => setActiveTerrain(t)}
+                                            className={`px-4 py-2 rounded-lg text-[9px] font-bold uppercase transition-all ${activeTerrain === t ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-slate-50 text-slate-400 border border-transparent hover:border-slate-100'}`}
+                                        >
+                                            {t}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 min-w-[70px]">Engine:</span>
+                                <div className="flex gap-2">
+                                    {['All', '0-200', '200-400', '400+'].map(c => (
+                                        <button 
+                                            key={c}
+                                            onClick={() => setCcRange(c)}
+                                            className={`px-4 py-2 rounded-lg text-[9px] font-bold uppercase transition-all ${ccRange === c ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-slate-50 text-slate-400 border border-transparent hover:border-slate-100'}`}
+                                        >
+                                            {c === 'All' ? 'Any CC' : c + ' CC'}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -232,11 +291,17 @@ const Packages = () => {
                                             <div
                                                 className="group bg-white rounded-[2rem] overflow-hidden shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col hover:shadow-[0_40px_80px_-20px_rgba(3,92,62,0.15)] transition-all duration-500 relative h-full"
                                             >
-                                                {/* Category Badge */}
-                                                <div className="absolute top-5 left-5 z-20" style={{ transform: "translateZ(30px)" }}>
+                                                {/* Category Badge & Compare Toggle */}
+                                                <div className="absolute top-5 left-5 right-5 z-20 flex justify-between items-center" style={{ transform: "translateZ(30px)" }}>
                                                     <div className="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-black text-primary border border-primary/10 shadow-sm uppercase tracking-widest">
                                                         {pkg.category}
                                                     </div>
+                                                    <button 
+                                                        onClick={(e) => { e.preventDefault(); toggleCompare(pkg); }}
+                                                        className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${selectedCompare.find(b => b._id === pkg._id) ? 'bg-primary text-white scale-110' : 'bg-white/90 text-slate-400 hover:text-primary'}`}
+                                                    >
+                                                        {selectedCompare.find(b => b._id === pkg._id) ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                                                    </button>
                                                 </div>
 
                                                 {/* Image Container - Premium Gradient + Blend Mode */}
@@ -330,6 +395,196 @@ const Packages = () => {
             </section>
 
             <Footer />
+
+            {/* Sticky Compare Bar */}
+            <AnimatePresence>
+                {selectedCompare.length > 0 && (
+                    <motion.div 
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 100, opacity: 0 }}
+                        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[95%] max-w-xl"
+                    >
+                        <div className="bg-[#e2f3ee]/90 backdrop-blur-2xl rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex items-center justify-between shadow-[0_30px_60px_-15px_rgba(3,92,62,0.15)] border border-white/40">
+                            <div className="flex items-center gap-4">
+                                <div className="flex -space-x-3 pointer-events-none">
+                                    {selectedCompare.map(b => (
+                                        <motion.div 
+                                            layoutId={`compare-${b._id}`}
+                                            key={b._id} 
+                                            className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#e2f3ee] overflow-hidden bg-white shadow-lg"
+                                        >
+                                            <img src={b.image} className="w-full h-full object-cover" alt={b.title} />
+                                        </motion.div>
+                                    ))}
+                                    {selectedCompare.length < 2 && (
+                                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#e2f3ee] bg-white flex items-center justify-center border-dashed">
+                                            <Plus className="w-4 h-4 text-slate-300" />
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="hidden sm:block">
+                                    <h4 className="text-slate-900 font-black text-[9px] uppercase tracking-[0.2em] mb-0.5">
+                                        {selectedCompare.length === 1 ? 'Add machine to compare' : 'Comparison Ready'}
+                                    </h4>
+                                    <div className="flex items-center gap-2">
+                                        <div className="h-1 w-20 bg-slate-200 rounded-full overflow-hidden">
+                                            <motion.div 
+                                                className="h-full bg-primary" 
+                                                animate={{ width: selectedCompare.length === 1 ? '50%' : '100%' }}
+                                            />
+                                        </div>
+                                        <span className="text-slate-500 text-[8px] font-bold uppercase tracking-widest">{selectedCompare.length}/2</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="flex items-center gap-2 md:gap-4 font-black">
+                                <button 
+                                    onClick={() => setSelectedCompare([])}
+                                    className="px-3 py-2 text-[9px] text-slate-500 uppercase tracking-widest hover:text-rose-500 transition-colors"
+                                >
+                                    Clear
+                                </button>
+                                <button 
+                                    disabled={selectedCompare.length < 2}
+                                    onClick={() => setShowCompareModal(true)}
+                                    className={`px-5 py-2.5 md:px-8 md:py-3.5 rounded-xl text-[9px] md:text-[10px] uppercase tracking-widest transition-all ${selectedCompare.length < 2 ? 'bg-slate-200 text-slate-400 cursor-not-allowed' : 'bg-primary text-white shadow-lg shadow-primary/30 hover:scale-105 active:scale-95'}`}
+                                >
+                                    {selectedCompare.length < 2 ? 'Select 2' : 'Compare Now'}
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Comparison Modal */}
+            <AnimatePresence>
+                {showCompareModal && (
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md"
+                    >
+                        <motion.div 
+                            initial={{ scale: 0.95, y: 30, opacity: 0 }}
+                            animate={{ scale: 1, y: 0, opacity: 1 }}
+                            className="bg-[#e2f3ee] w-full max-w-5xl max-h-[90vh] rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden relative shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/20 flex flex-col"
+                        >
+                            {/* Modal Header - Fixed */}
+                            <div className="p-6 md:p-8 flex justify-between items-center bg-[#e2f3ee] border-b border-slate-900/10 z-20">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                        <BarChart3 className="w-5 h-5 text-primary" />
+                                    </div>
+                                    <h2 className="text-xl font-black text-slate-900 uppercase tracking-tighter">Machine <span className="text-primary">Versus</span></h2>
+                                </div>
+                                <button 
+                                    onClick={() => setShowCompareModal(false)}
+                                    className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-slate-100 flex items-center justify-center hover:bg-rose-500 hover:text-white transition-all shadow-sm group"
+                                >
+                                    <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+                                </button>
+                            </div>
+
+                            {/* Scrollable Content */}
+                            <div className="overflow-y-auto flex-grow custom-scrollbar">
+                                <div className="grid grid-cols-1 md:grid-cols-3 min-w-[700px] md:min-w-0">
+                                    {/* Feature Labels Column (Desktop Only) */}
+                                    <div className="hidden md:flex flex-col bg-slate-900/5 p-8 pt-[320px] gap-0 border-r border-slate-900/10">
+                                        {[
+                                            { label: 'Engine', icon: Gauge },
+                                            { label: 'Terrain', icon: Mountain },
+                                            { label: 'Comfort', icon: Sofa },
+                                            { label: 'Mileage', icon: BarChart3 },
+                                            { label: 'Rank', icon: Star }
+                                        ].map((item, i) => (
+                                            <div key={i} className="h-16 flex items-center gap-4 text-slate-500 uppercase tracking-[0.2em] font-black text-[9px] border-b border-slate-900/5 last:border-0">
+                                                <item.icon className="w-4 h-4 text-slate-400" /> {item.label}
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Comparison Bikes */}
+                                    {selectedCompare.map((bike, idx) => (
+                                        <div key={bike._id} className={`p-6 md:p-8 text-center flex flex-col items-center ${idx === 0 && selectedCompare.length > 1 ? 'border-r border-slate-900/10' : ''}`}>
+                                            {/* Bike Profile Card */}
+                                            <div className="w-full mb-8">
+                                                <div className="relative aspect-video bg-white/50 backdrop-blur-sm rounded-[2rem] mb-6 flex items-center justify-center p-2 border border-white/40 group overflow-hidden shadow-inner">
+                                                    <img 
+                                                        src={bike.image} 
+                                                        className="w-[120%] h-[120%] object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" 
+                                                        alt={bike.title} 
+                                                    />
+                                                    <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-md px-4 py-1.5 rounded-full text-[8px] font-black text-primary border border-primary/20 shadow-sm uppercase tracking-widest">
+                                                        {bike.category}
+                                                    </div>
+                                                </div>
+                                                <h3 className="text-xl md:text-2xl font-black text-slate-900 uppercase tracking-tighter mb-1 leading-none">{bike.title}</h3>
+                                                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em]">{bike.location}</p>
+                                            </div>
+
+                                            {/* Specs Rows */}
+                                            <div className="w-full">
+                                                <div className="md:hidden h-px bg-slate-100 w-full mb-4"></div>
+                                                
+                                                {[
+                                                    { label: 'Engine', value: `${bike.specs.cc} CC`, type: 'text' },
+                                                    { label: 'Type', value: bike.specs.terrain, type: 'text' },
+                                                    { label: 'Comfort', value: bike.specs.comfort, type: 'stars' },
+                                                    { label: 'Mileage', value: `${bike.specs.mileage} KMPL`, type: 'text' },
+                                                    { label: 'Rating', value: `${bike.rating} ★`, type: 'highlight' }
+                                                ].map((row, i) => (
+                                                    <div key={i} className="h-16 flex flex-col md:flex-row items-center justify-center md:border-b border-slate-900/10 last:border-0 relative">
+                                                        <span className="md:hidden text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">{row.label}</span>
+                                                        
+                                                        {row.type === 'text' && (
+                                                            <span className="text-lg font-black text-slate-800 tracking-tight">{row.value}</span>
+                                                        )}
+                                                        
+                                                        {row.type === 'stars' && (
+                                                            <div className="flex gap-1">
+                                                                {[...Array(5)].map((_, s) => (
+                                                                    <Star key={s} className={`w-3.5 h-3.5 ${s < row.value ? 'text-secondary fill-secondary' : 'text-slate-100 fill-slate-100'}`} />
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                        
+                                                        {row.type === 'highlight' && (
+                                                            <span className="text-lg font-black text-primary tracking-tight">{row.value}</span>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            <Link to={`/bike/${bike._id}`} className="mt-8 w-full">
+                                                <Button className="w-full h-14 rounded-2xl bg-slate-950 text-white shadow-xl hover:bg-primary transition-all font-black uppercase tracking-[0.2em] text-[9px] flex items-center justify-center gap-3">
+                                                    Book Now <Check className="w-4 h-4" />
+                                                </Button>
+                                            </Link>
+                                        </div>
+                                    ))}
+
+                                    {/* Empty Slot if only 1 bike */}
+                                    {selectedCompare.length < 2 && (
+                                        <div className="hidden md:flex flex-col items-center justify-center p-8 text-center border-dashed border-2 border-slate-100 m-6 rounded-[2.5rem] bg-slate-50/30">
+                                            <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                                                <Plus className="w-6 h-6 text-slate-300" />
+                                            </div>
+                                            <p className="text-slate-400 font-extrabold uppercase tracking-widest text-[9px] leading-relaxed">
+                                                Select second bike<br/><span className="text-primary/40">to compare</span>
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
         </div>
     );
 };

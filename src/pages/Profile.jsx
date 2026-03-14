@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Phone, ShoppingBag, Wallet, LogOut, Edit, Camera, ChevronRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Button from '../components/common/Button';
+import WavyPride from '../components/common/WavyPride';
+import { Trophy } from 'lucide-react';
 
 const Profile = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('profile');
+    const [searchParams] = useSearchParams();
+    const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'profile');
+
+    useEffect(() => {
+        const tab = searchParams.get('tab');
+        if (tab) setActiveTab(tab);
+    }, [searchParams]);
 
     if (!user) {
         navigate('/auth');
@@ -21,6 +29,7 @@ const Profile = () => {
         { id: 'profile', label: 'Profile', icon: User },
         { id: 'bookings', label: 'My Bookings', icon: ShoppingBag },
         { id: 'wallet', label: 'Wallet', icon: Wallet },
+        { id: 'loyalty', label: 'Wavy Pride', icon: Trophy },
     ];
 
     const handleLogout = () => {
@@ -32,8 +41,8 @@ const Profile = () => {
         <div className="bg-gradient-to-b from-white to-[#f0f9f6] min-h-screen flex flex-col">
             <Navbar />
 
-            <main className="flex-grow container-custom pt-32 pb-20">
-                <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
+            <main className="flex-grow container-custom pt-24 md:pt-32 pb-10 md:pb-20 px-4 md:px-6">
+                <div className="flex flex-col lg:flex-row gap-6 md:gap-8 max-w-6xl mx-auto">
 
                     {/* Sidebar */}
                     <motion.aside
@@ -97,11 +106,11 @@ const Profile = () => {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex-1 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-slate-100"
+                        className="flex-1 bg-white rounded-[2rem] md:rounded-[2.5rem] p-4 md:p-12 shadow-sm border border-slate-100"
                     >
-                        <div className="mb-10 flex justify-between items-center">
-                            <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tight">
-                                {activeTab === 'profile' ? 'Profile Details' : activeTab === 'bookings' ? 'My Bookings' : 'Wallet Status'}
+                        <div className="mb-6 md:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <h1 className="text-xl md:text-2xl font-black text-slate-900 uppercase tracking-tight">
+                                {activeTab === 'profile' ? 'Profile Details' : activeTab === 'bookings' ? 'My Bookings' : activeTab === 'loyalty' ? 'Wavy Pride Rewards' : 'Wallet Status'}
                             </h1>
                             {activeTab === 'profile' && (
                                 <Button variant="outline" className="px-6 py-2 rounded-xl text-xs font-bold border-slate-200 flex items-center gap-2">
@@ -172,6 +181,12 @@ const Profile = () => {
                                     <p className="text-[10pt] font-black uppercase text-slate-400 tracking-widest mb-2">Transactions</p>
                                     <p className="text-sm font-bold text-slate-500">No transaction history found.</p>
                                 </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'loyalty' && (
+                            <div className="overflow-hidden rounded-[2rem]">
+                                <WavyPride />
                             </div>
                         )}
                     </motion.div>
