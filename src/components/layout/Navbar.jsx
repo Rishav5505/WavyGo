@@ -124,9 +124,9 @@ const Navbar = () => {
             </AnimatePresence>
 
             {/* Main Navbar */}
-            <nav className={`fixed left-0 right-0 z-[100] transition-all duration-700 pointer-events-none ${scrolled ? 'top-4 md:top-6' : 'top-0'}`}>
-                <div className={`container-custom pointer-events-auto transition-all duration-700 ${scrolled ? 'max-w-5xl' : 'max-w-7xl'}`}>
-                    <div className={`relative flex items-center justify-between transition-all duration-700 px-4 md:px-10 rounded-[2rem] md:rounded-[2.5rem] border ${scrolled ? 'bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] py-3 md:py-4 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border-[#035c3e]/10' : 'py-4 md:py-10 border-transparent bg-transparent'}`}>
+            <nav className={`fixed left-0 right-0 z-[100] transition-all duration-300 pointer-events-none ${scrolled ? 'top-3 md:top-6' : 'top-0'}`}>
+                <div className={`container-custom pointer-events-auto transition-all duration-300 ${scrolled ? 'max-w-5xl px-4' : 'max-w-7xl'}`}>
+                    <div className={`relative flex items-center justify-between transition-all duration-300 px-6 md:px-10 rounded-[1.5rem] md:rounded-[2.5rem] border ${scrolled ? 'bg-white/95 md:bg-gradient-to-br md:from-[#d1ede1] md:to-[#f0f9f6] py-2 md:py-4 shadow-xl border-slate-100' : 'py-4 md:py-10 border-transparent bg-transparent'}`}>
                         <Logo />
 
                         {/* Desktop Menu */}

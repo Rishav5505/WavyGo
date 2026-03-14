@@ -182,9 +182,8 @@ const Home = () => {
                             className="absolute inset-0"
                         >
                             <motion.img
-                                initial={{ scale: 1.1 }}
+                                initial={{ scale: 1 }}
                                 animate={{ scale: 1 }}
-                                transition={{ duration: 6, ease: "linear" }}
                                 src={heroImages[currentHeroIndex]}
                                 className="w-full h-full object-cover pointer-events-none brightness-110 contrast-[1.05]"
                                 alt={`WavyGo Experience ${currentHeroIndex + 1}`}
@@ -208,17 +207,7 @@ const Home = () => {
                             initial={{ opacity: 0, x: -80, rotateY: 15 }}
                             whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
                             viewport={{ once: true }}
-                            animate={{
-                                y: [0, -15, 0],
-                            }}
-                            transition={{
-                                y: {
-                                    duration: 6,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                },
-                                default: { duration: 1.2, ease: "circOut" }
-                            }}
+                            transition={{ duration: 0.8, ease: "circOut" }}
                             className="w-full max-w-sm lg:max-w-[440px] bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] backdrop-blur-3xl rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-11 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-[#035c3e]/10"
                         >
                             <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2 tracking-tighter leading-tight md:leading-none">
@@ -390,7 +379,7 @@ const Home = () => {
                                             transition={{ delay: 0.4 + (i * 0.15), duration: 0.8 }}
                                             className="space-y-3 md:space-y-4 group flex flex-col items-center lg:items-start text-center lg:text-left translate-y-0 hover:-translate-y-2 transition-transform duration-500"
                                         >
-                                            <div className="w-12 h-12 md:w-16 md:h-16 bg-white/10 shadow-2xl backdrop-blur-xl border border-white/20 rounded-2xl md:rounded-[1.5rem] flex items-center justify-center transition-all group-hover:bg-primary group-hover:border-primary group-hover:shadow-primary/40">
+                                            <div className="w-12 h-12 md:w-16 md:h-16 bg-white/10 shadow-2xl backdrop-blur-xl border border-white/20 rounded-2xl md:rounded-[1.5rem] flex items-center justify-center transition-all group-hover:bg-primary group-hover:border-primary">
                                                 <usp.icon className={`w-6 h-6 md:w-8 md:h-8 ${usp.color} group-hover:text-white transition-colors duration-300`} />
                                             </div>
                                             <div>
