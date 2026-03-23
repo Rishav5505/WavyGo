@@ -186,10 +186,10 @@ const AdminSettings = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
                 <div className="md:col-span-3 space-y-3">
-                    <button onClick={() => setActiveTab('profile')} className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all font-bold ${activeTab === 'profile' ? 'bg-slate-900 text-white shadow-xl shadow-slate-200' : 'bg-white border border-slate-100 text-slate-400 hover:border-slate-300'}`}>
+                    <button onClick={() => setActiveTab('profile')} className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all font-bold ${activeTab === 'profile' ? 'bg-[#035c3e] text-white shadow-xl shadow-emerald-200' : 'bg-[#f8fefc] border border-emerald-100 text-slate-400 hover:border-emerald-300'}`}>
                         <User className="w-5 h-5" /> Account Details
                     </button>
-                    <button onClick={() => setActiveTab('campaigns')} className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all font-bold ${activeTab === 'campaigns' ? 'bg-slate-900 text-white shadow-xl shadow-slate-200' : 'bg-white border border-slate-100 text-slate-400 hover:border-slate-300'}`}>
+                    <button onClick={() => setActiveTab('campaigns')} className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all font-bold ${activeTab === 'campaigns' ? 'bg-[#035c3e] text-white shadow-xl shadow-emerald-200' : 'bg-[#f8fefc] border border-emerald-100 text-slate-400 hover:border-emerald-300'}`}>
                         <Megaphone className="w-5 h-5" /> Campaign Hub
                     </button>
                 </div>
@@ -197,7 +197,7 @@ const AdminSettings = () => {
                 <div className="md:col-span-9">
                     <AnimatePresence mode="wait">
                         {activeTab === 'profile' && (
-                            <motion.div key="profile" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                            <motion.div key="profile" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="bg-[#f8fefc] p-10 rounded-[2.5rem] border border-emerald-100 shadow-sm">
                                 <h3 className="text-xl font-black text-slate-900 mb-10">System Identity</h3>
                                 <div className="space-y-6 max-w-xl">
                                     <div className="flex flex-col gap-2">
@@ -227,7 +227,7 @@ const AdminSettings = () => {
                                     ) : campaigns.length === 0 ? (
                                         <div className="col-span-full py-20 text-center text-slate-400 italic">No campaigns found.</div>
                                     ) : campaigns.map(campaign => (
-                                        <div key={campaign._id} className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm relative group overflow-hidden">
+                                        <div key={campaign._id} className="bg-[#f8fefc] p-8 rounded-[2.5rem] border border-emerald-100 shadow-sm relative group overflow-hidden">
                                             <div className="flex justify-between items-start mb-6">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-primary">
@@ -263,7 +263,7 @@ const AdminSettings = () => {
                 {showCampaignModal && (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => !submitting && setShowCampaignModal(false)} />
-                        <motion.div initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }} className="relative w-full max-w-2xl bg-white rounded-[3rem] p-12 shadow-2xl max-h-[90vh] overflow-y-auto">
+                        <motion.div initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }} className="relative w-full max-w-2xl bg-[#f8fefc] rounded-[3rem] p-12 shadow-2xl max-h-[90vh] overflow-y-auto">
                             <button onClick={() => !submitting && setShowCampaignModal(false)} className="absolute top-8 right-8 p-3 hover:bg-slate-100 rounded-full"><X className="w-6 h-6 text-slate-400" /></button>
                             {selectedCampaignType && <button onClick={() => setSelectedCampaignType(null)} className="flex items-center gap-2 text-slate-400 mb-8 font-black text-xs uppercase tracking-widest"><ArrowLeft className="w-4 h-4" /> Categories</button>}
                             <header className="mb-10 text-center">

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Users, Shield, Star, Globe, Compass, Zap, Play, Volume2, VolumeX } from 'lucide-react';
+import { Heart, Users, Shield, Star, Globe, Compass, Zap, Play, Volume2, VolumeX, MessageCircle } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import CTA from '../components/layout/CTA';
@@ -129,30 +129,118 @@ const About = () => {
             </section>
 
             {/* Stats */}
-            <section className="py-8 md:py-24 bg-gradient-to-b from-white to-[#f0f9f6]">
+            <section className="py-12 md:py-20 bg-gradient-to-b from-white to-[#f0f9f6]">
                 <div className="container-custom">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
                         {stats.map((stat, i) => (
-                            <div key={i} className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] p-10 rounded-3xl text-center border border-[#035c3e]/10 shadow-sm group hover:scale-105 transition-all duration-300">
-                                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                                    <stat.icon className="w-8 h-8 text-primary" />
+                            <div key={i} className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] text-center border border-[#035c3e]/10 shadow-sm group hover:scale-105 transition-all duration-300">
+                                <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/10 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-5">
+                                    <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                                 </div>
-                                <h3 className="text-3xl font-bold text-slate-900 mb-2">{stat.value}</h3>
-                                <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">{stat.label}</p>
+                                <h3 className="text-xl md:text-3xl font-black text-slate-900 mb-1 md:mb-2">{stat.value}</h3>
+                                <p className="text-slate-500 md:text-slate-400 font-bold uppercase tracking-wider md:tracking-widest text-[8px] md:text-[10px]">{stat.label}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Quote */}
-            <section className="py-12 md:py-32 bg-white text-center">
-                <div className="container-custom max-w-4xl mx-auto">
-                    <Compass className="w-12 h-12 text-secondary/40 mx-auto mb-10" />
-                    <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-8 italic">
-                        "Tradition in hospitality, <br className="hidden md:block" /> innovation in exploration."
-                    </h2>
-                    <p className="text-slate-400 font-bold uppercase tracking-[0.4em] text-xs">The WavyGo DNA</p>
+            {/* Insta-style Story Feed */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom max-w-6xl mx-auto">
+                    <div className="text-center mb-10 md:mb-16 px-4">
+                        <Reveal center>
+                            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-none mb-4">Our <span className="text-[#035c3e]">Journey</span></h2>
+                        </Reveal>
+                        <p className="text-slate-500 font-bold uppercase tracking-[0.1em] md:tracking-[0.3em] text-[10px] whitespace-normal">Told through memories</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[
+                            {
+                                id: 1,
+                                image: "/images/insta/1.png",
+                                likes: "1,245",
+                                caption: "Find the BEST BIKE for RENT. Book Now. 🏍️ #wavygo #bikerentals",
+                                time: "2 DAYS AGO"
+                            },
+                            {
+                                id: 2,
+                                image: "/images/insta/2.png",
+                                likes: "2,089",
+                                caption: "Get your favourite vehicle on rent. Cruiser, Scooter, E-Scooter, or Sport bike! ⚡",
+                                time: "4 DAYS AGO"
+                            },
+                            {
+                                id: 3,
+                                image: "/images/insta/3.jpg",
+                                likes: "4,532",
+                                caption: "Rule the roads of Dehradun with WAVYGO. 🏔️ #dehradun #uttarakhand",
+                                time: "1 WEEK AGO"
+                            },
+                            {
+                                id: 4,
+                                image: "/images/insta/4.jpg",
+                                likes: "8,921",
+                                caption: "Ride Your Way. Happy Women's Day to every woman who chooses to ride her own path. 🙌♀️",
+                                time: "1 WEEK AGO"
+                            },
+                            {
+                                id: 5,
+                                image: "/images/insta/5.jpg",
+                                likes: "15.4k",
+                                caption: "Punch found his perfect rental partner. No more sad days. 🐒❤️🏍️",
+                                time: "2 WEEKS AGO"
+                            }
+                        ].map((post) => (
+                            <div 
+                                key={post.id}
+                                className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] p-3 md:p-4 rounded-[1rem] md:rounded-[1.5rem] border border-[#035c3e]/10 shadow-sm transition-all duration-300 hover:scale-[1.02] flex flex-col max-w-sm mx-auto w-full"
+                            >
+                                {/* Post Header */}
+                                <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 p-[2px]">
+                                        <div className="w-full h-full bg-white rounded-full flex items-center justify-center p-0.5">
+                                            <div className="w-full h-full bg-[#035c3e] rounded-full flex items-center justify-center">
+                                                <span className="text-white text-[8px] font-black italic">WG</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex-1">
+                                        <h4 className="text-xs font-bold text-slate-900 leading-none mb-0.5">wavygo.official</h4>
+                                        <p className="text-[9px] text-slate-500">Original Audio</p>
+                                    </div>
+                                    <button className="text-slate-900 font-bold text-xs hover:text-slate-500">•••</button>
+                                </div>
+
+                                {/* Image */}
+                                <div className="aspect-square w-full bg-slate-100 overflow-hidden relative group rounded-xl md:rounded-[1.25rem] mb-3 shadow-inner">
+                                    <img src={post.image} alt="post" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                                </div>
+
+                                {/* Actions */}
+                                <div>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <button className="hover:opacity-50 transition-opacity"><Heart className="w-4 h-4 md:w-5 md:h-5 text-slate-900" /></button>
+                                            <button className="hover:opacity-50 transition-opacity"><MessageCircle className="w-4 h-4 md:w-5 md:h-5 text-slate-900" /></button>
+                                            <button className="hover:opacity-50 transition-opacity"><Zap className="w-4 h-4 md:w-5 md:h-5 text-slate-900" /></button>
+                                        </div>
+                                        <button className="hover:opacity-50 transition-opacity"><Compass className="w-4 h-4 md:w-5 md:h-5 text-slate-900" /></button>
+                                    </div>
+                                    
+                                    <p className="text-xs font-bold text-slate-900 mb-1">{post.likes} likes</p>
+                                    
+                                    <p className="text-[10px] md:text-xs text-slate-700 mb-2 leading-relaxed">
+                                        <span className="font-bold text-slate-900 mr-1.5">wavygo.official</span>
+                                        {post.caption}
+                                    </p>
+
+                                    <p className="text-[8px] md:text-[9px] text-slate-400 font-medium uppercase tracking-widest">{post.time}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
 

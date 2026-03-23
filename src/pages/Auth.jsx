@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Mail, Lock, ArrowRight, ChevronLeft, Bike, Sparkles, Send } from 'lucide-react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { User, Mail, Lock, ArrowRight, ChevronLeft, Bike, Sparkles, Send, ShieldCheck } from 'lucide-react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import API from '../utils/api';
 import Button from '../components/common/Button';
@@ -10,15 +10,53 @@ import Footer from '../components/layout/Footer';
 import { Loader2 } from 'lucide-react';
 
 const Auth = () => {
-    const [mode, setMode] = useState('login'); // 'login', 'signup', 'forgot'
-    const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const { login } = useAuth();
+    const { user, login, logout } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const [mode, setMode] = useState('login'); // login, signup, forgot
+    const [role, setRole] = useState('user'); // user, vendor, admin
+    const [step, setStep] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        otp: '',
+        location: ''
+    });
 
     const from = location.state?.from?.pathname || "/";
+
+    if (user && mode === 'login') {
+        return (
+            <div className="min-h-screen pt-40 pb-20 container-custom flex items-center justify-center">
+                <div className="w-full max-w-md bg-white p-12 rounded-[3.5rem] border border-emerald-50 shadow-2xl text-center relative overflow-hidden">
+                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+                    <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-8 text-primary relative z-10">
+                        <User className="w-10 h-10" />
+                    </div>
+                    <h2 className="text-2xl font-black text-slate-900 mb-2 relative z-10">Already Logged In</h2>
+                    <p className="text-slate-500 font-medium mb-10 italic relative z-10">You are currently logged in as <span className="text-primary font-bold">{user.name}</span>.</p>
+
+                    <div className="space-y-4 relative z-10">
+                        <Button
+                            onClick={() => navigate(user.role === 'admin' ? '/admin/dashboard' : user.role === 'vendor' ? '/vendor/dashboard' : '/profile')}
+                            className="w-full py-5 rounded-2xl bg-slate-900 text-white font-bold shadow-xl hover:scale-[1.02] transition-all"
+                        >
+                            Go to Dashboard
+                        </Button>
+                        <button
+                            onClick={() => logout()}
+                            className="w-full py-4 text-red-500 font-black text-[10px] uppercase tracking-[0.2em] hover:bg-rose-50 rounded-2xl transition-all"
+                        >
+                            Sign Out to Switch Accounts
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,8 +64,83 @@ const Auth = () => {
         setError('');
 
         try {
+            if (mode === 'signup' && role === 'vendor') {
+                if (step === 1) {
+                    if (!formData.location) throw new Error('Please select a location');
+                    setStep(2);
+                } else if (step === 2) {
+                    // Simulate OTP sending
+                    setStep(3);
+                } else if (step === 3) {
+                    if (formData.otp === '1234') {
+                        // Save to localStorage for Admin to see
+                        const pendingVendors = JSON.parse(localStorage.getItem('pendingVendors') || '[]');
+                        const newVendor = {
+                            id: "V" + Date.now(),
+                            name: formData.name || formData.email.split('@')[0],
+                            email: formData.email,
+                            password: formData.password,
+                            location: formData.location,
+                            status: "pending",
+                            bikes: 0,
+                            bookings: 0,
+                            revenue: 0,
+                            joinedDate: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+                        };
+                        pendingVendors.push(newVendor);
+                        localStorage.setItem('pendingVendors', JSON.stringify(pendingVendors));
+
+                        setStep(4);
+                    } else {
+                        throw new Error('Invalid OTP. Use 1234 for demo.');
+                    }
+                }
+                setLoading(false);
+                return;
+            }
+
             let response;
             if (mode === 'login') {
+                // Simulation for Admin/Vendor
+                if (role === 'admin' && formData.email === 'admin@wavygo.com' && formData.password === 'admin123') {
+                    login({ name: 'Super Admin', email: formData.email, role: 'admin', isAdmin: true, token: 'mock-admin-token' });
+                    navigate('/admin/dashboard');
+                    return;
+                }
+                if (role === 'vendor') {
+                    // Try hardcoded demo vendor
+                    if (formData.email === 'ram@rentals.com' && formData.password === 'vendor123') {
+                        localStorage.setItem('vendorId', 'V1');
+                        localStorage.setItem('vendorName', 'Ram Rentals');
+                        localStorage.setItem('vendorLocation', 'Manali');
+                        login({ name: 'Ram Rentals', email: formData.email, role: 'vendor', token: 'mock-vendor-token', location: 'Manali' });
+                        navigate('/vendor/dashboard');
+                        return;
+                    }
+
+                    // Try dynamic vendors from signup
+                    const vendors = JSON.parse(localStorage.getItem('pendingVendors') || '[]');
+                    const foundVendor = vendors.find(v => v.email === formData.email && (v.password === formData.password || !v.password));
+
+                    if (foundVendor) {
+                        if (foundVendor.status === 'approved') {
+                            localStorage.setItem('vendorId', foundVendor.id);
+                            localStorage.setItem('vendorName', foundVendor.name);
+                            localStorage.setItem('vendorLocation', foundVendor.location);
+                            login({ name: foundVendor.name, email: foundVendor.email, role: 'vendor', token: 'mock-vendor-token', location: foundVendor.location });
+                            navigate('/vendor/dashboard');
+                            return;
+                        } else {
+                            throw new Error('Your account is still pending admin approval.');
+                        }
+                    }
+                }
+
+                if (role !== 'user') {
+                    throw new Error('Invalid credentials for ' + role);
+                }
+
+                // Regular User Login
                 response = await API.post('/users/login', {
                     email: formData.email,
                     password: formData.password
@@ -39,7 +152,6 @@ const Auth = () => {
                     password: formData.password
                 });
             } else {
-                // Simplified forgot password logic
                 alert('Password reset link sent to your email!');
                 setMode('login');
                 setLoading(false);
@@ -49,7 +161,7 @@ const Auth = () => {
             login(response.data);
             navigate(from, { replace: true });
         } catch (err) {
-            setError(err.response?.data?.message || 'Something went wrong. Please try again.');
+            setError(err.message || err.response?.data?.message || 'Something went wrong. Please try again.');
             console.error(err);
         } finally {
             setLoading(false);
@@ -131,7 +243,7 @@ const Auth = () => {
                                 transition={{ duration: 0.4 }}
                             >
                                 {/* Mode Header */}
-                                <div className="mb-12">
+                                <div className="mb-10">
                                     <h1 className="text-4xl font-black text-slate-900 tracking-tight mb-3">
                                         {mode === 'login' ? 'Ride Back In' : mode === 'signup' ? 'Start Your Journey' : 'Reset Password'}
                                     </h1>
@@ -139,6 +251,24 @@ const Auth = () => {
                                         {mode === 'login' ? 'Enter your details to access your account' : mode === 'signup' ? 'Create an account to start booking' : 'Enter your email to receive reset instructions'}
                                     </p>
                                 </div>
+
+                                {mode === 'login' && (
+                                    <div className="flex bg-slate-100 p-1.5 rounded-2xl mb-8">
+                                        {['user', 'vendor', 'admin'].map((r) => (
+                                            <button
+                                                key={r}
+                                                type="button"
+                                                onClick={() => setRole(r)}
+                                                className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${role === r
+                                                    ? 'bg-white text-primary shadow-sm'
+                                                    : 'text-slate-400 hover:text-slate-600'
+                                                    }`}
+                                            >
+                                                {r}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
 
                                 {error && (
                                     <motion.div
@@ -151,95 +281,221 @@ const Auth = () => {
                                 )}
 
                                 <form onSubmit={handleSubmit} className="space-y-6">
-                                    {mode === 'signup' && (
-                                        <div className="space-y-2 group">
-                                            <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Full Name</label>
-                                            <div className="relative">
-                                                <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
-                                                <input
-                                                    type="text"
-                                                    required
-                                                    value={formData.name}
-                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                    placeholder="John Doe"
-                                                    className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
-                                                />
-                                            </div>
-                                        </div>
-                                    )}
+                                    {mode === 'signup' && role === 'vendor' ? (
+                                        <div className="space-y-6">
+                                            {step === 1 && (
+                                                <div className="space-y-4">
+                                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Business Location</label>
+                                                    <div className="grid grid-cols-2 gap-3">
+                                                        {['Delhi', 'Mumbai', 'Bangalore', 'Pune', 'Jaipur', 'Goa', 'Ahmedabad', 'Chandigarh', 'Hyderabad', 'Dehradun', 'Rishikesh', 'Manali'].map((loc) => (
+                                                            <button
+                                                                key={loc}
+                                                                type="button"
+                                                                onClick={() => setFormData({ ...formData, location: loc })}
+                                                                className={`p-4 rounded-2xl border-2 text-sm font-bold transition-all ${formData.location === loc
+                                                                    ? 'bg-primary/5 border-primary text-primary shadow-sm'
+                                                                    : 'bg-slate-50 border-slate-100 text-slate-400 hover:border-slate-200'
+                                                                    }`}
+                                                            >
+                                                                {loc}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
 
-                                    <div className="space-y-2 group">
-                                        <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Email Address</label>
-                                        <div className="relative">
-                                            <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
-                                            <input
-                                                type="email"
-                                                required
-                                                value={formData.email}
-                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                placeholder="email@example.com"
-                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
-                                            />
-                                        </div>
-                                    </div>
+                                            {step === 2 && (
+                                                <div className="space-y-6">
+                                                    <div className="space-y-2 group">
+                                                        <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Business Name</label>
+                                                        <div className="relative">
+                                                            <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
+                                                            <input
+                                                                type="text"
+                                                                required
+                                                                value={formData.name}
+                                                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                                                placeholder="e.g. Royal Rentals"
+                                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="space-y-2 group">
+                                                        <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Business Email</label>
+                                                        <div className="relative">
+                                                            <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
+                                                            <input
+                                                                type="email"
+                                                                required
+                                                                value={formData.email}
+                                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                                placeholder="vendor@business.com"
+                                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="space-y-2 group">
+                                                        <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Create Password</label>
+                                                        <div className="relative">
+                                                            <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
+                                                            <input
+                                                                type="password"
+                                                                required
+                                                                value={formData.password}
+                                                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                                                placeholder="••••••••"
+                                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
 
-                                    {mode !== 'forgot' && (
-                                        <div className="space-y-2 group">
-                                            <div className="flex justify-between items-center ml-1">
-                                                <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Password</label>
-                                                {mode === 'login' && (
+                                            {step === 3 && (
+                                                <div className="space-y-2 group">
+                                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Enter OTP (Sent to {formData.email})</label>
+                                                    <div className="relative">
+                                                        <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
+                                                        <input
+                                                            type="text"
+                                                            required
+                                                            maxLength={4}
+                                                            value={formData.otp}
+                                                            onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
+                                                            placeholder="Try 1234"
+                                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold tracking-[1em] text-center text-slate-700 text-lg"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {step === 4 ? (
+                                                <motion.div
+                                                    initial={{ scale: 0.9, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    className="bg-[#effaf6] border border-emerald-100 p-8 rounded-[2.5rem] text-center space-y-4"
+                                                >
+                                                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto text-white shadow-xl shadow-primary/20">
+                                                        <ShieldCheck className="w-8 h-8" />
+                                                    </div>
+                                                    <h3 className="text-xl font-black text-slate-900 tracking-tight">Request Submitted!</h3>
+                                                    <p className="text-xs font-medium text-slate-500 leading-relaxed">
+                                                        Our Admin team will review your {formData.location} rental profile. You'll receive an approval email within 24 hours.
+                                                    </p>
                                                     <button
-                                                        type="button"
-                                                        onClick={() => setMode('forgot')}
-                                                        className="text-[10px] font-black uppercase text-primary tracking-widest hover:underline"
+                                                        onClick={() => setMode('login')}
+                                                        className="pt-4 text-xs font-black text-primary uppercase tracking-widest underline underline-offset-4"
                                                     >
-                                                        Forgot?
+                                                        Back to login
+                                                    </button>
+                                                </motion.div>
+                                            ) : (
+                                                <Button
+                                                    type="submit"
+                                                    disabled={loading}
+                                                    className="w-full h-16 rounded-2xl bg-primary text-white font-black text-lg uppercase tracking-[0.4em] shadow-2xl shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center"
+                                                >
+                                                    {loading ? (
+                                                        <Loader2 className="w-6 h-6 animate-spin" />
+                                                    ) : (
+                                                        step === 1 ? 'NEXT' : step === 2 ? 'SEND OTP' : 'VERIFY'
+                                                    )}
+                                                </Button>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <>
+                                            {mode === 'signup' && (
+                                                <div className="space-y-2 group">
+                                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Full Name</label>
+                                                    <div className="relative">
+                                                        <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
+                                                        <input
+                                                            type="text"
+                                                            required
+                                                            value={formData.name}
+                                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                                            placeholder="John Doe"
+                                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            <div className="space-y-2 group">
+                                                <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Email Address</label>
+                                                <div className="relative">
+                                                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
+                                                    <input
+                                                        type="email"
+                                                        required
+                                                        value={formData.email}
+                                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                        placeholder="email@example.com"
+                                                        className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            {mode !== 'forgot' && (
+                                                <div className="space-y-2 group">
+                                                    <div className="flex justify-between items-center ml-1">
+                                                        <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Password</label>
+                                                        {mode === 'login' && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setMode('forgot')}
+                                                                className="text-[10px] font-black uppercase text-primary tracking-widest hover:underline"
+                                                            >
+                                                                Forgot?
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                    <div className="relative">
+                                                        <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
+                                                        <input
+                                                            type="password"
+                                                            required
+                                                            value={formData.password}
+                                                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                                            placeholder="••••••••"
+                                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            <Button
+                                                type="submit"
+                                                disabled={loading}
+                                                className="w-full h-16 rounded-2xl bg-primary text-white font-black text-lg uppercase tracking-[0.4em] shadow-2xl shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center"
+                                            >
+                                                {loading ? (
+                                                    <Loader2 className="w-6 h-6 animate-spin" />
+                                                ) : (
+                                                    mode === 'login' ? 'LOGIN' : mode === 'signup' ? 'CREATE' : 'RESET'
+                                                )}
+                                            </Button>
+
+                                            {/* Mode Toggle */}
+                                            <div className="pt-6 text-center">
+                                                {mode === 'login' ? (
+                                                    <p className="text-sm font-medium text-slate-500">
+                                                        Don't have an account? {' '}
+                                                        <button onClick={() => setMode('signup')} type="button" className="text-primary font-black hover:underline underline-offset-4">Sign Up</button>
+                                                    </p>
+                                                ) : (
+                                                    <button
+                                                        onClick={() => setMode('login')}
+                                                        type="button"
+                                                        className="flex items-center gap-2 mx-auto text-sm font-black text-slate-500 hover:text-primary transition-colors uppercase tracking-widest"
+                                                    >
+                                                        <ChevronLeft className="w-4 h-4" /> Back to Login
                                                     </button>
                                                 )}
                                             </div>
-                                            <div className="relative">
-                                                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
-                                                <input
-                                                    type="password"
-                                                    required
-                                                    value={formData.password}
-                                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                                    placeholder="••••••••"
-                                                    className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
-                                                />
-                                            </div>
-                                        </div>
+                                        </>
                                     )}
-
-                                    <Button
-                                        type="submit"
-                                        disabled={loading}
-                                        className="w-full h-16 rounded-2xl bg-primary text-white font-black text-lg uppercase tracking-[0.4em] shadow-2xl shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center"
-                                    >
-                                        {loading ? (
-                                            <Loader2 className="w-6 h-6 animate-spin" />
-                                        ) : (
-                                            mode === 'login' ? 'LOGIN' : mode === 'signup' ? 'CREATE' : 'RESET'
-                                        )}
-                                    </Button>
-
-                                    {/* Mode Toggle */}
-                                    <div className="pt-6 text-center">
-                                        {mode === 'login' ? (
-                                            <p className="text-sm font-medium text-slate-500">
-                                                Don't have an account? {' '}
-                                                <button onClick={() => setMode('signup')} type="button" className="text-primary font-black hover:underline underline-offset-4">Sign Up</button>
-                                            </p>
-                                        ) : (
-                                            <button
-                                                onClick={() => setMode('login')}
-                                                type="button"
-                                                className="flex items-center gap-2 mx-auto text-sm font-black text-slate-500 hover:text-primary transition-colors uppercase tracking-widest"
-                                            >
-                                                <ChevronLeft className="w-4 h-4" /> Back to Login
-                                            </button>
-                                        )}
-                                    </div>
                                 </form>
                             </motion.div>
                         </AnimatePresence>

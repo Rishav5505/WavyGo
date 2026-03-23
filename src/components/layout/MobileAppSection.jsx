@@ -31,13 +31,13 @@ const MobileAppSection = () => {
                 className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[100px]"
             />
 
-            <div className="container-custom relative z-10">
+            <div className="container-custom relative z-10 px-4 md:px-0">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    className="relative w-full rounded-[3rem] overflow-hidden shadow-[0_40px_80px_-15px_rgba(3,92,62,0.15)] group cursor-pointer border-[8px] border-white"
+                    className="relative w-full max-w-5xl mx-auto rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(3,92,62,0.15)] group cursor-pointer border-[6px] border-white"
                 >
                     {/* Hover Effect Overlay */}
                     <motion.div

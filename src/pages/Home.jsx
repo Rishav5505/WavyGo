@@ -15,11 +15,12 @@ import Testimonials from '../components/common/Testimonials';
 import FAQ from '../components/common/FAQ';
 import PopularPackages from '../components/common/PopularPackages';
 import WhyChooseUs from '../components/common/WhyChooseUs';
-import BlogSection from '../components/common/BlogSection';
+import ClientSection from '../components/common/ClientSection';
 import MobileAppSection from '../components/layout/MobileAppSection';
 import SocialSection from '../components/layout/SocialSection';
 import Lightbox from '../components/common/Lightbox';
 import WavyLabs from '../components/common/WavyLabs';
+import CitySelectorModal from '../components/common/CitySelectorModal';
 
 const Counter = ({ value }) => {
     const [count, setCount] = useState(0);
@@ -74,7 +75,7 @@ const Home = () => {
     const [destination, setDestination] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
-    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [isCityModalOpen, setIsCityModalOpen] = useState(false);
 
     // Date & Time State
     const [pickupDate, setPickupDate] = useState(() => {
@@ -223,15 +224,11 @@ const Home = () => {
                                         <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors z-10" />
                                         <input
                                             type="text"
+                                            readOnly
                                             placeholder="Pick Your City..."
                                             value={destination}
-                                            onChange={(e) => {
-                                                setDestination(e.target.value);
-                                                setShowSuggestions(true);
-                                            }}
-                                            onFocus={() => setShowSuggestions(true)}
-                                            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 md:py-4.5 pl-14 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm hover:shadow-inner"
+                                            onClick={() => setIsCityModalOpen(true)}
+                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 md:py-4.5 pl-14 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm hover:shadow-inner cursor-pointer"
                                         />
                                         <div className="absolute bottom-0 left-0 right-0 h-0.5 overflow-hidden rounded-b-2xl">
                                             <motion.div
@@ -240,43 +237,6 @@ const Home = () => {
                                                 className="w-full h-full bg-primary"
                                             />
                                         </div>
-
-                                        {/* Dropdown Suggestions */}
-                                        <AnimatePresence>
-                                            {showSuggestions && suggestions.length > 0 && (
-                                                <motion.ul
-                                                    initial={{ opacity: 0, y: 5 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    exit={{ opacity: 0, y: 5 }}
-                                                    className="absolute top-full mt-2 w-full bg-white border border-slate-100 rounded-xl shadow-2xl overflow-hidden z-[100]"
-                                                >
-                                                    {isSearching ? (
-                                                        <li className="px-4 py-3 text-xs text-slate-500 text-center">Searching...</li>
-                                                    ) : (
-                                                        suggestions.map((s, i) => (
-                                                            <li
-                                                                key={i}
-                                                                onClick={(e) => {
-                                                                    e.preventDefault();
-                                                                    const cityName = s.display_name.split(',')[0];
-                                                                    setDestination(cityName);
-                                                                    setShowSuggestions(false);
-                                                                }}
-                                                                className="px-4 py-3 hover:bg-slate-50 cursor-pointer border-b last:border-0 border-slate-50 transition-colors"
-                                                            >
-                                                                <div className="flex items-start gap-3">
-                                                                    <MapPin className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-                                                                    <div className="flex flex-col">
-                                                                        <span className="text-xs font-bold text-slate-800 line-clamp-1">{s.display_name.split(',')[0]}</span>
-                                                                        <span className="text-[10px] text-slate-400 line-clamp-1">{s.display_name.split(',').slice(1).join(',')}</span>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        ))
-                                                    )}
-                                                </motion.ul>
-                                            )}
-                                        </AnimatePresence>
                                     </div>
                                 </div>
 
@@ -336,12 +296,12 @@ const Home = () => {
                                     </div>
                                 </div>
 
-                                <Link to="/packages">
+                                <Link to={`/packages`} state={{ selectedCity: destination }}>
                                     <motion.div
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                     >
-                                        <Button className="w-full h-14 md:h-18 rounded-2xl bg-primary text-white font-black text-base md:text-lg uppercase tracking-[0.3em] md:tracking-[0.4em] shadow-2xl shadow-primary/40 transition-all mt-2 md:mt-4 border-b-4 border-black/20 active:translate-y-1 active:border-b-0">
+                                        <Button className="w-full h-14 md:h-16 rounded-2xl bg-primary text-white font-black text-base md:text-lg uppercase tracking-[0.3em] md:tracking-[0.4em] shadow-2xl shadow-primary/40 transition-all mt-2 md:mt-4 border-b-4 border-black/20 active:translate-y-1 active:border-b-0 flex items-center justify-center">
                                             SEARCH
                                         </Button>
                                     </motion.div>
@@ -367,7 +327,7 @@ const Home = () => {
                                 <div className="grid grid-cols-2 gap-x-4 md:gap-x-12 gap-y-6 md:gap-y-14">
                                     {[
                                         { icon: Bike, val: "10k+", label: "premium machines", color: "text-primary" },
-                                        { icon: Globe, val: "Unlim.", label: "total freedom", color: "text-primary" },
+                                        { icon: Globe, val: "Unlimited", label: "total freedom", color: "text-primary" },
                                         { icon: ShieldCheck, val: "Secure", label: "insured & safe", color: "text-primary" },
                                         { icon: Headset, val: "24/7", label: "expert support", color: "text-primary" },
                                     ].map((usp, i) => (
@@ -440,10 +400,10 @@ const Home = () => {
             <WhyChooseUs />
 
             {/* Analytics Section */}
-            <section className="py-12 bg-primary overflow-hidden relative border-y border-white/10">
+            <section className="py-6 md:py-12 bg-primary overflow-hidden relative border-y border-white/10">
                 <div className="absolute inset-0 bg-black/10 pointer-events-none"></div>
                 <div className="container-custom">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-2 md:gap-8 lg:gap-12">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 md:gap-y-10 gap-x-1 md:gap-8 lg:gap-12">
                         {stats.map((stat, i) => (
                             <motion.div
                                 key={i}
@@ -451,15 +411,15 @@ const Home = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8, delay: i * 0.1 }}
-                                className="text-center group p-2 hover:bg-white/5 transition-all duration-500 rounded-2xl relative"
+                                className="text-center group p-1 md:p-2 hover:bg-white/5 transition-all duration-500 rounded-2xl relative"
                             >
-                                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-3 transition-all group-hover:scale-110 group-hover:bg-white group-hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)]">
-                                    <stat.icon className="w-4 h-4 text-white group-hover:text-primary transition-colors" />
+                                <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-lg md:rounded-xl flex items-center justify-center mx-auto mb-1.5 md:mb-3 transition-all group-hover:scale-110 group-hover:bg-white group-hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)]">
+                                    <stat.icon className="w-3.5 h-3.5 md:w-4 md:h-4 text-white group-hover:text-primary transition-colors" />
                                 </div>
-                                <h3 className="text-2xl font-black text-white mb-0.5 tracking-tighter">
+                                <h3 className="text-lg md:text-2xl font-black text-white tracking-tighter leading-none mb-1">
                                     <Counter value={stat.value} />
                                 </h3>
-                                <p className="text-white/60 font-extrabold uppercase tracking-[0.2em] text-[7.5px]">{stat.label}</p>
+                                <p className="text-white/60 font-extrabold uppercase tracking-widest md:tracking-[0.2em] text-[6px] md:text-[7.5px] mt-0.5">{stat.label}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -470,9 +430,16 @@ const Home = () => {
             <SocialSection />
             <FAQ />
             <MobileAppSection />
-            <BlogSection />
+            <ClientSection />
             <CTA />
             <Footer />
+
+            <CitySelectorModal
+                isOpen={isCityModalOpen}
+                onClose={() => setIsCityModalOpen(false)}
+                onSelect={(city) => setDestination(city)}
+                allCities={INDIAN_CITIES}
+            />
 
             <Lightbox
                 isOpen={isLightboxOpen}

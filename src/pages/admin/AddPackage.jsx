@@ -90,7 +90,7 @@ const AddPackage = () => {
 
             <form onSubmit={handleSubmit} className="space-y-10">
                 {/* Basic Info */}
-                <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-8">
+                <div className="bg-[#f8fefc] p-10 rounded-[2.5rem] border border-emerald-100 shadow-sm space-y-8">
                     <h3 className="text-xl font-bold flex items-center gap-3 text-slate-900">
                         <Plus className="w-5 h-5 text-primary" /> Basic Information
                     </h3>
@@ -100,7 +100,7 @@ const AddPackage = () => {
                             <label className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 block ml-1">Package Title</label>
                             <input
                                 type="text" name="title" value={formData.title} onChange={handleChange}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-medium"
+                                className="w-full bg-[#effaf6] border border-emerald-50 rounded-xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-medium"
                                 placeholder="e.g. Kedarkantha Winter Trek" required
                             />
                         </div>
@@ -110,7 +110,7 @@ const AddPackage = () => {
                                 <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
                                 <input
                                     type="text" name="location" value={formData.location} onChange={handleChange}
-                                    className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 pl-12 pr-6 focus:outline-none focus:border-primary transition-all font-medium"
+                                    className="w-full bg-[#effaf6] border border-emerald-50 rounded-xl py-4 pl-12 pr-6 focus:outline-none focus:border-primary transition-all font-medium"
                                     placeholder="Uttarakhand, India" required
                                 />
                             </div>
@@ -119,7 +119,7 @@ const AddPackage = () => {
                             <label className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 block ml-1">Category</label>
                             <select
                                 name="category" value={formData.category} onChange={handleChange}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-medium appearance-none"
+                                className="w-full bg-[#effaf6] border border-emerald-50 rounded-xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-medium appearance-none"
                             >
                                 <option>Trekking</option>
                                 <option>Camping</option>
@@ -133,7 +133,7 @@ const AddPackage = () => {
                                 <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
                                 <input
                                     type="number" name="price" value={formData.price} onChange={handleChange}
-                                    className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 pl-12 pr-6 focus:outline-none focus:border-primary transition-all font-medium"
+                                    className="w-full bg-[#effaf6] border border-emerald-50 rounded-xl py-4 pl-12 pr-6 focus:outline-none focus:border-primary transition-all font-medium"
                                     placeholder="4999" required
                                 />
                             </div>
@@ -144,7 +144,7 @@ const AddPackage = () => {
                                 <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
                                 <input
                                     type="text" name="duration" value={formData.duration} onChange={handleChange}
-                                    className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 pl-12 pr-6 focus:outline-none focus:border-primary transition-all font-medium"
+                                    className="w-full bg-[#effaf6] border border-emerald-50 rounded-xl py-4 pl-12 pr-6 focus:outline-none focus:border-primary transition-all font-medium"
                                     placeholder="4 Days / 3 Nights" required
                                 />
                             </div>
@@ -155,14 +155,14 @@ const AddPackage = () => {
                         <label className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 block ml-1">Description</label>
                         <textarea
                             name="description" value={formData.description} onChange={handleChange}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-medium min-h-[150px]"
+                            className="w-full bg-[#effaf6] border border-emerald-50 rounded-xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-medium min-h-[150px]"
                             placeholder="Tell the story of this adventure..." required
                         />
                     </div>
                 </div>
 
                 {/* Media */}
-                <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-8">
+                <div className="bg-[#f8fefc] p-10 rounded-[2.5rem] border border-emerald-100 shadow-sm space-y-8">
                     <h3 className="text-xl font-bold flex items-center gap-3 text-slate-900">
                         <Camera className="w-5 h-5 text-primary" /> Media & Images
                     </h3>
@@ -170,7 +170,7 @@ const AddPackage = () => {
                         <label className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 block ml-1">Main Cover Image URL</label>
                         <input
                             type="text" name="image" value={formData.image} onChange={handleChange}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-medium"
+                            className="w-full bg-[#effaf6] border border-emerald-50 rounded-xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-medium"
                             placeholder="https://images.unsplash.com/..." required
                         />
                     </div>
@@ -185,13 +185,13 @@ const AddPackage = () => {
 
                 {/* Inclusions & Exclusions */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-6">
+                    <div className="bg-[#f8fefc] p-10 rounded-[2.5rem] border border-emerald-100 shadow-sm space-y-6">
                         <h3 className="font-bold text-slate-900">Inclusions</h3>
                         {formData.inclusions.map((inc, i) => (
                             <div key={i} className="flex gap-2">
                                 <input
                                     value={inc} onChange={(e) => handleArrayChange(i, 'inclusions', e.target.value)}
-                                    className="flex-1 bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:outline-none focus:border-primary font-medium text-sm"
+                                    className="flex-1 bg-[#effaf6] border border-emerald-50 rounded-xl py-3 px-4 focus:outline-none focus:border-primary font-medium text-sm"
                                     placeholder="e.g. All Meals included"
                                 />
                                 <button type="button" onClick={() => removeArrayField(i, 'inclusions')} className="p-2 text-rose-400 hover:bg-rose-50 rounded-lg">
@@ -204,13 +204,13 @@ const AddPackage = () => {
                         </button>
                     </div>
 
-                    <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-6">
+                    <div className="bg-[#f8fefc] p-10 rounded-[2.5rem] border border-emerald-100 shadow-sm space-y-6">
                         <h3 className="font-bold text-slate-900">Exclusions</h3>
                         {formData.exclusions.map((exc, i) => (
                             <div key={i} className="flex gap-2">
                                 <input
                                     value={exc} onChange={(e) => handleArrayChange(i, 'exclusions', e.target.value)}
-                                    className="flex-1 bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:outline-none focus:border-primary font-medium text-sm"
+                                    className="flex-1 bg-[#effaf6] border border-emerald-50 rounded-xl py-3 px-4 focus:outline-none focus:border-primary font-medium text-sm"
                                     placeholder="e.g. Personal Expenses"
                                 />
                                 <button type="button" onClick={() => removeArrayField(i, 'exclusions')} className="p-2 text-rose-400 hover:bg-rose-50 rounded-lg">

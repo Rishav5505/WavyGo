@@ -9,6 +9,15 @@ const packageSchema = mongoose.Schema({
     image: { type: String, required: true },
     category: { type: String, required: true },
     images: [String],
+    vendorName: { type: String },
+    vendorId: { type: String },
+    rating: { type: Number, default: 0 },
+    specs: {
+        cc: { type: Number },
+        terrain: { type: String },
+        comfort: { type: Number },
+        mileage: { type: Number }
+    },
     itinerary: [{
         day: Number,
         title: String,

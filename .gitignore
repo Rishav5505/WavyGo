@@ -21,4 +21,14 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+# Server Uploads
+server/uploads/
+server/check_db.js
+server/check_manali_bikes.js
+server/clear_packages.js
+server/post_bike_simulator.js
+tmp_cleanup.js
+
+# Env
+.env
+server/.env

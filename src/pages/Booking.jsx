@@ -6,6 +6,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Button from '../components/common/Button';
 import API from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 import { Shield, Camera, HardHat, Wind, Trash2, Plus } from 'lucide-react';
 
 const GEAR_ITEMS = [
@@ -43,6 +44,17 @@ const GEAR_ITEMS = [
     }
 ];
 
+const MOCK_BIKES = [
+    { _id: 'mock1', title: 'Royal Enfield Himalayan', location: 'Manali', price: 1200 },
+    { _id: 'mock2', title: 'KTM Duke 390', location: 'Delhi', price: 1500 },
+    { _id: 'mock3', title: 'Honda Activa 6G', location: 'Jaipur', price: 400 },
+    { _id: 'mock4', title: 'Triumph Speed 400', location: 'Bangalore', price: 1800 },
+    { _id: 'mock5', title: 'Royal Enfield Interceptor 650', location: 'Goa', price: 1800 },
+    { _id: 'mock6', title: 'BMW G310 GS Adventure', location: 'Rishikesh', price: 1800 },
+    { _id: 'mock7', title: 'Kawasaki Ninja 400', location: 'Pune', price: 2500 },
+    { _id: 'mock8', title: 'Harley Davidson X440', location: 'Mumbai', price: 2000 }
+];
+
 const Booking = () => {
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
@@ -59,32 +71,16 @@ const Booking = () => {
         specialRequests: '',
         selectedGear: []
     });
+    const { user } = useAuth();
 
     useEffect(() => {
         const fetchPackages = async () => {
             try {
                 const { data } = await API.get('/packages');
-                if (data && data.length > 0) {
-                    setPackages(data);
-                } else {
-                    // Fallback if DB is empty
-                    const mockBikes = [
-                        { _id: "65e5a2e1f1a2b3c4d5e6f001", title: "Royal Enfield Himalayan", price: 1200 },
-                        { _id: "65e5a2e1f1a2b3c4d5e6f002", title: "KTM Duke 390", price: 1500 },
-                        { _id: "65e5a2e1f1a2b3c4d5e6f003", title: "Honda Activa 6G", price: 400 },
-                        { _id: "65e5a2e1f1a2b3c4d5e6f004", title: "Triumph Speed 400", price: 1800 }
-                    ];
-                    setPackages(mockBikes);
-                }
+                setPackages([...(data || []), ...MOCK_BIKES]);
             } catch (error) {
                 console.error("Failed to fetch packages", error);
-                const mockBikes = [
-                    { _id: "65e5a2e1f1a2b3c4d5e6f001", title: "Royal Enfield Himalayan", price: 1200 },
-                    { _id: "65e5a2e1f1a2b3c4d5e6f002", title: "KTM Duke 390", price: 1500 },
-                    { _id: "65e5a2e1f1a2b3c4d5e6f003", title: "Honda Activa 6G", price: 400 },
-                    { _id: "65e5a2e1f1a2b3c4d5e6f004", title: "Triumph Speed 400", price: 1800 }
-                ];
-                setPackages(mockBikes);
+                setPackages(MOCK_BIKES);
             }
         };
         fetchPackages();
@@ -113,9 +109,16 @@ const Booking = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            await API.post('/bookings', formData);
+            const selectedPackage = packages.find(p => p._id === formData.packageId);
+            const payload = {
+                ...formData,
+                userId: user?._id || user?.id,
+                vendorId: selectedPackage?.vendorId,
+                vendorName: selectedPackage?.vendorName,
+                itemTitle: selectedPackage?.title
+            };
+            await API.post('/bookings', payload);
 
-            // Re-enable Success Screen as requested
             setIsSubmitted(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (error) {

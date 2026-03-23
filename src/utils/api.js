@@ -10,9 +10,14 @@ const API = axios.create({
 API.interceptors.request.use((req) => {
     const storedUser = localStorage.getItem('userInfo');
     if (storedUser) {
-        req.headers.Authorization = `Bearer ${JSON.parse(storedUser).token}`;
+        const token = JSON.parse(storedUser).token;
+        if (token) {
+            req.headers.authorization = `Bearer ${token}`;
+        }
     }
     return req;
+}, (error) => {
+    return Promise.reject(error);
 });
 
 export default API;

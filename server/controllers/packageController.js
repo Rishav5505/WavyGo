@@ -32,10 +32,28 @@ const getPackageById = async (req, res) => {
 // @route   POST /api/packages
 // @access  Private/Admin
 const createPackage = async (req, res) => {
+    console.log('--- CREATE PACKAGE REQUEST ---');
+    console.log('Body:', JSON.stringify(req.body, null, 2));
+    console.log('User:', req.user);
     try {
-        const { title, description, location, price, duration, image, category, images, itinerary, inclusions, exclusions, isFeatured } = req.body;
+        const { title, description, location, price, duration, image, category, images, itinerary, inclusions, exclusions, isFeatured, vendorName, vendorId, specs, rating } = req.body;
         const package = new Package({
-            title, description, location, price, duration, image, category, images, itinerary, inclusions, exclusions, isFeatured
+            title,
+            description: description || title,
+            location,
+            price,
+            duration,
+            image,
+            category,
+            images,
+            itinerary,
+            inclusions,
+            exclusions,
+            isFeatured,
+            vendorName,
+            vendorId,
+            specs,
+            rating: rating || 0
         });
         const createdPackage = await package.save();
         res.status(201).json(createdPackage);
@@ -79,4 +97,26 @@ const deletePackage = async (req, res) => {
     }
 };
 
-module.exports = { getPackages, getPackageById, createPackage, updatePackage, deletePackage };
+// @desc    Get category stats for dashboard
+// @route   GET /api/packages/category-stats
+// @access  Private/Admin
+const getCategoryStats = async (req, res) => {
+    try {
+        const stats = await Package.aggregate([
+            { $group: { _id: '$category', count: { $sum: 1 } } }
+        ]);
+        const total = await Package.countDocuments();
+        
+        const formattedStats = stats.map(s => ({
+            label: s._id || 'Others',
+            value: total > 0 ? Math.round((s.count / total) * 100) : 0,
+            count: s.count
+        }));
+        
+        res.json(formattedStats);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { getPackages, getPackageById, createPackage, updatePackage, deletePackage, getCategoryStats };

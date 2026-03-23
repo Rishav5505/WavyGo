@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Smartphone, MessageCircle, ChevronUp, Download } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const FloatingActions = () => {
+    const location = useLocation();
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [showScrollTop, setShowScrollTop] = useState(false);
     const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+    // Don't show on admin or vendor pages
+    const isHiddenRoute = location.pathname.startsWith('/admin') || location.pathname.startsWith('/vendor');
 
     useEffect(() => {
         const handleBeforeInstallPrompt = (e) => {
@@ -92,6 +96,8 @@ const FloatingActions = () => {
         visible: { opacity: 1, scale: 1, y: 0 },
         exit: { opacity: 0, scale: 0.8, y: 20 }
     };
+
+    if (isHiddenRoute) return null;
 
     return (
         <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">

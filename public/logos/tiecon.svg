@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200">
+  <rect width="500" height="200" fill="white"/>
+  <text x="20" y="130" font-family="Arial Black, sans-serif" font-weight="900" font-size="120" fill="#E61E27">TiE</text>
+  <text x="230" y="130" font-family="Arial, sans-serif" font-weight="700" font-size="100" fill="#1e293b">CON</text>
+  <text x="440" y="100" font-family="Arial, sans-serif" font-weight="700" font-size="30" fill="#94a3b8" transform="rotate(90 440,100)">2025</text>
+</svg>

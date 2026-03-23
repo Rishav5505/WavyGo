@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { 
-    Search, MapPin, Clock, Star, ArrowUpRight, Loader, 
+import {
+    Search, MapPin, Clock, Star, ArrowUpRight, Loader,
     X, Check, Gauge, Mountain, Sofa, Info, BarChart3, Plus
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Button from '../components/common/Button';
 import Reveal from '../components/common/Reveal';
 import AIRoutePlanner from '../components/common/AIRoutePlanner';
 import API from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 import { Sparkles as SparklesIcon } from 'lucide-react';
 
 const TiltCard = ({ children, className }) => {
@@ -76,7 +77,107 @@ const TiltCard = ({ children, className }) => {
     );
 };
 
+const MOCK_BIKES = [
+    {
+        _id: 'mock1',
+        title: 'Royal Enfield Himalayan',
+        location: 'Manali',
+        price: 1200,
+        category: 'Cruiser',
+        image: '/images/bikes/himalayan.png',
+        specs: { cc: 450, terrain: 'Mountain', transmission: 'Manual' },
+        rating: 4.9,
+        reviews: 245,
+        isDemo: true
+    },
+    {
+        _id: 'mock2',
+        title: 'KTM Duke 390',
+        location: 'Delhi',
+        price: 1500,
+        category: 'Sports',
+        image: '/images/bikes/duke390.png',
+        specs: { cc: 398, terrain: 'City', transmission: 'Manual' },
+        rating: 4.8,
+        reviews: 189,
+        isDemo: true
+    },
+    {
+        _id: 'mock3',
+        title: 'Honda Activa 6G',
+        location: 'Jaipur',
+        price: 400,
+        category: 'Commuter',
+        image: '/images/bikes/activa.png',
+        specs: { cc: 110, terrain: 'City', transmission: 'Automatic' },
+        rating: 4.7,
+        reviews: 320,
+        isDemo: true
+    },
+    {
+        _id: 'mock4',
+        title: 'Triumph Speed 400',
+        location: 'Bangalore',
+        price: 1800,
+        category: 'Premium',
+        image: '/images/bikes/ninja.png', // User reference shows Ninja for Triumph
+        specs: { cc: 400, terrain: 'City', transmission: 'Manual' },
+        rating: 5.0,
+        reviews: 142,
+        isDemo: true
+    },
+    {
+        _id: 'mock5',
+        title: 'Royal Enfield Interceptor 650',
+        location: 'Goa',
+        price: 1800,
+        category: 'Premium',
+        image: '/images/bikes/interceptor.png',
+        specs: { cc: 648, terrain: 'Coastal', transmission: 'Manual' },
+        rating: 4.8,
+        reviews: 145,
+        isDemo: true
+    },
+    {
+        _id: 'mock6',
+        title: 'BMW G310 GS Adventure',
+        location: 'Rishikesh',
+        price: 1800,
+        category: 'Cruiser',
+        image: '/images/bikes/bmw310.png',
+        specs: { cc: 310, terrain: 'Off-Road', transmission: 'Manual' },
+        rating: 4.7,
+        reviews: 56,
+        isDemo: true
+    },
+    {
+        _id: 'mock7',
+        title: 'Kawasaki Ninja 400',
+        location: 'Pune',
+        price: 2500,
+        category: 'Sports',
+        image: '/images/bikes/ninja.png',
+        specs: { cc: 399, terrain: 'Highway', transmission: 'Manual' },
+        rating: 4.9,
+        reviews: 78,
+        isDemo: true
+    },
+    {
+        _id: 'mock8',
+        title: 'Harley Davidson X440',
+        location: 'Mumbai',
+        price: 2000,
+        category: 'Premium',
+        image: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&h=600&fit=cover',
+        specs: { cc: 440, terrain: 'City', transmission: 'Manual' },
+        rating: 4.9,
+        reviews: 210,
+        isDemo: true
+    }
+];
+
 const Packages = () => {
+    const { user } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
     const [activeCategory, setActiveCategory] = useState('All');
     const [packages, setPackages] = useState([]);
@@ -87,64 +188,18 @@ const Packages = () => {
     const [ccRange, setCcRange] = useState('All');
     const [showAiPlanner, setShowAiPlanner] = useState(false);
 
+    // Grab selected city from route state (if coming from Home Page)
+    const location = useLocation();
+    const { selectedCity } = location.state || {};
+
     useEffect(() => {
         const fetchPackages = async () => {
             try {
                 const { data } = await API.get('/packages');
-                if (data && data.length > 0) {
-                    setPackages(data);
-                } else {
-                    throw new Error("Empty data");
-                }
+                setPackages(data || []);
             } catch (error) {
-                console.error("Failed to fetch packages, using mock data", error);
-                const mockBikes = [
-                    {
-                        _id: "65e5a2e1f1a2b3c4d5e6f001",
-                        title: "Royal Enfield Himalayan",
-                        location: "Delhi / Manali",
-                        price: 1200,
-                        rating: "4.9",
-                        category: "Cruiser",
-                        image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/183389/classic-350-right-side-view-50.jpeg?isig=0&q=80",
-                        duration: "24 Hours",
-                        specs: { cc: 411, terrain: "Mountains", comfort: 5, mileage: 30 }
-                    },
-                    {
-                        _id: "65e5a2e1f1a2b3c4d5e6f002",
-                        title: "KTM Duke 390",
-                        location: "Delhi / Pune",
-                        price: 1500,
-                        rating: "4.8",
-                        category: "Sports",
-                        image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/148323/duke-390-right-side-view-14.png?isig=0&q=80",
-                        duration: "24 Hours",
-                        specs: { cc: 373, terrain: "Highway", comfort: 3, mileage: 25 }
-                    },
-                    {
-                        _id: "65e5a2e1f1a2b3c4d5e6f003",
-                        title: "Honda Activa 6G",
-                        location: "Goa / Jaipur",
-                        price: 400,
-                        rating: "4.7",
-                        category: "Commuter",
-                        image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/44686/activa-6g-right-side-view-2.png?isig=0&q=80",
-                        duration: "24 Hours",
-                        specs: { cc: 110, terrain: "City", comfort: 4, mileage: 50 }
-                    },
-                    {
-                        _id: "65e5a2e1f1a2b3c4d5e6f004",
-                        title: "Triumph Speed 400",
-                        location: "Bangalore",
-                        price: 1800,
-                        rating: "5.0",
-                        category: "Premium",
-                        image: "https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?q=80&w=800",
-                        duration: "24 Hours",
-                        specs: { cc: 398, terrain: "Highway", comfort: 4, mileage: 28 }
-                    }
-                ];
-                setPackages(mockBikes);
+                console.error("Failed to fetch packages", error);
+                setPackages([]);
             } finally {
                 setLoading(false);
             }
@@ -153,18 +208,26 @@ const Packages = () => {
     }, []);
 
     const categories = ['All', 'Cruiser', 'Sports', 'Commuter', 'Premium'];
+    const targetCity = selectedCity ? selectedCity.split(',')[0].trim().toLowerCase() : (user?.location?.toLowerCase() || "");
 
-    const filteredPackages = packages.filter(pkg => {
+    const allItems = [...packages, ...MOCK_BIKES];
+
+    const filteredPackages = allItems.filter(pkg => {
         const matchesCategory = activeCategory === 'All' || pkg.category === activeCategory;
         const matchesTerrain = activeTerrain === 'All' || (pkg.specs && pkg.specs.terrain === activeTerrain);
         const matchesCC = ccRange === 'All' || (pkg.specs && (
             ccRange === '0-200' ? pkg.specs.cc <= 200 :
-            ccRange === '200-400' ? (pkg.specs.cc > 200 && pkg.specs.cc <= 400) :
-            pkg.specs.cc > 400
+                ccRange === '200-400' ? (pkg.specs.cc > 200 && pkg.specs.cc <= 400) :
+                    pkg.specs.cc > 400
         ));
+
+        // Location filtering logic
+        const matchesSelectedCity = !targetCity || pkg.location.toLowerCase().includes(targetCity);
+
         const matchesSearch = pkg.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             pkg.location.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesTerrain && matchesCC && matchesSearch;
+
+        return matchesCategory && matchesTerrain && matchesCC && matchesSearch && matchesSelectedCity;
     });
 
     const toggleCompare = (bike) => {
@@ -182,9 +245,19 @@ const Packages = () => {
             {/* Header / Hero Section - WavyGo Green Theme */}
             <section className="relative pt-20 pb-28 md:pt-32 md:pb-40 bg-[#035c3e] text-center text-white overflow-hidden">
                 <div className="container-custom relative z-10 px-4">
+                    {targetCity && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full mb-8 border border-white/10"
+                        >
+                            <MapPin className="w-4 h-4 text-white" />
+                            <span className="text-xs font-black uppercase tracking-widest text-white">Showing Machines in {targetCity}</span>
+                        </motion.div>
+                    )}
                     <Reveal center width="100%">
                         <h1 className="text-4xl md:text-[5rem] font-black mb-3 md:mb-4 tracking-tighter leading-tight md:leading-none uppercase">
-                            Rental <span className="text-white">Fleet</span>
+                            {selectedCity ? selectedCity.split(',')[0].trim() : "Rental"} <span className="text-white">Fleet</span>
                         </h1>
                     </Reveal>
                     <motion.p
@@ -193,7 +266,9 @@ const Packages = () => {
                         transition={{ delay: 0.6, duration: 0.8 }}
                         className="text-sm md:text-lg text-white/70 max-w-2xl mx-auto font-medium tracking-tight px-2"
                     >
-                        Choose your machine for the next big adventure.
+                        {targetCity 
+                            ? `Only verified machines and professional vendors from ${targetCity} region.` 
+                            : "Choose your machine for the next big adventure."}
                     </motion.p>
                 </div>
 
@@ -246,7 +321,7 @@ const Packages = () => {
                                 <span className="text-[9px] font-black uppercase tracking-widest text-slate-300 shrink-0">Terrain:</span>
                                 <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
                                     {['All', 'Mountains', 'Highway', 'City'].map(t => (
-                                        <button 
+                                        <button
                                             key={t}
                                             onClick={() => setActiveTerrain(t)}
                                             className={`px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase transition-all whitespace-nowrap ${activeTerrain === t ? 'bg-primary/10 text-primary' : 'bg-slate-50/50 text-slate-400 hover:text-slate-600'}`}
@@ -260,7 +335,7 @@ const Packages = () => {
                                 <span className="text-[9px] font-black uppercase tracking-widest text-slate-300 shrink-0">Engine:</span>
                                 <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
                                     {['All', '0-200', '200-400', '400+'].map(c => (
-                                        <button 
+                                        <button
                                             key={c}
                                             onClick={() => setCcRange(c)}
                                             className={`px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase transition-all whitespace-nowrap ${ccRange === c ? 'bg-primary/10 text-primary' : 'bg-slate-50/50 text-slate-400 hover:text-slate-600'}`}
@@ -294,14 +369,14 @@ const Packages = () => {
                                     {filteredPackages.map((pkg, i) => (
                                         <TiltCard key={pkg._id} className="perspective-1000">
                                             <div
-                                                className="group bg-white rounded-[2rem] overflow-hidden shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col hover:shadow-[0_40px_80px_-20px_rgba(3,92,62,0.15)] transition-all duration-500 relative h-full"
+                                                className="group bg-white rounded-[2rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col hover:shadow-[0_40px_80px_-20px_rgba(3,92,62,0.15)] transition-all duration-500 relative h-full"
                                             >
                                                 {/* Category Badge & Compare Toggle */}
                                                 <div className="absolute top-5 left-5 right-5 z-20 flex justify-between items-center" style={{ transform: "translateZ(30px)" }}>
-                                                    <div className="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-black text-primary border border-primary/10 shadow-sm uppercase tracking-widest">
+                                                    <div className="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-black text-primary border border-primary/10 shadow-sm uppercase tracking-widest max-w-[120px] truncate">
                                                         {pkg.category}
                                                     </div>
-                                                    <button 
+                                                    <button
                                                         onClick={(e) => { e.preventDefault(); toggleCompare(pkg); }}
                                                         className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${selectedCompare.find(b => b._id === pkg._id) ? 'bg-primary text-white scale-110' : 'bg-white/90 text-slate-400 hover:text-primary'}`}
                                                     >
@@ -309,14 +384,13 @@ const Packages = () => {
                                                     </button>
                                                 </div>
 
-                                                {/* Image Container - Premium Gradient + Blend Mode */}
-                                                <div className="relative h-56 overflow-hidden bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] flex items-center justify-center p-2" style={{ transform: "translateZ(20px)" }}>
+                                                {/* Image Container - Mint Green Theme Isolation */}
+                                                <div className="relative h-56 overflow-hidden rounded-t-[2rem] bg-[#effaf6] flex items-center justify-center p-6" style={{ transform: "translateZ(20px)" }}>
                                                     <img
                                                         src={pkg.image}
-                                                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-1000 mix-blend-multiply"
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                                                         alt={pkg.title}
                                                     />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-[#035c3e]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                                 </div>
 
                                                 <div className="p-6 flex-grow flex flex-col" style={{ transform: "translateZ(25px)" }}>
@@ -333,6 +407,8 @@ const Packages = () => {
                                                             <h3 className="text-xl font-black text-slate-900 tracking-tight leading-tight group-hover:text-primary transition-colors">{pkg.title}</h3>
                                                             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1 flex items-center gap-1">
                                                                 <MapPin className="w-3 h-3 text-primary" /> {pkg.location}
+                                                                <span className="mx-2 text-slate-200">|</span>
+                                                                <span className="text-primary font-black lowercase underline underline-offset-2 decoration-primary/20">{pkg.vendorName}</span>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -404,7 +480,7 @@ const Packages = () => {
             {/* Sticky Compare Bar */}
             <AnimatePresence>
                 {selectedCompare.length > 0 && !showCompareModal && (
-                    <motion.div 
+                    <motion.div
                         initial={{ y: 100, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 100, opacity: 0 }}
@@ -414,9 +490,9 @@ const Packages = () => {
                             <div className="flex items-center gap-3">
                                 <div className="flex -space-x-2 md:-space-x-3 pointer-events-none">
                                     {selectedCompare.map(b => (
-                                        <motion.div 
+                                        <motion.div
                                             layoutId={`compare-${b._id}`}
-                                            key={b._id} 
+                                            key={b._id}
                                             className="w-8 h-8 md:w-12 md:h-12 rounded-full border-2 border-[#e2f3ee] overflow-hidden bg-white shadow-lg"
                                         >
                                             <img src={b.image} className="w-full h-full object-cover" alt={b.title} />
@@ -434,8 +510,8 @@ const Packages = () => {
                                     </h4>
                                     <div className="flex items-center gap-2">
                                         <div className="h-1 w-20 bg-slate-200 rounded-full overflow-hidden">
-                                            <motion.div 
-                                                className="h-full bg-primary" 
+                                            <motion.div
+                                                className="h-full bg-primary"
                                                 animate={{ width: selectedCompare.length === 1 ? '50%' : '100%' }}
                                             />
                                         </div>
@@ -443,15 +519,15 @@ const Packages = () => {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center gap-2 md:gap-4 font-black">
-                                <button 
+                                <button
                                     onClick={() => setSelectedCompare([])}
                                     className="px-3 py-2 text-[9px] text-slate-500 uppercase tracking-widest hover:text-rose-500 transition-colors"
                                 >
                                     Clear
                                 </button>
-                                <button 
+                                <button
                                     disabled={selectedCompare.length < 2}
                                     onClick={() => setShowCompareModal(true)}
                                     className={`px-5 py-2.5 md:px-8 md:py-3.5 rounded-xl text-[9px] md:text-[10px] uppercase tracking-widest transition-all ${selectedCompare.length < 2 ? 'bg-slate-200 text-slate-400 cursor-not-allowed' : 'bg-primary text-white shadow-lg shadow-primary/30 hover:scale-105 active:scale-95'}`}
@@ -467,13 +543,13 @@ const Packages = () => {
             {/* Comparison Modal */}
             <AnimatePresence>
                 {showCompareModal && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md"
                     >
-                        <motion.div 
+                        <motion.div
                             initial={{ scale: 0.95, y: 30, opacity: 0 }}
                             animate={{ scale: 1, y: 0, opacity: 1 }}
                             className="bg-[#e2f3ee] w-full max-w-5xl max-h-[90vh] rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden relative shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/20 flex flex-col"
@@ -488,7 +564,7 @@ const Packages = () => {
                                         Machine <br className="sm:hidden" /> <span className="text-primary">Versus</span>
                                     </h2>
                                 </div>
-                                <button 
+                                <button
                                     onClick={() => setShowCompareModal(false)}
                                     className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center text-slate-400 hover:text-rose-500 hover:rotate-90 transition-all duration-300 shadow-sm border border-slate-100"
                                 >
@@ -520,10 +596,10 @@ const Packages = () => {
                                             {/* Bike Profile Card */}
                                             <div className="w-full mb-4 md:mb-8">
                                                 <div className="relative aspect-[4/3] bg-white/50 backdrop-blur-sm rounded-xl md:rounded-[2rem] mb-3 md:mb-6 flex items-center justify-center p-2 md:p-8 border border-white/40 group overflow-hidden shadow-inner">
-                                                    <img 
-                                                        src={bike.image} 
-                                                        className="w-full h-full object-contain mix-blend-multiply scale-100 md:scale-110 group-hover:scale-125 transition-transform duration-700" 
-                                                        alt={bike.title} 
+                                                    <img
+                                                        src={bike.image}
+                                                        className="w-full h-full object-contain mix-blend-multiply scale-100 md:scale-110 group-hover:scale-125 transition-transform duration-700"
+                                                        alt={bike.title}
                                                     />
                                                     <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-white/80 backdrop-blur-md px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[6px] md:text-[8px] font-black text-primary border border-primary/20 shadow-sm uppercase tracking-widest">
                                                         {bike.category}
@@ -543,11 +619,11 @@ const Packages = () => {
                                                 ].map((row, i) => (
                                                     <div key={i} className="h-12 md:h-16 flex flex-col md:flex-row items-center justify-center md:border-b border-slate-900/10 last:border-0 relative">
                                                         <span className="md:hidden text-[6px] font-black text-slate-300 uppercase tracking-widest">{row.label}</span>
-                                                        
+
                                                         {row.type === 'text' && (
                                                             <span className="text-xs md:text-lg font-black text-slate-800 tracking-tight">{row.value}</span>
                                                         )}
-                                                        
+
                                                         {row.type === 'stars' && (
                                                             <div className="flex gap-0.5">
                                                                 {[...Array(5)].map((_, s) => (
@@ -555,7 +631,7 @@ const Packages = () => {
                                                                 ))}
                                                             </div>
                                                         )}
-                                                        
+
                                                         {row.type === 'highlight' && (
                                                             <span className="text-xs md:text-lg font-black text-primary tracking-tight">{row.value}★</span>
                                                         )}
@@ -578,7 +654,7 @@ const Packages = () => {
                                                 <Plus className="w-6 h-6 text-slate-300" />
                                             </div>
                                             <p className="text-slate-400 font-extrabold uppercase tracking-widest text-[9px] leading-relaxed">
-                                                Select second bike<br/><span className="text-primary/40">to compare</span>
+                                                Select second bike<br /><span className="text-primary/40">to compare</span>
                                             </p>
                                         </div>
                                     )}

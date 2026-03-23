@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <circle cx="200" cy="200" r="180" fill="white" stroke="#0058a9" stroke-width="15"/>
+  <circle cx="200" cy="200" r="140" fill="none" stroke="#0058a9" stroke-width="5"/>
+  <text x="50%" y="215" font-family="Arial, sans-serif" font-weight="900" font-size="140" fill="#0058a9" text-anchor="middle">S</text>
+  <text x="50%" y="360" font-family="Arial, sans-serif" font-weight="900" font-size="28" fill="#1e293b" text-anchor="middle">SURAT MUNICIPAL</text>
+</svg>

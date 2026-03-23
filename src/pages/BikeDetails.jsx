@@ -31,42 +31,42 @@ const BikeDetails = () => {
                 const mockBikes = [
                     {
                         _id: "65e5a2e1f1a2b3c4d5e6f001",
-                        title: "Royal Enfield Himalayan",
+                        title: "RE Himalayan 450",
                         location: "Delhi / Manali",
-                        price: 1200,
+                        price: 1300,
                         rating: "4.9",
                         category: "Cruiser",
-                        image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/183389/classic-350-right-side-view-50.jpeg?isig=0&q=80",
+                        image: "/bikes/himalayan_450.png",
+                        duration: "24 Hours"
+                    },
+                    {
+                        _id: "65e5a2e1f1a2b3c4d5e6f007",
+                        title: "Kawasaki Ninja 300",
+                        location: "Mumbai / Pune",
+                        price: 2200,
+                        rating: "4.9",
+                        category: "Premium",
+                        image: "/bikes/ninja_300.png",
+                        duration: "24 Hours"
+                    },
+                    {
+                        _id: "65e5a2e1f1a2b3c4d5e6f006",
+                        title: "Yamaha MT-15 V2",
+                        location: "Goa / Bangalore",
+                        price: 1100,
+                        rating: "4.9",
+                        category: "Sports",
+                        image: "/bikes/mt15.png",
                         duration: "24 Hours"
                     },
                     {
                         _id: "65e5a2e1f1a2b3c4d5e6f002",
                         title: "KTM Duke 390",
-                        location: "Delhi / Pune",
+                        location: "Delhi",
                         price: 1500,
                         rating: "4.8",
                         category: "Sports",
-                        image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/148323/duke-390-right-side-view-14.png?isig=0&q=80",
-                        duration: "24 Hours"
-                    },
-                    {
-                        _id: "65e5a2e1f1a2b3c4d5e6f003",
-                        title: "Honda Activa 6G",
-                        location: "Goa / Jaipur",
-                        price: 400,
-                        rating: "4.7",
-                        category: "Commuter",
-                        image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/44686/activa-6g-right-side-view-2.png?isig=0&q=80",
-                        duration: "24 Hours"
-                    },
-                    {
-                        _id: "65e5a2e1f1a2b3c4d5e6f004",
-                        title: "Triumph Speed 400",
-                        location: "Bangalore",
-                        price: 1800,
-                        rating: "5.0",
-                        category: "Premium",
-                        image: "https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?q=80&w=800",
+                        image: "/bikes/ktm.png",
                         duration: "24 Hours"
                     }
                 ];
@@ -112,13 +112,13 @@ const BikeDetails = () => {
 
             <section className="py-12 px-4 -mt-10">
                 <div className="container-custom max-w-6xl">
-                    <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] border border-slate-100 grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+                    <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-5 md:p-10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] border border-slate-100 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 relative z-10">
 
                         {/* 360 Viewer Section */}
-                        <div className="flex flex-col items-center justify-center p-8 bg-slate-50 rounded-[2rem] border border-slate-100 relative overflow-hidden h-[500px]">
+                        <div className="flex flex-col items-center justify-center p-4 md:p-8 bg-slate-50 rounded-[2rem] border border-slate-100 relative overflow-hidden h-[300px] md:h-[400px] lg:h-[500px]">
                             {/* Decorative Background */}
                             <div className="absolute inset-0 z-0">
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-[#035c3e]/5 rounded-full blur-[50px]"></div>
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[350px] h-[250px] md:h-[350px] bg-[#035c3e]/5 rounded-full blur-[40px] md:blur-[50px]"></div>
                             </div>
 
                             <motion.div
@@ -131,14 +131,14 @@ const BikeDetails = () => {
                                     <img
                                         src={bike.image}
                                         alt={bike.title}
-                                        className="max-w-[120%] max-h-[120%] object-contain pointer-events-none drop-shadow-2xl"
+                                        className="max-w-[90%] md:max-w-[120%] max-h-[90%] md:max-h-[120%] object-contain pointer-events-none drop-shadow-2xl"
                                     />
                                 </motion.div>
                             </motion.div>
 
-                            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 bg-white/80 backdrop-blur-md px-6 py-2.5 rounded-full border border-slate-200 shadow-sm flex items-center gap-2 pointer-events-none">
-                                <div className="w-2 h-2 rounded-full bg-[#035c3e] animate-pulse"></div>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-[#035c3e]">Drag to Rotate 360°</span>
+                            <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-20 bg-white/80 backdrop-blur-md px-4 md:px-6 py-2 md:py-2.5 rounded-full border border-slate-200 shadow-sm flex items-center gap-2 pointer-events-none">
+                                <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#035c3e] animate-pulse"></div>
+                                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-[#035c3e] whitespace-nowrap">Drag to Rotate 360°</span>
                             </div>
                         </div>
 

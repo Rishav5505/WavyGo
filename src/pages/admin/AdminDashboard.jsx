@@ -14,7 +14,7 @@ const StatCard = ({ label, value, icon: Icon, color, trend, onClick }) => (
         whileHover={{ y: -5 }}
         animate={{ opacity: 1, scale: 1 }}
         onClick={onClick}
-        className="bg-white p-4 md:p-7 rounded-[1.5rem] md:rounded-[2.2rem] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-slate-100 relative overflow-hidden group cursor-pointer h-full"
+        className="bg-[#f8fefc] p-4 md:p-7 rounded-[1.5rem] md:rounded-[2.2rem] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-emerald-100/50 relative overflow-hidden group cursor-pointer h-full"
     >
         <div className={`absolute -right-4 -top-4 w-16 h-16 md:w-24 md:h-24 ${color.split(' ')[0]} opacity-10 rounded-full transition-transform group-hover:scale-150`} />
 
@@ -42,26 +42,42 @@ const AdminDashboard = () => {
         revenue: 0,
         pendingBookings: 0,
         confirmedBookings: 0,
-        totalPackages: 0
+        totalPackages: 0,
+        pendingVendors: 1,
+        totalUsers: 24 
     });
     const [recentBookings, setRecentBookings] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [categoryStats, setCategoryStats] = useState([]);
+    const [loading, setLoading] =  useState(true);
     const [liveVisitors, setLiveVisitors] = useState(12);
 
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                const [statsRes, bookingsRes, packagesRes] = await Promise.all([
+                const [statsRes, bookingsRes, packagesRes, usersRes, catStatsRes] = await Promise.all([
                     API.get('/bookings/stats'),
                     API.get('/bookings'),
-                    API.get('/packages')
+                    API.get('/packages'),
+                    API.get('/users'),
+                    API.get('/packages/category-stats')
                 ]);
 
                 setStats({
-                    ...statsRes.data,
-                    totalPackages: packagesRes.data.length
+                    totalBookings: statsRes.data.totalBookings || 0,
+                    revenue: statsRes.data.revenue || 0,
+                    pendingBookings: statsRes.data.pendingBookings || 0,
+                    confirmedBookings: statsRes.data.confirmedBookings || 0,
+                    totalPackages: packagesRes.data.length || 0,
+                    pendingVendors: usersRes.data.filter(u => u.role === 'vendor' && !u.isApproved).length || 0,
+                    totalUsers: usersRes.data.length || 0
                 });
-                setRecentBookings(bookingsRes.data.slice(0, 4));
+
+                if (catStatsRes.data && catStatsRes.data.length > 0) {
+                    setCategoryStats(catStatsRes.data);
+                }
+                
+                const realBookings = bookingsRes.data.slice(0, 4);
+                setRecentBookings(realBookings);
             } catch (error) {
                 console.error("Dashboard error:", error);
             } finally {
@@ -71,7 +87,6 @@ const AdminDashboard = () => {
 
         fetchDashboardData();
 
-        // Randomly change live visitors for dynamic feel
         const interval = setInterval(() => {
             setLiveVisitors(prev => Math.max(5, prev + Math.floor(Math.random() * 5) - 2));
         }, 5000);
@@ -94,8 +109,8 @@ const AdminDashboard = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3 bg-white p-2 rounded-2xl shadow-sm border border-slate-100">
-                    <div className="px-3 md:px-5 py-2 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-2 md:gap-3">
+                <div className="flex items-center gap-3 bg-[#f8fefc] p-2 rounded-2xl shadow-sm border border-emerald-100/50">
+                    <div className="px-3 md:px-5 py-2 bg-[#effaf6] rounded-xl border border-emerald-100/30 flex items-center gap-2 md:gap-3">
                         <div className="relative">
                             <CloudSun className="w-4 h-4 md:w-5 md:h-5 text-amber-500" />
                             <motion.div
@@ -134,23 +149,25 @@ const AdminDashboard = () => {
                     label="Total Bookings"
                     value={stats.totalBookings}
                     icon={Calendar}
-                    color="bg-blue-50 text-blue-500"
+                    color="bg-[#d1ede1] text-[#035c3e]"
                     trend="+3"
                     onClick={() => navigate('/admin/bookings')}
                 />
                 <StatCard
-                    label="Active Packages"
-                    value={stats.totalPackages}
-                    icon={Map}
-                    color="bg-indigo-50 text-indigo-500"
-                    onClick={() => navigate('/admin/packages')}
+                    label="Active Users"
+                    value={stats.totalUsers}
+                    icon={Users}
+                    color="bg-indigo-50 text-indigo-600"
+                    trend="+5"
+                    onClick={() => navigate('/admin/users')}
                 />
                 <StatCard
-                    label="Pending Tasks"
-                    value={stats.pendingBookings}
-                    icon={Clock}
-                    color="bg-orange-50 text-orange-600"
-                    onClick={() => navigate('/admin/bookings')}
+                    label="Vendor Pool"
+                    value={stats.pendingVendors}
+                    icon={Users}
+                    color="bg-indigo-50 text-indigo-600"
+                    trend="1 Pending"
+                    onClick={() => navigate('/admin/vendors')}
                 />
             </div>
 
@@ -159,7 +176,7 @@ const AdminDashboard = () => {
                 <div className="lg:col-span-8 space-y-10">
 
                     {/* Visual Analytics Chart & Live Traffic */}
-                    <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-slate-100 shadow-sm overflow-hidden relative group">
+                    <div className="bg-[#f8fefc] p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-emerald-100/50 shadow-sm overflow-hidden relative group">
                         <div className="flex flex-col sm:flex-row justify-between items-start mb-8 md:mb-12 gap-6">
                             <div>
                                 <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Revenue Analytics</h3>
@@ -169,10 +186,10 @@ const AdminDashboard = () => {
                             {/* Live Traffic Widget */}
                             <div className="flex items-center gap-3 md:gap-4 bg-slate-900 text-white px-4 md:px-6 py-2.5 md:py-3 rounded-2xl shadow-xl shadow-slate-900/10">
                                 <div className="p-1.5 md:p-2 bg-white/10 rounded-lg">
-                                    <Globe className="w-4 h-4 md:w-5 md:h-5 text-indigo-400 animate-spin-slow" />
+                                    <Globe className="w-4 h-4 md:w-5 md:h-5 text-primary animate-spin-slow" />
                                 </div>
-                                <div>
-                                    <p className="text-[8px] md:text-[10px] font-black text-indigo-300 uppercase leading-none mb-1">Live Visitors</p>
+                                <div className="min-w-[80px]">
+                                    <p className="text-[8px] md:text-[10px] font-black text-primary/80 uppercase leading-none mb-1">Live Visitors</p>
                                     <div className="flex items-center gap-2">
                                         <h4 className="text-sm md:text-lg font-black">{liveVisitors}</h4>
                                         <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-emerald-400 rounded-full animate-pulse" />
@@ -181,39 +198,83 @@ const AdminDashboard = () => {
                             </div>
                         </div>
 
-                        {/* Modern Wave Chart simulation with SVG */}
-                        <div className="relative h-40 md:h-56 w-full px-2">
-                            <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 600 150">
-                                <defs>
-                                    <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.4" />
-                                        <stop offset="100%" stopColor="#4F46E5" stopOpacity="0" />
-                                    </linearGradient>
-                                    <filter id="shadow">
-                                        <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#4F46E5" floodOpacity="0.3" />
-                                    </filter>
-                                </defs>
-                                <path
-                                    d={`M 0 120 Q 50 20, 100 90 T 200 50 T 300 110 T 400 30 T 500 80 T 600 20 L 600 150 L 0 150 Z`}
-                                    fill="url(#chartGradient)"
-                                    className="transition-all duration-1000"
-                                />
-                                <motion.path
-                                    initial={{ pathLength: 0 }}
-                                    animate={{ pathLength: 1 }}
-                                    transition={{ duration: 2, ease: "easeInOut" }}
-                                    d={`M 0 120 Q 50 20, 100 90 T 200 50 T 300 110 T 400 30 T 500 80 T 600 20`}
-                                    fill="none"
-                                    stroke="#4F46E5"
-                                    strokeWidth="5"
-                                    strokeLinecap="round"
-                                    filter="url(#shadow)"
-                                />
-                                {/* Dynamic data points */}
-                                <motion.circle cx="100" cy="90" r="4" md:r="6" fill="#4F46E5" stroke="white" strokeWidth="2" whileHover={{ r: 10 }} />
-                                <motion.circle cx="300" cy="110" r="4" md:r="6" fill="#4F46E5" stroke="white" strokeWidth="2" whileHover={{ r: 10 }} />
-                                <motion.circle cx="400" cy="30" r="7" md:r="10" fill="#4F46E5" stroke="white" strokeWidth="3" className="animate-pulse shadow-lg" />
-                            </svg>
+                        {/* Modern Circle (Donut) Chart simulation with SVG */}
+                        <div className="relative h-48 md:h-64 w-full flex items-center justify-center mt-4 group">
+                            <div className="w-40 h-40 md:w-56 md:h-56 relative flex items-center justify-center">
+                                <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90 drop-shadow-2xl">
+                                    <defs>
+                                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stopColor="#035c3e" />
+                                            <stop offset="100%" stopColor="#058c5e" />
+                                        </linearGradient>
+                                        <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stopColor="#10b981" />
+                                            <stop offset="100%" stopColor="#34d399" />
+                                        </linearGradient>
+                                        <linearGradient id="grad3" x1="100%" y1="100%" x2="0%" y2="0%">
+                                            <stop offset="0%" stopColor="#94a3b8" />
+                                            <stop offset="100%" stopColor="#cbd5e1" />
+                                        </linearGradient>
+                                    </defs>
+                                    
+                                    <motion.circle
+                                        cx="50" cy="50" r="40"
+                                        fill="transparent"
+                                        stroke="url(#grad3)"
+                                        strokeWidth="15"
+                                        strokeDasharray="251.2"
+                                        strokeDashoffset="251.2"
+                                        animate={{ strokeDashoffset: 0 }}
+                                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                                    />
+                                    
+                                    <motion.circle
+                                        cx="50" cy="50" r="40"
+                                        fill="transparent"
+                                        stroke="url(#grad2)"
+                                        strokeWidth="15"
+                                        strokeDasharray="251.2"
+                                        strokeDashoffset="251.2"
+                                        animate={{ strokeDashoffset: 60 }}
+                                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                                        className="drop-shadow-md"
+                                    />
+
+                                    <motion.circle
+                                        cx="50" cy="50" r="40"
+                                        fill="transparent"
+                                        stroke="url(#grad1)"
+                                        strokeWidth="15"
+                                        strokeDasharray="251.2"
+                                        strokeDashoffset="251.2"
+                                        animate={{ strokeDashoffset: 140 }}
+                                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                                        className="drop-shadow-lg"
+                                    />
+                                </svg>
+                                
+                                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                    <p className="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5 mt-1">Growth</p>
+                                    <p className="text-xl md:text-3xl font-black text-slate-900 group-hover:scale-110 transition-transform">+24%</p>
+                                </div>
+                            </div>
+                            
+                            <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden sm:block space-y-4 pr-4">
+                                {categoryStats.length > 0 ? (
+                                    categoryStats.map((stat, idx) => (
+                                        <div key={idx} className="flex items-center gap-3">
+                                            <div className={`w-3 h-3 rounded-full shadow-sm ring-2 ring-white ${
+                                                idx === 0 ? 'bg-[#035c3e]' : idx === 1 ? 'bg-emerald-400' : 'bg-slate-300'
+                                            }`} />
+                                            <span className="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-wider">
+                                                {stat.label} ({stat.value}%)
+                                            </span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="text-[10px] font-bold text-slate-400 uppercase italic">No data available</div>
+                                )}
+                            </div>
                         </div>
 
                         <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
@@ -240,7 +301,7 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Bookings Feed */}
-                    <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-slate-100 shadow-sm relative">
+                    <div className="bg-[#f8fefc] p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-emerald-100/50 shadow-sm relative">
                         <div className="flex justify-between items-center mb-10">
                             <h3 className="text-xl font-black text-slate-900 flex items-center gap-3">
                                 <Activity className="w-6 h-6 text-primary" /> Recent Reservations
@@ -302,26 +363,26 @@ const AdminDashboard = () => {
                 <div className="lg:col-span-4 space-y-10">
 
                     {/* Marketing Campaign Center */}
-                    <div className="bg-slate-900 p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-2xl shadow-indigo-200/50 text-white relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-bl-full transform translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform" />
+                    <div className="bg-slate-900 p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-2xl shadow-primary/30 text-white relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-primary/20 rounded-bl-full transform translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform" />
 
                         <div className="flex items-center gap-3 mb-8">
-                            <Megaphone className="w-6 h-6 text-indigo-400" />
+                            <Megaphone className="w-6 h-6 text-primary" />
                             <h3 className="text-xl font-black tracking-tight">Campaign Center</h3>
                         </div>
 
                         <div className="space-y-6">
                             <div className="bg-white/5 p-6 rounded-2xl border border-white/5 hover:bg-white/10 transition-all cursor-pointer group/card" onClick={() => navigate('/admin/settings')}>
                                 <div className="flex justify-between items-start mb-4">
-                                    <p className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em]">Active Campaign</p>
-                                    <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
+                                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Active Campaign</p>
+                                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                                 </div>
-                                <h4 className="font-black text-lg mb-1 group-hover/card:text-indigo-300 transition-colors">Winter Wonderland Sale ❄️</h4>
+                                <h4 className="font-black text-lg mb-1 group-hover/card:text-primary transition-colors">Winter Wonderland Sale ❄️</h4>
                                 <p className="text-xs text-slate-400 font-medium leading-relaxed">Boost bookings by 15% with seasonal coupons for Himalayan treks.</p>
 
                                 <div className="mt-6">
                                     <div className="flex justify-between text-[9px] font-black uppercase tracking-widest mb-2">
-                                        <span className="text-indigo-300">Conversion Rate</span>
+                                        <span className="text-primary/70">Conversion Rate</span>
                                         <span>65%</span>
                                     </div>
                                     <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -329,53 +390,53 @@ const AdminDashboard = () => {
                                             initial={{ width: 0 }}
                                             animate={{ width: '65%' }}
                                             transition={{ duration: 1.5 }}
-                                            className="h-full bg-indigo-500"
+                                            className="h-full bg-primary"
                                         />
                                     </div>
                                 </div>
                             </div>
 
-                            <button onClick={() => navigate('/admin/settings')} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-sm shadow-xl shadow-indigo-900/40 translate-z-0 active:scale-95">
+                            <button onClick={() => navigate('/admin/settings')} className="w-full bg-[#035c3e] hover:bg-[#024a32] text-white py-4 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-sm shadow-xl shadow-primary/40 translate-z-0 active:scale-95">
                                 <Send className="w-4 h-4" /> Start New Campaign
                             </button>
                         </div>
                     </div>
 
                     {/* Operational Console (Quick Actions) */}
-                    <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-slate-100 shadow-sm">
+                    <div className="bg-[#f8fefc] p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-emerald-100/50 shadow-sm">
                         <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-8 pb-4 border-b border-slate-50">Operational Hub</h4>
 
                         <div className="grid grid-cols-2 gap-4">
                             <button
                                 onClick={() => navigate('/admin/packages/add')}
-                                className="p-4 md:p-6 bg-slate-50 rounded-2xl md:rounded-[2rem] flex flex-col items-center gap-2 md:gap-3 hover:bg-slate-900 hover:text-white transition-all group shadow-sm active:scale-95"
+                                className="p-4 md:p-6 bg-slate-50 rounded-2xl md:rounded-[2rem] flex flex-col items-center gap-2 md:gap-3 hover:bg-[#035c3e] hover:text-white transition-all group shadow-sm active:scale-95"
                             >
                                 <div className="p-2 md:p-3 bg-white rounded-xl group-hover:bg-white/10 transition-colors">
-                                    <Plus className="w-4 h-4 md:w-5 md:h-5 text-indigo-600 group-hover:text-white" />
+                                    <Plus className="w-4 h-4 md:w-5 md:h-5 text-primary group-hover:text-white" />
                                 </div>
                                 <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.1em]">New Package</span>
                             </button>
                             <button
                                 onClick={() => navigate('/admin/packages')}
-                                className="p-4 md:p-6 bg-slate-50 rounded-2xl md:rounded-[2rem] flex flex-col items-center gap-2 md:gap-3 hover:bg-slate-900 hover:text-white transition-all group shadow-sm active:scale-95"
+                                className="p-4 md:p-6 bg-slate-50 rounded-2xl md:rounded-[2rem] flex flex-col items-center gap-2 md:gap-3 hover:bg-[#035c3e] hover:text-white transition-all group shadow-sm active:scale-95"
                             >
                                 <div className="p-2 md:p-3 bg-white rounded-xl group-hover:bg-white/10 transition-colors">
-                                    <Map className="w-4 h-4 md:w-5 md:h-5 text-emerald-500 group-hover:text-white" />
+                                    <Map className="w-4 h-4 md:w-5 md:h-5 text-primary group-hover:text-white" />
                                 </div>
                                 <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.1em]">Inventory</span>
                             </button>
                             <button
                                 onClick={() => navigate('/admin/bookings')}
-                                className="p-4 md:p-6 bg-slate-50 rounded-2xl md:rounded-[2rem] flex flex-col items-center gap-2 md:gap-3 hover:bg-slate-900 hover:text-white transition-all group shadow-sm active:scale-95"
+                                className="p-4 md:p-6 bg-slate-50 rounded-2xl md:rounded-[2rem] flex flex-col items-center gap-2 md:gap-3 hover:bg-[#035c3e] hover:text-white transition-all group shadow-sm active:scale-95"
                             >
                                 <div className="p-2 md:p-3 bg-white rounded-xl group-hover:bg-white/10 transition-colors">
-                                    <MousePointer2 className="w-4 h-4 md:w-5 md:h-5 text-indigo-500 group-hover:text-white" />
+                                    <MousePointer2 className="w-4 h-4 md:w-5 md:h-5 text-primary group-hover:text-white" />
                                 </div>
                                 <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.1em]">Review</span>
                             </button>
                             <button
                                 onClick={() => navigate('/admin/settings')}
-                                className="p-4 md:p-6 bg-slate-50 rounded-2xl md:rounded-[2rem] flex flex-col items-center gap-2 md:gap-3 hover:bg-slate-900 hover:text-white transition-all group shadow-sm active:scale-95"
+                                className="p-4 md:p-6 bg-slate-50 rounded-2xl md:rounded-[2rem] flex flex-col items-center gap-2 md:gap-3 hover:bg-[#035c3e] hover:text-white transition-all group shadow-sm active:scale-95"
                             >
                                 <div className="p-2 md:p-3 bg-white rounded-xl group-hover:bg-white/10 transition-colors">
                                     <Zap className="w-4 h-4 md:w-5 md:h-5 text-amber-500 group-hover:text-white" />
@@ -395,6 +456,27 @@ const AdminDashboard = () => {
                             </div>
                         </div>
                         <Activity className="w-5 h-5 text-emerald-300" />
+                    </div>
+
+                    {/* Platform Security Console */}
+                    <div className="bg-slate-50 p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-inner">
+                        <div className="flex items-center gap-3 mb-6">
+                            <ShieldCheck className="w-5 h-5 text-indigo-600" />
+                            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-800">Security Audit</h4>
+                        </div>
+                        <div className="space-y-4">
+                            {[
+                                { event: "SSL Certificate", status: "Active", color: "text-emerald-500" },
+                                { event: "Database Backup", status: "Completed", color: "text-emerald-500" },
+                                { event: "Brute-force Filter", status: "Engaged", color: "text-blue-500" },
+                                { event: "Privacy Policy", status: "V2.1 Compliance", color: "text-slate-400" }
+                            ].map((log, i) => (
+                                <div key={i} className="flex justify-between items-center text-[9px] font-bold">
+                                    <span className="text-slate-500 uppercase tracking-tight">{log.event}</span>
+                                    <span className={log.color}>{log.status}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Map, Calendar, LogOut, Settings, Package as PackageIcon } from 'lucide-react';
+import { LayoutDashboard, Map, Calendar, LogOut, Settings, Package as PackageIcon, Users, IndianRupee } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 
@@ -19,8 +19,10 @@ const AdminLayout = () => {
 
     const menuItems = [
         { name: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
-        { name: 'Manage Packages', icon: Map, path: '/admin/packages' },
         { name: 'Bookings', icon: Calendar, path: '/admin/bookings' },
+        { name: 'Vendors', icon: Users, path: '/admin/vendors' },
+        { name: 'Financials', icon: IndianRupee, path: '/admin/financials' },
+        { name: 'Registered Users', icon: Users, path: '/admin/users' },
         { name: 'Settings', icon: Settings, path: '/admin/settings' },
     ];
 
@@ -77,13 +79,13 @@ const AdminLayout = () => {
     };
 
     return (
-        <div className="flex min-h-screen bg-slate-50 overflow-hidden relative">
+        <div className="flex min-h-screen bg-[#effaf6] overflow-hidden relative">
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:flex w-80 bg-white border-r border-slate-100 flex-col fixed h-screen z-10 shadow-[20px_0_40px_rgba(0,0,0,0.02)]">
+            <aside className="hidden lg:flex w-80 bg-[#effaf6] border-r border-slate-100 flex-col fixed h-screen z-10 shadow-[20px_0_40px_rgba(0,0,0,0.02)]">
                 <div className="p-10">
                     <div className="flex items-center gap-4 mb-16">
-                        <div className="w-12 h-12 bg-slate-900 rounded-[1.2rem] flex items-center justify-center shadow-xl shadow-slate-900/10">
-                            <PackageIcon className="w-6 h-6 text-primary" />
+                        <div className="w-12 h-12 bg-[#035c3e] rounded-[1.2rem] flex items-center justify-center shadow-xl shadow-[#035c3e]/20">
+                            <PackageIcon className="w-6 h-6 text-white" />
                         </div>
                         <h1 className="text-2xl font-black text-slate-900 tracking-tighter">Wavy<span className="text-primary">Go Pro</span></h1>
                     </div>
@@ -95,7 +97,7 @@ const AdminLayout = () => {
                                 to={item.path}
                                 className={({ isActive }) =>
                                     `flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-300 font-bold group relative ${isActive
-                                        ? 'bg-slate-900 text-white shadow-2xl scale-[1.02]'
+                                        ? 'bg-[#035c3e] text-white shadow-2xl shadow-[#035c3e]/20 scale-[1.02]'
                                         : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'
                                     }`
                                 }
@@ -125,10 +127,10 @@ const AdminLayout = () => {
             {/* Unique Mobile Navigation Interface */}
             <div className="lg:hidden">
                 {/* Minimal Header */}
-                <header className="fixed top-0 left-0 right-0 h-20 bg-white/80 backdrop-blur-xl border-b border-slate-50 flex items-center justify-between px-6 z-[60]">
+                <header className="fixed top-0 left-0 right-0 h-20 bg-[#effaf6]/80 backdrop-blur-xl border-b border-slate-50 flex items-center justify-between px-6 z-[60]">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
-                            <PackageIcon className="w-4 h-4 text-primary" />
+                        <div className="w-8 h-8 bg-[#035c3e] rounded-lg flex items-center justify-center shadow-lg shadow-[#035c3e]/20">
+                            <PackageIcon className="w-4 h-4 text-white" />
                         </div>
                         <span className="font-black text-lg tracking-tighter">Wavy<span className="text-primary">Go Admin</span></span>
                     </div>
@@ -139,15 +141,15 @@ const AdminLayout = () => {
                     >
                         <motion.div
                             animate={isMenuOpen ? { rotate: 45, y: 4, width: "24px" } : { rotate: 0, y: 0, width: "20px" }}
-                            className="h-1 bg-slate-900 rounded-full transition-all"
+                            className="h-1 bg-[#035c3e] rounded-full transition-all"
                         />
                         <motion.div
                             animate={isMenuOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0, width: "24px" }}
-                            className="h-1 bg-slate-900 rounded-full"
+                            className="h-1 bg-[#035c3e] rounded-full"
                         />
                         <motion.div
                             animate={isMenuOpen ? { rotate: -45, y: -4, width: "24px" } : { rotate: 0, y: 0, width: "16px" }}
-                            className="h-1 bg-slate-900 rounded-full transition-all"
+                            className="h-1 bg-[#035c3e] rounded-full transition-all"
                         />
                     </button>
                 </header>
@@ -168,7 +170,7 @@ const AdminLayout = () => {
                                 animate={{ clipPath: 'circle(150% at 85% 40px)' }}
                                 exit={{ clipPath: 'circle(0% at 85% 40px)' }}
                                 transition={{ type: "spring", stiffness: 35, damping: 15 }}
-                                className="fixed inset-y-0 right-0 w-[85%] max-w-sm bg-slate-900 z-[70] flex flex-col shadow-[-20px_0_60px_rgba(0,0,0,0.5)] border-l border-white/5"
+                                className="fixed inset-y-0 right-0 w-[85%] max-w-sm bg-[#035c3e] z-[70] flex flex-col shadow-[-20px_0_60px_rgba(0,0,0,0.5)] border-l border-white/5"
                             >
                                 <div className="p-8 pt-12 flex-1 overflow-y-auto">
                                     <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-8">Navigation Menu</p>
@@ -232,7 +234,7 @@ const AdminLayout = () => {
             </div>
 
             {/* Content Area */}
-            <main className="flex-1 lg:ml-80 bg-white min-h-screen">
+            <main className="flex-1 lg:ml-80 bg-[#effaf6] min-h-screen">
                 <div className="p-6 md:p-12 pt-28 lg:pt-12">
                     <Outlet />
                 </div>

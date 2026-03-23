@@ -6,6 +6,9 @@ const packageRoutes = require('./routes/packageRoutes');
 const userRoutes = require('./routes/userRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const campaignRoutes = require('./routes/campaignRoutes');
+const vendorRoutes = require('./routes/vendorRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
+const path = require('path');
 
 dotenv.config();
 
@@ -23,6 +26,11 @@ app.use('/api/packages', packageRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/campaigns', campaignRoutes);
+app.use('/api/vendor', vendorRoutes);
+app.use('/api/upload', uploadRoutes);
+
+// Static uploads folder
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.get('/', (req, res) => {
     res.send('WavyGo API is running...');

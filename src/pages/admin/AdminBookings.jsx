@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Calendar, Clock, User, Mail, Phone, TrendingUp, CheckCircle, XCircle, ExternalLink, MoreVertical } from 'lucide-react';
+import { Search, Calendar, Clock, User, Mail, Phone, TrendingUp, CheckCircle, XCircle, ExternalLink, MoreVertical, AlertCircle, Package } from 'lucide-react';
 import API from '../../utils/api';
 
 const AdminBookings = () => {
@@ -72,7 +72,7 @@ const AdminBookings = () => {
                     <p className="text-slate-500 mt-1">Track and manage all traveler reservations.</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <button className="px-6 py-3 bg-white border border-slate-200 rounded-xl font-bold text-sm text-slate-600 hover:border-primary hover:text-primary transition-all shadow-sm">
+                    <button className="px-6 py-3 bg-[#f8fefc] border border-emerald-100 rounded-xl font-bold text-sm text-slate-600 hover:border-primary hover:text-primary transition-all shadow-sm">
                         Export CSV
                     </button>
                     <button className="px-6 py-3 bg-primary text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:scale-105 transition-all">
@@ -82,8 +82,8 @@ const AdminBookings = () => {
             </div>
 
             {/* Filters Bar */}
-            <div className="bg-white rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
-                <div className="p-5 md:p-8 border-b border-slate-50 flex flex-col md:flex-row gap-6 justify-between">
+            <div className="bg-[#f8fefc] rounded-[1.5rem] md:rounded-[2.5rem] border border-emerald-100 shadow-sm overflow-hidden">
+                <div className="p-5 md:p-8 border-b border-emerald-50 flex flex-col md:flex-row gap-6 justify-between">
                     <div className="relative flex-1 w-full">
                         <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
                         <input
@@ -91,15 +91,15 @@ const AdminBookings = () => {
                             placeholder="Search by name, email or package..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-slate-50 border-none rounded-2xl py-4 pl-14 pr-6 focus:ring-2 focus:ring-primary/20 transition-all font-medium text-slate-700"
+                            className="w-full bg-[#effaf6] border-none rounded-2xl py-4 pl-14 pr-6 focus:ring-2 focus:ring-primary/20 transition-all font-medium text-slate-700"
                         />
                     </div>
-                    <div className="flex gap-2 p-1 bg-slate-100 rounded-2xl">
+                    <div className="flex gap-2 p-1 bg-[#effaf6] rounded-2xl">
                         {['all', 'pending', 'confirmed', 'cancelled'].map(f => (
                             <button
                                 key={f}
                                 onClick={() => setStatusFilter(f)}
-                                className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${statusFilter === f ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-slate-600'
+                                className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${statusFilter === f ? 'bg-[#f8fefc] text-primary shadow-sm' : 'text-slate-400 hover:text-slate-600'
                                     }`}
                             >
                                 {f}
@@ -130,7 +130,7 @@ const AdminBookings = () => {
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ delay: idx * 0.05 }}
                                 key={booking._id}
-                                className="bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-5 md:p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-slate-200/50 transition-all group"
+                                className="bg-[#f8fefc] rounded-[1.5rem] md:rounded-[2.5rem] p-5 md:p-8 border border-emerald-100 shadow-sm hover:shadow-xl hover:shadow-emerald-200/50 transition-all group"
                             >
                                 <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
                                     {/* Left: Traveler Info */}
@@ -174,6 +174,15 @@ const AdminBookings = () => {
                                                     <p className="font-bold text-slate-900">{booking.guests} People</p>
                                                 </div>
                                             </div>
+                                            <div className="flex items-center gap-3">
+                                                <div className="p-2 bg-indigo-50 rounded-lg">
+                                                    <Package className="w-5 h-5 text-indigo-500" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Provider</p>
+                                                    <p className="font-bold text-slate-900">{booking.vendorName || 'Independent'}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -190,7 +199,7 @@ const AdminBookings = () => {
                                             </button>
 
                                             {/* Animated Action Dropdown */}
-                                            <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-slate-100 p-2 z-20 opacity-0 invisible translate-y-3 group-hover/menu:opacity-100 group-hover/menu:visible group-hover/menu:translate-y-0 transition-all duration-300">
+                                            <div className="absolute right-0 top-full mt-2 w-56 bg-[#f8fefc] rounded-2xl shadow-2xl border border-emerald-100 p-2 z-20 opacity-0 invisible translate-y-3 group-hover/menu:opacity-100 group-hover/menu:visible group-hover/menu:translate-y-0 transition-all duration-300">
                                                 <div className="px-4 py-2 mb-1 border-b border-slate-50">
                                                     <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Manage Status</p>
                                                 </div>
@@ -241,7 +250,7 @@ const AdminBookings = () => {
                                 </div>
 
                                 {booking.specialRequests && (
-                                    <div className="mt-8 p-6 bg-slate-50 rounded-[1.5rem] border border-slate-100 flex gap-4">
+                                    <div className="mt-8 p-6 bg-[#effaf6] rounded-[1.5rem] border border-emerald-100 flex gap-4">
                                         <AlertCircle className="w-5 h-5 text-amber-500 shrink-0" />
                                         <p className="text-sm text-slate-600 italic font-medium">"{booking.specialRequests}"</p>
                                     </div>

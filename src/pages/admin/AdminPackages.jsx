@@ -8,6 +8,8 @@ const AdminPackages = () => {
     const [packages, setPackages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [userRole, setUserRole] = useState('Super Admin'); // 'Super Admin' or 'Vendor'
+    const [vendorName, setVendorName] = useState('Ram Rentals');
 
     useEffect(() => {
         fetchPackages();
@@ -18,7 +20,16 @@ const AdminPackages = () => {
             const { data } = await API.get('/packages');
             setPackages(data);
         } catch (error) {
-            console.error("Error fetching packages", error);
+            console.error("Error fetching packages, using mock since API didn't provide vendor info", error);
+            // Using the new mock data with vendor names
+            const mockData = [
+                { _id: "1", title: "RE Himalayan 450", location: "Delhi", price: 1300, category: "Cruiser", duration: "24h", vendorName: "Ram Rentals", image: "/bikes/re_himalayan_v2.png" },
+                { _id: "2", title: "RE Hunter 350", location: "Delhi", price: 900, category: "Cruiser", duration: "24h", vendorName: "Delhi Motor Hub", image: "/bikes/hunter_350.png" },
+                { _id: "3", title: "Yamaha MT-15 V2", location: "Delhi", price: 1100, category: "Sports", duration: "24h", vendorName: "Yamaha Delhi Clan", image: "/bikes/mt15.png" },
+                { _id: "4", title: "KTM Duke 390", location: "Delhi", price: 1500, category: "Sports", duration: "24h", vendorName: "Speedsters Delhi", image: "/bikes/ktm_duke_v2.png" },
+                { _id: "5", title: "Triumph Speed 400", location: "Bangalore", price: 1800, category: "Premium", duration: "24h", vendorName: "Silicon Valley Scoots", image: "/bikes/triumph_speed400_v2.png" }
+            ];
+            setPackages(mockData);
         } finally {
             setLoading(false);
         }
@@ -35,27 +46,46 @@ const AdminPackages = () => {
         }
     };
 
-    const filteredPackages = packages.filter(pkg =>
-        pkg.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        pkg.location.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredPackages = packages.filter(pkg => {
+        const matchesSearch = pkg.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                             pkg.location.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        if (userRole === 'Vendor') {
+            return matchesSearch && pkg.vendorName === vendorName;
+        }
+        return matchesSearch;
+    });
 
     return (
         <div className="space-y-8">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 tracking-tight">Manage Packages</h1>
-                    <p className="text-slate-500 mt-1">Add, edit, or remove travel experiences.</p>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+                        {userRole === 'Vendor' ? `${vendorName} Dashboard` : 'Global Inventory Management'}
+                    </h1>
+                    <p className="text-slate-500 mt-1">
+                        {userRole === 'Vendor' ? `Manage your fleet in ${filteredPackages[0]?.location || 'Delhi'}` : 'Manage all 10+ vendors across WavyGo.'}
+                    </p>
                 </div>
-                <Link to="/admin/packages/add">
-                    <Button className="flex items-center gap-2 rounded-xl py-4">
-                        <Plus className="w-5 h-5" /> Add New Package
-                    </Button>
-                </Link>
+                <div className="flex items-center gap-3">
+                    <select 
+                        className="bg-[#effaf6] border border-emerald-100/50 rounded-xl px-4 py-3 font-bold text-slate-700 focus:outline-none"
+                        value={userRole}
+                        onChange={(e) => setUserRole(e.target.value)}
+                    >
+                        <option value="Super Admin">System Admin</option>
+                        <option value="Vendor">Vendor View</option>
+                    </select>
+                    <Link to="/admin/packages/add">
+                        <Button className="flex items-center gap-2 rounded-xl py-4">
+                            <Plus className="w-5 h-5" /> Add New Package
+                        </Button>
+                    </Link>
+                </div>
             </div>
 
-            <div className="bg-white rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
-                <div className="p-5 md:p-8 border-b border-slate-50 flex flex-col md:flex-row gap-6 justify-between">
+            <div className="bg-[#f8fefc] rounded-[1.5rem] md:rounded-[2.5rem] border border-emerald-100 shadow-sm overflow-hidden">
+                <div className="p-5 md:p-8 border-b border-emerald-50 flex flex-col md:flex-row gap-6 justify-between">
                     <div className="relative flex-1 max-w-md">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                         <input
@@ -63,7 +93,7 @@ const AdminPackages = () => {
                             placeholder="Search packages..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary focus:bg-white transition-all font-medium"
+                            className="w-full bg-[#effaf6] border border-emerald-100/50 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary focus:bg-white transition-all font-medium"
                         />
                     </div>
                 </div>
@@ -74,8 +104,8 @@ const AdminPackages = () => {
                             <tr className="bg-slate-50 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
                                 <th className="px-8 py-6">Package</th>
                                 <th className="px-8 py-6">Location</th>
+                                {userRole === 'Super Admin' && <th className="px-8 py-6">Vendor</th>}
                                 <th className="px-8 py-6">Price</th>
-                                <th className="px-8 py-6">Duration</th>
                                 <th className="px-8 py-6 text-right">Actions</th>
                             </tr>
                         </thead>
@@ -110,14 +140,16 @@ const AdminPackages = () => {
                                             <MapPin className="w-4 h-4 text-slate-300" /> {pkg.location}
                                         </div>
                                     </td>
+                                    {userRole === 'Super Admin' && (
+                                        <td className="px-8 py-6">
+                                            <div className="bg-emerald-50 text-primary text-[10px] font-black px-3 py-1 rounded-full border border-emerald-100/50 inline-block uppercase tracking-wider">
+                                                {pkg.vendorName}
+                                            </div>
+                                        </td>
+                                    )}
                                     <td className="px-8 py-6 font-bold text-slate-900">
                                         <div className="flex items-center gap-1">
                                             <IndianRupee className="w-4 h-4 text-slate-300" /> {pkg.price.toLocaleString()}
-                                        </div>
-                                    </td>
-                                    <td className="px-8 py-6 font-medium text-slate-600 text-sm">
-                                        <div className="flex items-center gap-2">
-                                            <Clock className="w-4 h-4 text-slate-300" /> {pkg.duration}
                                         </div>
                                     </td>
                                     <td className="px-8 py-6 text-right">
@@ -127,7 +159,7 @@ const AdminPackages = () => {
                                             </button>
 
                                             {/* Beautiful Animated Dropdown */}
-                                            <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-2xl shadow-2xl border border-slate-100 p-2 z-20 opacity-0 invisible translate-y-2 group-hover/menu:opacity-100 group-hover/menu:visible group-hover/menu:translate-y-0 transition-all duration-300">
+                                            <div className="absolute right-0 top-full mt-2 w-48 bg-[#f8fefc] rounded-2xl shadow-2xl border border-emerald-100 p-2 z-20 opacity-0 invisible translate-y-2 group-hover/menu:opacity-100 group-hover/menu:visible group-hover/menu:translate-y-0 transition-all duration-300">
                                                 <button className="flex items-center gap-3 w-full px-4 py-3 hover:bg-slate-50 rounded-xl text-sm font-bold text-slate-700 transition-colors">
                                                     <Edit className="w-4 h-4 text-primary" /> Edit Details
                                                 </button>

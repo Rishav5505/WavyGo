@@ -10,59 +10,60 @@ const PopularPackages = () => {
     const [packages, setPackages] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // Mocking bike data for WavyGo demonstration
-        const mockBikes = [
-            {
-                _id: "1",
-                title: "Royal Enfield Classic 350",
-                location: "Available in Delhi",
-                price: "1,200",
-                rating: "4.9",
-                image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/183389/classic-350-right-side-view-50.jpeg?isig=0&q=80",
-                duration: "Self-Drive",
-                tag: "Bestseller",
-                link: "/bike/65e5a2e1f1a2b3c4d5e6f001"
-            },
-            {
-                _id: "2",
-                title: "KTM Duke 390",
-                location: "Available in Manali",
-                price: "1,500",
-                rating: "4.8",
-                image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/148323/duke-390-right-side-view-14.png?isig=0&q=80",
-                duration: "Self-Drive",
-                tag: "Modern",
-                link: "/bike/65e5a2e1f1a2b3c4d5e6f002"
-            },
-            {
-                _id: "3",
-                title: "Honda Activa 6G",
-                location: "Available in Goa",
-                price: "400",
-                rating: "4.7",
-                image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/44686/activa-6g-right-side-view-2.png?isig=0&q=80",
-                duration: "Self-Drive",
-                tag: "Economical",
-                link: "/bike/65e5a2e1f1a2b3c4d5e6f003"
-            },
-            {
-                _id: "4",
-                title: "Honda Shine 125",
-                location: "Available in Bangalore",
-                price: "1,800",
-                rating: "5.0",
-                image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/45481/shine-right-side-view-12.jpeg?isig=0&q=100",
-                duration: "Self-Drive",
-                tag: "Bestseller",
-                link: "/bike/65e5a2e1f1a2b3c4d5e6f004"
-            }
-        ];
+    const mockBikes = [
+        {
+            _id: "1",
+            title: "Royal Enfield Himalayan 450",
+            location: "Available in Delhi",
+            price: "1,200",
+            rating: "4.9",
+            image: "/bikes/re_himalayan_v2.png",
+            duration: "Self-Drive",
+            tag: "Bestseller",
+            link: "/packages",
+            isFeatured: true
+        },
+        {
+            _id: "2",
+            title: "KTM Duke 390",
+            location: "Available in Manali",
+            price: "1,500",
+            rating: "4.8",
+            image: "/bikes/ktm_duke_v2.png",
+            duration: "Self-Drive",
+            tag: "Modern",
+            link: "/packages",
+            isFeatured: true
+        },
+        {
+            _id: "3",
+            title: "Honda Activa 6G",
+            location: "Available in Goa",
+            price: "400",
+            rating: "4.7",
+            image: "/bikes/honda_activa_v2.png",
+            duration: "Self-Drive",
+            tag: "Economical",
+            link: "/packages"
+        },
+        {
+            _id: "4",
+            title: "Yamaha MT-15 V2",
+            location: "Available in Bangalore",
+            price: "1,100",
+            rating: "5.0",
+            image: "/bikes/mt15.png",
+            duration: "Self-Drive",
+            tag: "Bestseller",
+            link: "/packages"
+        }
+    ];
 
-        setPackages(mockBikes);
+    useEffect(() => {
+        // Always show the 4 main bikes to maintain the premium look on the home page
+        setPackages(mockBikes.slice(0, 4));
         setLoading(false);
     }, []);
-
     if (loading) return (
         <div className="flex items-center justify-center py-24">
             <Loader className="w-8 h-8 text-primary animate-spin" />
@@ -107,9 +108,12 @@ const PopularPackages = () => {
                                 </div>
                             </div>
 
-                            <div className="relative h-28 md:h-48 overflow-hidden bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] flex items-center justify-center p-4 md:p-6">
-                                <img src={pkg.image} className="max-w-full max-h-full object-contain scale-110 group-hover:scale-125 transition-transform duration-1000 mix-blend-multiply" alt={pkg.title} />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                            <div className="relative h-28 md:h-48 overflow-hidden bg-[#effaf6] flex items-center justify-center p-4 md:p-6">
+                                <img
+                                    src={pkg.image}
+                                    className="max-w-full max-h-full object-contain scale-105 group-hover:scale-110 transition-transform duration-1000"
+                                    alt={pkg.title}
+                                />
                             </div>
 
                             <div className="p-3 md:p-6 flex-grow flex flex-col">

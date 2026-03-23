@@ -9,6 +9,7 @@ import Button from '../components/common/Button';
 import WavyPride from '../components/common/WavyPride';
 import RideStats from '../components/profile/RideStats';
 import TripCanvas from '../components/profile/TripCanvas';
+import API from '../utils/api';
 import { Trophy, BarChart3, Map, ArrowLeft } from 'lucide-react';
 
 const Profile = () => {
@@ -17,6 +18,8 @@ const Profile = () => {
     const [searchParams] = useSearchParams();
     const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'profile');
     const [showMobileMenu, setShowMobileMenu] = useState(!searchParams.get('tab')); // Show menu on mobile if no tab set
+    const [bookings, setBookings] = useState([]);
+    const [loadingBookings, setLoadingBookings] = useState(false);
 
     useEffect(() => {
         const tab = searchParams.get('tab');
@@ -25,6 +28,23 @@ const Profile = () => {
             setShowMobileMenu(false);
         }
     }, [searchParams]);
+
+    useEffect(() => {
+        const fetchMyBookings = async () => {
+            if (activeTab === 'bookings') {
+                setLoadingBookings(true);
+                try {
+                    const { data } = await API.get('/bookings/mybookings');
+                    setBookings(data || []);
+                } catch (error) {
+                    console.error("Failed to fetch bookings", error);
+                } finally {
+                    setLoadingBookings(false);
+                }
+            }
+        };
+        fetchMyBookings();
+    }, [activeTab]);
 
     if (!user) {
         navigate('/auth');
@@ -179,13 +199,43 @@ const Profile = () => {
                         )}
 
                         {activeTab === 'bookings' && (
-                            <div className="text-center py-20 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-200">
-                                <ShoppingBag className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                                <h3 className="text-xl font-bold text-slate-900 mb-2">No Bookings Yet</h3>
-                                <p className="text-slate-400 text-sm mb-8">Ready to start your first adventure?</p>
-                                <Button onClick={() => navigate('/packages')} className="px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest">
-                                    Explore Bikes
-                                </Button>
+                            <div className="space-y-4">
+                                {loadingBookings ? (
+                                    <div className="py-10 text-center">Loading your adventures...</div>
+                                ) : bookings.length > 0 ? (
+                                    bookings.map((bk) => (
+                                        <div key={bk._id} className="p-6 border border-slate-100 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:shadow-md transition-all">
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-16 h-16 rounded-xl bg-slate-50 overflow-hidden shrink-0">
+                                                    <img src={bk.packageId?.image || '/bikes/placeholder.png'} className="w-full h-full object-cover" />
+                                                </div>
+                                                <div>
+                                                    <h3 className="font-bold text-slate-900">{bk.packageId?.title || bk.itemTitle}</h3>
+                                                    <p className="text-xs text-slate-400 font-medium">{new Date(bk.travelDate).toLocaleDateString()} • {bk.guests} Guest(s)</p>
+                                                    <p className="text-[10px] font-black text-primary uppercase mt-1">{bk.packageId?.location}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right w-full md:w-auto flex md:flex-col justify-between items-center md:items-end">
+                                                <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                                                    bk.status === 'confirmed' ? 'bg-emerald-100 text-emerald-600' : 
+                                                    bk.status === 'cancelled' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-600'
+                                                }`}>
+                                                    {bk.status}
+                                                </span>
+                                                <p className="font-black text-slate-900 mt-2">₹{bk.totalPrice}</p>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="text-center py-20 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-200">
+                                        <ShoppingBag className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+                                        <h3 className="text-xl font-bold text-slate-900 mb-2">No Bookings Yet</h3>
+                                        <p className="text-slate-400 text-sm mb-8">Ready to start your first adventure?</p>
+                                        <Button onClick={() => navigate('/packages')} className="px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest">
+                                            Explore Bikes
+                                        </Button>
+                                    </div>
+                                )}
                             </div>
                         )}
 

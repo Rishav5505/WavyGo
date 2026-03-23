@@ -21,9 +21,22 @@ import AdminLogin from './pages/admin/AdminLogin';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminPackages from './pages/admin/AdminPackages';
-import AddPackage from './pages/admin/AddPackage';
+import AddBike from './pages/admin/AddBike';
 import AdminBookings from './pages/admin/AdminBookings';
 import AdminSettings from './pages/admin/AdminSettings';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminVendors from './pages/admin/AdminVendors';
+import AdminFinancials from './pages/admin/AdminFinancials';
+
+// Vendor Pages
+import VendorLayout from './components/vendor/VendorLayout';
+import VendorDashboard from './pages/vendor/VendorDashboard';
+import VendorPackages from './pages/vendor/VendorPackages';
+import VendorBookings from './pages/vendor/VendorBookings';
+import VendorSettings from './pages/vendor/VendorSettings';
+import VendorInsights from './pages/vendor/VendorInsights';
+import VendorEarnings from './pages/vendor/VendorEarnings';
+import VendorProfile from './pages/vendor/VendorProfile';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -85,9 +98,25 @@ const App = () => {
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="packages" element={<AdminPackages />} />
-                  <Route path="packages/add" element={<AddPackage />} />
+                  <Route path="packages/add" element={<AddBike />} />
                   <Route path="bookings" element={<AdminBookings />} />
+                  <Route path="vendors" element={<AdminVendors />} />
+                  <Route path="users" element={<AdminUsers />} />
+                  <Route path="financials" element={<AdminFinancials />} />
                   <Route path="settings" element={<AdminSettings />} />
+                </Route>
+
+                {/* Vendor Routes */}
+                <Route path="/vendor" element={<VendorLayout />}>
+                  <Route index element={<VendorDashboard />} />
+                  <Route path="dashboard" element={<VendorDashboard />} />
+                  <Route path="packages" element={<VendorPackages />} />
+                  <Route path="packages/add" element={<AddBike />} />
+                  <Route path="bookings" element={<VendorBookings />} />
+                  <Route path="insights" element={<VendorInsights />} />
+                  <Route path="earnings" element={<VendorEarnings />} />
+                  <Route path="profile" element={<VendorProfile />} />
+                  <Route path="settings" element={<VendorSettings />} />
                 </Route>
               </Routes>
 
