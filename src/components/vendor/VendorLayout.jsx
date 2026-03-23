@@ -120,7 +120,7 @@ const VendorLayout = () => {
                             <p className="text-xl font-black text-primary tracking-tight">1,240 <span className="text-[10px] text-emerald-500">+12%</span></p>
                         </div>
                         <button 
-                            onClick={() => navigate('/admin/login')}
+                            onClick={() => navigate('/auth')}
                             className="flex items-center gap-4 w-full px-4 py-4 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-2xl transition-all font-bold text-sm group"
                         >
                             <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />

@@ -17,7 +17,7 @@ import Loader from './components/common/Loader';
 import ScrollToTop from './components/common/ScrollToTop';
 import FloatingActions from './components/common/FloatingActions';
 import { AuthProvider } from './context/AuthContext';
-import AdminLogin from './pages/admin/AdminLogin';
+import { Navigate } from 'react-router-dom';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminPackages from './pages/admin/AdminPackages';
@@ -94,7 +94,7 @@ const App = () => {
                 <Route path="/packages" element={<Packages />} />
 
                 {/* Admin Routes */}
-                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/login" element={<Navigate to="/auth" />} />
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="packages" element={<AdminPackages />} />

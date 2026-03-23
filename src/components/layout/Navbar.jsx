@@ -370,7 +370,7 @@ const Navbar = () => {
 
                                 <div className="flex items-center justify-between px-2">
                                     <Link
-                                        to="/admin/login"
+                                        to="/auth"
                                         className="flex items-center gap-2 text-slate-400 font-bold text-[9px] uppercase tracking-widest hover:text-primary transition-colors"
                                     >
                                         <User className="w-3.5 h-3.5" /> Portal

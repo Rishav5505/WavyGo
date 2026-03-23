@@ -172,7 +172,7 @@ const Auth = () => {
         <div className="bg-slate-50 min-h-screen flex flex-col">
             <Navbar />
 
-            <main className="flex-grow flex items-center justify-center p-6 pt-32 pb-20 overflow-hidden relative">
+            <main className="flex-grow flex items-center justify-center p-3 md:p-6 pt-24 md:pt-40 pb-20 overflow-hidden relative">
                 {/* Background Decor */}
                 <div className="absolute top-0 right-0 w-full h-full pointer-events-none overflow-hidden">
                     <motion.div
@@ -196,7 +196,7 @@ const Auth = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="w-full max-w-[1000px] bg-white rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-white overflow-hidden flex flex-col lg:flex-row relative z-10"
+                    className="w-full max-w-[1000px] bg-white rounded-[2rem] md:rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-white overflow-hidden flex flex-col lg:flex-row relative z-10"
                 >
                     {/* Visual Side */}
                     <div className="hidden lg:flex lg:w-1/2 bg-slate-900 relative items-center justify-center p-16 overflow-hidden">
@@ -233,7 +233,7 @@ const Auth = () => {
                     </div>
 
                     {/* Form Side */}
-                    <div className="w-full lg:w-1/2 p-10 md:p-16">
+                    <div className="w-full lg:w-1/2 p-6 md:p-16">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={mode}
@@ -243,23 +243,23 @@ const Auth = () => {
                                 transition={{ duration: 0.4 }}
                             >
                                 {/* Mode Header */}
-                                <div className="mb-10">
-                                    <h1 className="text-4xl font-black text-slate-900 tracking-tight mb-3">
+                                <div className="mb-6 md:mb-10">
+                                    <h1 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-2 md:mb-3 leading-tight">
                                         {mode === 'login' ? 'Ride Back In' : mode === 'signup' ? 'Start Your Journey' : 'Reset Password'}
                                     </h1>
-                                    <p className="text-slate-500 font-medium">
+                                    <p className="text-[11px] md:text-sm font-medium text-slate-500">
                                         {mode === 'login' ? 'Enter your details to access your account' : mode === 'signup' ? 'Create an account to start booking' : 'Enter your email to receive reset instructions'}
                                     </p>
                                 </div>
 
                                 {mode === 'login' && (
-                                    <div className="flex bg-slate-100 p-1.5 rounded-2xl mb-8">
+                                    <div className="flex bg-slate-100 p-1 rounded-xl md:rounded-2xl mb-6 md:mb-8">
                                         {['user', 'vendor', 'admin'].map((r) => (
                                             <button
                                                 key={r}
                                                 type="button"
                                                 onClick={() => setRole(r)}
-                                                className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${role === r
+                                                className={`flex-1 py-2 md:py-3 rounded-lg md:rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all ${role === r
                                                     ? 'bg-white text-primary shadow-sm'
                                                     : 'text-slate-400 hover:text-slate-600'
                                                     }`}
@@ -416,7 +416,7 @@ const Auth = () => {
                                                             value={formData.name}
                                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                                             placeholder="John Doe"
-                                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
+                                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-xl md:rounded-2xl py-3.5 md:py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
                                                         />
                                                     </div>
                                                 </div>
@@ -432,7 +432,7 @@ const Auth = () => {
                                                         value={formData.email}
                                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                                         placeholder="email@example.com"
-                                                        className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
+                                                        className="w-full bg-slate-50 border-2 border-slate-100 rounded-xl md:rounded-2xl py-3.5 md:py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
                                                     />
                                                 </div>
                                             </div>
@@ -459,7 +459,7 @@ const Auth = () => {
                                                             value={formData.password}
                                                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                                             placeholder="••••••••"
-                                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
+                                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-xl md:rounded-2xl py-3.5 md:py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm"
                                                         />
                                                     </div>
                                                 </div>
@@ -468,7 +468,7 @@ const Auth = () => {
                                             <Button
                                                 type="submit"
                                                 disabled={loading}
-                                                className="w-full h-16 rounded-2xl bg-primary text-white font-black text-lg uppercase tracking-[0.4em] shadow-2xl shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center"
+                                                className="w-full h-14 md:h-16 rounded-xl md:rounded-2xl bg-primary text-white font-black text-base md:text-lg uppercase tracking-[0.2em] md:tracking-[0.4em] shadow-2xl shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center"
                                             >
                                                 {loading ? (
                                                     <Loader2 className="w-6 h-6 animate-spin" />

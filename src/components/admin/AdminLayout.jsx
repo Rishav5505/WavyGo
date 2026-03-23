@@ -14,7 +14,7 @@ const AdminLayout = () => {
 
     const handleLogout = () => {
         logout();
-        navigate('/admin/login');
+        navigate('/auth');
     };
 
     const menuItems = [
@@ -28,7 +28,7 @@ const AdminLayout = () => {
 
     useEffect(() => {
         if (!user || !user.isAdmin) {
-            navigate('/admin/login');
+            navigate('/auth');
         }
     }, [user, navigate]);
 
