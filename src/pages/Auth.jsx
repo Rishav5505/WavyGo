@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Mail, Lock, ArrowRight, ChevronLeft, Bike, Sparkles, Send, ShieldCheck } from 'lucide-react';
+import { User, Mail, Lock, ArrowRight, ChevronLeft, Bike, Sparkles, Send, ShieldCheck, MapPin, Loader2 } from 'lucide-react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import API from '../utils/api';
 import Button from '../components/common/Button';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
-import { Loader2 } from 'lucide-react';
 
 const Auth = () => {
     const { user, login, logout } = useAuth();
@@ -69,27 +68,17 @@ const Auth = () => {
                     if (!formData.location) throw new Error('Please select a location');
                     setStep(2);
                 } else if (step === 2) {
-                    // Simulate OTP sending
                     setStep(3);
                 } else if (step === 3) {
                     if (formData.otp === '1234') {
-                        // Save to localStorage for Admin to see
-                        const pendingVendors = JSON.parse(localStorage.getItem('pendingVendors') || '[]');
-                        const newVendor = {
-                            id: "V" + Date.now(),
+                        // Create REAL vendor in DB
+                        await API.post('/users', {
                             name: formData.name || formData.email.split('@')[0],
                             email: formData.email,
                             password: formData.password,
-                            location: formData.location,
-                            status: "pending",
-                            bikes: 0,
-                            bookings: 0,
-                            revenue: 0,
-                            joinedDate: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
-                        };
-                        pendingVendors.push(newVendor);
-                        localStorage.setItem('pendingVendors', JSON.stringify(pendingVendors));
-
+                            role: 'vendor',
+                            location: formData.location
+                        });
                         setStep(4);
                     } else {
                         throw new Error('Invalid OTP. Use 1234 for demo.');
@@ -101,50 +90,25 @@ const Auth = () => {
 
             let response;
             if (mode === 'login') {
-                // Simulation for Admin/Vendor
+                // Simulation for Admin
                 if (role === 'admin' && formData.email === 'admin@wavygo.com' && formData.password === 'admin123') {
                     login({ name: 'Super Admin', email: formData.email, role: 'admin', isAdmin: true, token: 'mock-admin-token' });
                     navigate('/admin/dashboard');
                     return;
                 }
-                if (role === 'vendor') {
-                    // Try hardcoded demo vendor
-                    if (formData.email === 'ram@rentals.com' && formData.password === 'vendor123') {
-                        localStorage.setItem('vendorId', 'V1');
-                        localStorage.setItem('vendorName', 'Ram Rentals');
-                        localStorage.setItem('vendorLocation', 'Manali');
-                        login({ name: 'Ram Rentals', email: formData.email, role: 'vendor', token: 'mock-vendor-token', location: 'Manali' });
-                        navigate('/vendor/dashboard');
-                        return;
-                    }
 
-                    // Try dynamic vendors from signup
-                    const vendors = JSON.parse(localStorage.getItem('pendingVendors') || '[]');
-                    const foundVendor = vendors.find(v => v.email === formData.email && (v.password === formData.password || !v.password));
-
-                    if (foundVendor) {
-                        if (foundVendor.status === 'approved') {
-                            localStorage.setItem('vendorId', foundVendor.id);
-                            localStorage.setItem('vendorName', foundVendor.name);
-                            localStorage.setItem('vendorLocation', foundVendor.location);
-                            login({ name: foundVendor.name, email: foundVendor.email, role: 'vendor', token: 'mock-vendor-token', location: foundVendor.location });
-                            navigate('/vendor/dashboard');
-                            return;
-                        } else {
-                            throw new Error('Your account is still pending admin approval.');
-                        }
-                    }
-                }
-
-                if (role !== 'user') {
-                    throw new Error('Invalid credentials for ' + role);
-                }
-
-                // Regular User Login
+                // Try Real Login for BOTH User and Vendor
                 response = await API.post('/users/login', {
                     email: formData.email,
                     password: formData.password
                 });
+
+                // If vendor logic needed after login
+                if (response.data.role === 'vendor') {
+                    localStorage.setItem('vendorId', response.data._id);
+                    localStorage.setItem('vendorName', response.data.name);
+                    localStorage.setItem('vendorLocation', response.data.location);
+                }
             } else if (mode === 'signup') {
                 response = await API.post('/users', {
                     name: formData.name,
@@ -198,37 +162,15 @@ const Auth = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="w-full max-w-[1000px] bg-white rounded-[2rem] md:rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-white overflow-hidden flex flex-col lg:flex-row relative z-10"
                 >
-                    {/* Visual Side */}
-                    <div className="hidden lg:flex lg:w-1/2 bg-slate-900 relative items-center justify-center p-16 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent"></div>
-                        <div className="relative z-10 text-center">
-                            <motion.div
-                                initial={{ scale: 0.8, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ delay: 0.2 }}
-                                className="w-24 h-24 bg-primary rounded-[2rem] flex items-center justify-center mx-auto mb-10 shadow-2xl shadow-primary/40"
-                            >
-                                <Bike className="w-12 h-12 text-white" />
-                            </motion.div>
-                            <h2 className="text-4xl font-black text-white uppercase tracking-tighter leading-none mb-6">Join the <br /><span className="text-primary italic">WavyGo</span> Community</h2>
-                            <p className="text-slate-400 font-medium leading-relaxed mb-10">Access exclusive bike rates, manage your bookings, and explore India with total freedom.</p>
-
-                            <div className="flex flex-col gap-6 text-left">
-                                {[
-                                    { icon: Sparkles, text: "Elite Member Pricing", desc: "Get up to 20% off on long-term rentals." },
-                                    { icon: Send, text: "Instant Support Access", desc: "Priority WhatsApp support for members." },
-                                ].map((feature, i) => (
-                                    <div key={i} className="flex gap-4 items-start group">
-                                        <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors">
-                                            <feature.icon className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-white font-bold text-sm tracking-tight">{feature.text}</h4>
-                                            <p className="text-slate-500 text-[10px] font-medium mt-1">{feature.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                    {/* Visual Side - Featured Artwork */}
+                    <div className="hidden lg:flex lg:w-1/2 bg-[#035c3e] relative items-center justify-center p-0 overflow-hidden group">
+                        {/* Background Image - High Quality JPG */}
+                        <div className="absolute inset-0 z-0">
+                            <img 
+                                src="/assets/images/auth-monkey.jpg" 
+                                alt="Punch Story" 
+                                className="w-full h-full object-cover transition-transform duration-[10s] group-hover:scale-105"
+                            />
                         </div>
                     </div>
 

@@ -23,6 +23,8 @@ const authUser = async (req, res) => {
             name: user.name,
             email: user.email,
             role: user.role,
+            location: user.location,
+            profileImage: user.profileImage,
             isAdmin: user.isAdmin,
             token: generateToken(user._id)
         });
@@ -35,7 +37,7 @@ const authUser = async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role, location } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -47,7 +49,9 @@ const registerUser = async (req, res) => {
     const user = await User.create({
         name,
         email,
-        password
+        password,
+        role: role || 'user',
+        location: location || ''
     });
 
     if (user) {
@@ -55,6 +59,8 @@ const registerUser = async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            role: user.role,
+            location: user.location,
             isAdmin: user.isAdmin,
             token: generateToken(user._id)
         });
@@ -157,4 +163,38 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
-module.exports = { authUser, registerUser, getUsers, deleteUser, getVendorStatsForAdmin, updateUserProfile };
+// @desc    Approve a vendor
+// @route   PUT /api/users/vendor/:id/approve
+// @access  Private/Admin
+const approveVendor = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (user) {
+            user.isApproved = true;
+            await user.save();
+            res.json({ message: 'Vendor approved successfully' });
+        } else {
+            res.status(404).json({ message: 'Vendor not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// @desc    Get user profile
+// @route   GET /api/users/profile/:id
+// @access  Private
+const getUserProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password');
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { authUser, registerUser, getUsers, deleteUser, getVendorStatsForAdmin, updateUserProfile, approveVendor, getUserProfile };

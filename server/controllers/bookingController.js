@@ -88,7 +88,7 @@ const getDashboardStats = async (req, res) => {
     try {
         const confirmedBookingsData = await Booking.find({ status: 'confirmed' });
         const revenue = confirmedBookingsData.reduce((acc, curr) => acc + (curr.totalPrice || 0), 0);
-        
+
         const totalBookings = await Booking.countDocuments();
         const pendingBookings = await Booking.countDocuments({ status: 'pending' });
         const confirmedBookingsCount = await Booking.countDocuments({ status: 'confirmed' });
@@ -133,7 +133,7 @@ const getVendorStats = async (req, res) => {
         }
 
         const bookings = await Booking.find({ vendorId: vendorId });
-        
+
         // Detailed Stats
         const stats = {
             totalBookings: bookings.length,
@@ -141,7 +141,7 @@ const getVendorStats = async (req, res) => {
                 .filter(b => b.status === 'confirmed' || b.status === 'completed')
                 .reduce((acc, curr) => acc + (curr.totalPrice || 0), 0),
             activeRentals: bookings.filter(b => b.status === 'confirmed' || b.status === 'ongoing').length,
-            
+
             // Payment breakdown
             cash: bookings.filter(b => b.paymentMethod === 'Cash' || !b.paymentMethod).length,
             online: bookings.filter(b => b.paymentMethod === 'Online').length,
@@ -155,9 +155,9 @@ const getVendorStats = async (req, res) => {
             ongoing: bookings.filter(b => b.status === 'ongoing').length,
             completed: bookings.filter(b => b.status === 'completed').length,
         };
-        
+
         const totalBikes = await Package.countDocuments({ vendorId: vendorId });
-        
+
         res.json({
             ...stats,
             totalBikes
@@ -167,12 +167,65 @@ const getVendorStats = async (req, res) => {
     }
 };
 
-module.exports = { 
-    addBookingItems, 
-    getMyBookings, 
-    getVendorBookings, 
-    getBookings, 
-    getDashboardStats, 
+// @desc    Get Admin Financials
+// @route   GET /api/bookings/admin/financials
+// @access  Private/Admin
+const getAdminFinancials = async (req, res) => {
+    try {
+        const bookings = await Booking.find({ status: { $in: ['confirmed', 'completed', 'ongoing'] } });
+        
+        // Let's assume a 15% platform commission
+        const COMMISSION_RATE = 0.15;
+        
+        let totalRevenue = 0;
+        let totalBookings = bookings.length;
+        let vendorPayoutsMap = {}; // Maps vendorId to their payout payload
+        
+        bookings.forEach(b => {
+            const price = b.totalPrice || 0;
+            totalRevenue += price;
+            
+            if (b.vendorId) {
+                if (!vendorPayoutsMap[b.vendorId]) {
+                    vendorPayoutsMap[b.vendorId] = {
+                        id: b.vendorId, // using vendorId as transaction "id" or grouped payout
+                        vendor: b.vendorName || "Unknown Vendor",
+                        amount: 0,
+                        status: 'pending', // we can consider all current balances pending
+                        date: b.createdAt ? b.createdAt.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' }) : new Date().toLocaleDateString('en-IN'),
+                        method: 'Bank Transfer'
+                    };
+                }
+                // Vendor gets 85%
+                vendorPayoutsMap[b.vendorId].amount += price * (1 - COMMISSION_RATE);
+            }
+        });
+        
+        const platformRevenue = totalRevenue * COMMISSION_RATE;
+        const payoutsList = Object.values(vendorPayoutsMap).filter(p => p.amount > 0);
+        const pendingPayoutsTotal = payoutsList.reduce((sum, p) => sum + p.amount, 0);
+
+        res.json({
+            stats: {
+                platformRevenue: platformRevenue.toFixed(0),
+                pendingPayouts: pendingPayoutsTotal.toFixed(0),
+                totalBookings: totalBookings
+            },
+            payouts: payoutsList
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+module.exports = {
+    addBookingItems,
+    getMyBookings,
+    getVendorBookings,
+    getBookings,
+    getDashboardStats,
     updateBookingStatus,
-    getVendorStats
+    getVendorStats,
+    getAdminFinancials
 };

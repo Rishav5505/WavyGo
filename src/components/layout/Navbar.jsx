@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sparkles, ArrowRight, User, ChevronRight, Compass, Map, Info, Phone, Bike, Smartphone, Trophy } from 'lucide-react';
+import { Sparkles, ArrowRight, User, ChevronRight, Compass, Map, Info, Phone, Bike, Smartphone, Trophy, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import Button from '../common/Button';
@@ -192,16 +192,30 @@ const Navbar = () => {
                                                     </div>
 
                                                     <div className="space-y-1">
+                                                        {user.role === 'vendor' && (
+                                                            <Link to="/vendor/dashboard" onClick={() => setShowUserDropdown(false)}>
+                                                                <button className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-primary bg-primary/5 hover:bg-primary hover:text-white font-bold text-xs transition-all text-left group">
+                                                                    <Bike className="w-4 h-4" /> Vendor Dashboard
+                                                                </button>
+                                                            </Link>
+                                                        )}
+                                                        {user.role === 'admin' && (
+                                                            <Link to="/admin/dashboard" onClick={() => setShowUserDropdown(false)}>
+                                                                <button className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white font-bold text-xs transition-all text-left">
+                                                                    <ShieldCheck className="w-4 h-4" /> Admin Dashboard
+                                                                </button>
+                                                            </Link>
+                                                        )}
                                                         <Link to="/profile" onClick={() => setShowUserDropdown(false)}>
-                                                             <button className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-slate-600 hover:bg-slate-50 font-bold text-xs transition-all text-left">
-                                                                 <User className="w-4 h-4" /> My Profile
-                                                             </button>
-                                                         </Link>
-                                                         <Link to="/profile?tab=loyalty" onClick={() => setShowUserDropdown(false)}>
-                                                             <button className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-slate-600 hover:bg-primary/5 hover:text-primary font-bold text-xs transition-all text-left group">
-                                                                 <Trophy className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" /> Wavy Pride
-                                                             </button>
-                                                         </Link>
+                                                            <button className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-slate-600 hover:bg-slate-50 font-bold text-xs transition-all text-left">
+                                                                <User className="w-4 h-4" /> My Profile
+                                                            </button>
+                                                        </Link>
+                                                        <Link to="/profile?tab=loyalty" onClick={() => setShowUserDropdown(false)}>
+                                                            <button className="flex items-center gap-3 w-full p-3 px-4 rounded-xl text-slate-600 hover:bg-primary/5 hover:text-primary font-bold text-xs transition-all text-left group">
+                                                                <Trophy className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" /> Wavy Pride
+                                                            </button>
+                                                        </Link>
                                                         <button
                                                             onClick={() => {
                                                                 logout();
@@ -307,6 +321,36 @@ const Navbar = () => {
 
                                 {user ? (
                                     <motion.div variants={itemVariants} className="pt-3 mt-3 border-t border-slate-100 space-y-1">
+                                        {user.role === 'vendor' && (
+                                            <Link to="/vendor/dashboard" className="group block" onClick={() => setIsOpen(false)}>
+                                                <div className="flex items-center justify-between p-2.5 rounded-xl bg-primary/5 transition-all">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center shadow-md">
+                                                            <Bike className="w-3.5 h-3.5" />
+                                                        </div>
+                                                        <h3 className="text-base font-bold text-primary transition-colors">
+                                                            Vendor Dashboard
+                                                        </h3>
+                                                    </div>
+                                                    <ChevronRight className="w-3.5 h-3.5 text-primary transition-transform group-hover:translate-x-1" />
+                                                </div>
+                                            </Link>
+                                        )}
+                                        {user.role === 'admin' && (
+                                            <Link to="/admin/dashboard" className="group block" onClick={() => setIsOpen(false)}>
+                                                <div className="flex items-center justify-between p-2.5 rounded-xl bg-indigo-50 transition-all">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center shadow-md">
+                                                            <ShieldCheck className="w-3.5 h-3.5" />
+                                                        </div>
+                                                        <h3 className="text-base font-bold text-indigo-600 transition-colors">
+                                                            Admin Dashboard
+                                                        </h3>
+                                                    </div>
+                                                    <ChevronRight className="w-3.5 h-3.5 text-indigo-600 transition-transform group-hover:translate-x-1" />
+                                                </div>
+                                            </Link>
+                                        )}
                                         <Link to="/profile" className="group block" onClick={() => setIsOpen(false)}>
                                              <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-all">
                                                  <div className="flex items-center gap-3">

@@ -1,33 +1,57 @@
-import React, { useState } from 'react';
-import { 
-    IndianRupee, TrendingUp, ArrowUpRight, ArrowDownRight, 
+import React, { useState, useEffect } from 'react';
+import {
+    IndianRupee, TrendingUp, ArrowUpRight, ArrowDownRight,
     Wallet, Clock, CheckCircle2, Download, Search, Filter,
     Building2, Calendar, MoreVertical
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import API from '../../utils/api';
 
 const AdminFinancials = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    
-    // Mock financial data
+    const [loading, setLoading] = useState(true);
+    const [payouts, setPayouts] = useState([]);
+    const [financialStats, setFinancialStats] = useState({
+        platformRevenue: 0,
+        pendingPayouts: 0,
+        totalBookings: 0
+    });
+
+    useEffect(() => {
+        const fetchFinancialData = async () => {
+            try {
+                setLoading(true);
+                const { data } = await API.get('/bookings/admin/financials');
+                setFinancialStats(data.stats);
+                setPayouts(data.payouts);
+            } catch (error) {
+                console.error("Error fetching financial data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchFinancialData();
+    }, []);
+
     const stats = [
-        { label: "Platform Revenue", value: "₹4,25,000", trend: "+12.5%", icon: IndianRupee, color: "bg-primary" },
-        { label: "Pending Payouts", value: "₹85,200", trend: "5 Vendors", icon: Clock, color: "bg-orange-500" },
-        { label: "Total Bookings", value: "1,240", trend: "+8.2%", icon: TrendingUp, color: "bg-indigo-600" }
+        { label: "Platform Revenue", value: `₹${Number(financialStats.platformRevenue).toLocaleString('en-IN')}`, trend: "+15%", icon: IndianRupee, color: "bg-primary" },
+        { label: "Pending Payouts", value: `₹${Number(financialStats.pendingPayouts).toLocaleString('en-IN')}`, trend: `${payouts.length} Vendors`, icon: Clock, color: "bg-orange-500" },
+        { label: "Total Bookings", value: financialStats.totalBookings.toString(), trend: "+5.2%", icon: TrendingUp, color: "bg-indigo-600" }
     ];
 
-    const [payouts, setPayouts] = useState([
-        { id: "P101", vendor: "Ram Rentals", amount: 12500, status: "pending", date: "Mar 17, 2026", method: "Bank Transfer" },
-        { id: "P102", vendor: "Goa Riders", amount: 45000, status: "completed", date: "Mar 15, 2026", method: "UPI" },
-        { id: "P103", vendor: "Delhi Motor Hub", amount: 8900, status: "pending", date: "Mar 16, 2026", method: "Bank Transfer" },
-        { id: "P104", vendor: "Manali Biking", amount: 18200, status: "completed", date: "Mar 10, 2026", method: "Wallet" },
-    ]);
-
     const handleProcessPayout = (id) => {
-        if(window.confirm("Mark this payout as completed?")) {
+        if (window.confirm("Mark this payout as completed?")) {
             setPayouts(payouts.map(p => p.id === id ? { ...p, status: 'completed' } : p));
         }
     };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[500px]">
+                <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-10 pb-20">
@@ -45,11 +69,11 @@ const AdminFinancials = () => {
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {stats.map((stat, i) => (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        key={i} 
+                        key={i}
                         className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden group"
                     >
                         <div className={`w-14 h-14 ${stat.color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-black/10`}>
@@ -58,10 +82,10 @@ const AdminFinancials = () => {
                         <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1">{stat.label}</p>
                         <h3 className="text-3xl font-black text-slate-900 leading-none">{stat.value}</h3>
                         <div className="mt-4 flex items-center gap-2">
-                             <span className="text-emerald-500 text-[10px] font-black flex items-center gap-1 bg-emerald-50 px-2 py-1 rounded-full">
+                            <span className="text-emerald-500 text-[10px] font-black flex items-center gap-1 bg-emerald-50 px-2 py-1 rounded-full">
                                 <ArrowUpRight className="w-3 h-3" /> {stat.trend}
-                             </span>
-                             <span className="text-[10px] text-slate-300 font-bold uppercase tracking-wider">vs last month</span>
+                            </span>
+                            <span className="text-[10px] text-slate-300 font-bold uppercase tracking-wider">vs last month</span>
                         </div>
                     </motion.div>
                 ))}
@@ -74,13 +98,13 @@ const AdminFinancials = () => {
                         <Wallet className="w-7 h-7 text-primary" /> Vendor Payouts
                     </h2>
                     <div className="relative w-full md:w-80">
-                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                         <input 
-                            type="text" 
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                        <input
+                            type="text"
                             placeholder="Find payout # or vendor..."
                             className="w-full bg-white border border-slate-100 rounded-2xl py-3 pl-10 pr-4 focus:outline-none focus:border-primary font-bold text-sm"
                             onChange={(e) => setSearchTerm(e.target.value)}
-                         />
+                        />
                     </div>
                 </div>
 
@@ -115,16 +139,15 @@ const AdminFinancials = () => {
                                             ₹{p.amount.toLocaleString()}
                                         </td>
                                         <td className="px-8 py-6">
-                                            <span className={`px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-2 w-fit ${
-                                                p.status === 'completed' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-orange-50 text-orange-600 border border-orange-100'
-                                            }`}>
+                                            <span className={`px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-2 w-fit ${p.status === 'completed' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-orange-50 text-orange-600 border border-orange-100'
+                                                }`}>
                                                 {p.status === 'completed' ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
                                                 {p.status}
                                             </span>
                                         </td>
                                         <td className="px-8 py-6">
                                             {p.status === 'pending' ? (
-                                                <button 
+                                                <button
                                                     onClick={() => handleProcessPayout(p.id)}
                                                     className="px-6 py-3 bg-primary/10 text-primary hover:bg-primary hover:text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-sm"
                                                 >

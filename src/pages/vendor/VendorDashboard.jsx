@@ -10,6 +10,8 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../../utils/api';
 
+import { useAuth } from '../../context/AuthContext';
+
 const VendorStatCard = ({ label, value, icon: Icon, color, trend }) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -46,12 +48,16 @@ const PersonalizationItem = ({ icon: Icon, label, color }) => (
 
 const VendorDashboard = () => {
     const navigate = useNavigate();
-    const vendorName = localStorage.getItem('vendorName') || "Rishav Kumar";
+    const { user: authUser } = useAuth();
+    
+    // Prioritize context user, then localStorage, then defaults
+    const vendorName = authUser?.name || localStorage.getItem('vendorName') || "Rishav Kumar";
     const vendorPhone = localStorage.getItem('vendorPhone') || "9508287609";
-    const vendorEmail = JSON.parse(localStorage.getItem('userInfo') || '{}').email || "rishavkumar33372@gmail.com";
-    const vendorLocation = localStorage.getItem('vendorLocation') || "Manali";
-    const vendorId = localStorage.getItem('vendorId') || "V1";
-    const isDemoVendor = vendorName === "Ram Rentals";
+    const vendorEmail = authUser?.email || "rishavkumar33372@gmail.com";
+    const vendorLocation = (authUser?.location && authUser?.location !== "undefined") ? authUser.location : (localStorage.getItem('vendorLocation') !== "undefined" ? localStorage.getItem('vendorLocation') : "Manali") || "Manali";
+    const vendorId = authUser?._id || authUser?.id || localStorage.getItem('vendorId') || "V1";
+    
+    const isDemoVendor = vendorId === "V1" || vendorName === "Ram Rentals";
 
     const recentBookings = isDemoVendor ? [
         { id: "BK102", bike: "RE Himalayan 450", client: "Amit Singh", status: "Active", date: "Today" },
@@ -131,9 +137,12 @@ const VendorDashboard = () => {
         }
     };
 
+    const [isApproved, setIsApproved] = useState(false);
+
     useEffect(() => {
         const fetchStats = async () => {
             try {
+                // Fetch stats as before
                 const { data } = await API.get(`/bookings/vendor-stats?vendorId=${encodeURIComponent(vendorId)}`);
                 setVendorStats({
                     totalBikes: data.totalBikes,
@@ -141,8 +150,14 @@ const VendorDashboard = () => {
                     earnings: data.earnings.toLocaleString(),
                     rating: isDemoVendor ? "4.8" : "New"
                 });
+
+                // Also check if vendor is approved from the real database
+                if (vendorId !== "V1") {
+                    const { data: profile } = await API.get(`/users/profile/${vendorId}`);
+                    setIsApproved(profile.isApproved);
+                }
             } catch (error) {
-                console.error("Failed to fetch vendor stats", error);
+                console.error("Failed to fetch vendor stats or profile", error);
             } finally {
                 setLoading(false);
             }
@@ -152,6 +167,25 @@ const VendorDashboard = () => {
 
     return (
         <div className="space-y-4 md:space-y-8 pb-10">
+            {/* Approval Notification Banner */}
+            {isApproved && (
+                <motion.div 
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-center justify-between gap-4 shadow-sm"
+                >
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white shrink-0">
+                            <ShieldCheck className="w-6 h-6" />
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-black text-emerald-900 uppercase tracking-widest leading-none mb-1">Account Verified</h3>
+                            <p className="text-xs font-bold text-emerald-700">Congratulations! Your vendor account has been approved by the Admin. You can now publish your bikes.</p>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+
             {/* Ultra-Compact Premium Header */}
             <div className="bg-white p-3.5 md:p-7 rounded-[2rem] border border-emerald-50 shadow-sm overflow-hidden relative group">
                 <div className="absolute top-0 right-0 w-24 h-full bg-primary/5 rounded-l-[4rem] pointer-events-none" />
