@@ -243,13 +243,13 @@ const Packages = () => {
             <Navbar />
 
             {/* Header / Hero Section - WavyGo Green Theme */}
-            <section className="relative pt-20 pb-28 md:pt-32 md:pb-40 bg-[#035c3e] text-center text-white overflow-hidden">
+            <section className="relative pt-12 pb-24 md:pt-20 md:pb-36 bg-[#035c3e] text-center text-white overflow-hidden">
                 <div className="container-custom relative z-10 px-4">
                     {targetCity && (
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full mb-8 border border-white/10"
+                            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full mb-6 max-md:mt-4 border border-white/10"
                         >
                             <MapPin className="w-4 h-4 text-white" />
                             <span className="text-xs font-black uppercase tracking-widest text-white">Showing Machines in {targetCity}</span>

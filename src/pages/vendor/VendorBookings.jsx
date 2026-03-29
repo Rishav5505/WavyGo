@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { 
-    Calendar, Search, Filter, Mail, Phone, 
-    User, Users, Bike, Clock, CheckCircle2, XCircle, 
+import {
+    Calendar, Search, Filter, Mail, Phone,
+    User, Users, Bike, Clock, CheckCircle2, XCircle,
     IndianRupee, ChevronRight, MoreVertical
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,9 +13,9 @@ const VendorBookings = () => {
     const [filter, setFilter] = useState('all');
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+
     // Read from localStorage (set during login)
-    const currentVendorId = localStorage.getItem('vendorId') || "V1"; 
+    const currentVendorId = localStorage.getItem('vendorId') || "V1";
 
     useEffect(() => {
         const fetchVendorBookings = async () => {
@@ -32,8 +32,8 @@ const VendorBookings = () => {
     }, [currentVendorId]);
 
     const filtered = bookings.filter(bk => {
-        const matchesSearch = (bk.userName || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
-                             (bk._id || '').toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = (bk.userName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (bk._id || '').toLowerCase().includes(searchTerm.toLowerCase());
         const matchesFilter = filter === 'all' || bk.status.toLowerCase() === filter.toLowerCase();
         return matchesSearch && matchesFilter;
     });
@@ -55,9 +55,8 @@ const VendorBookings = () => {
                             <button
                                 key={t.label}
                                 onClick={() => setFilter(t.filter)}
-                                className={`flex-1 md:flex-none px-6 py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all ${
-                                    filter === t.filter ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-slate-400 hover:text-slate-600'
-                                }`}
+                                className={`flex-1 md:flex-none px-6 py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all ${filter === t.filter ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-slate-400 hover:text-slate-600'
+                                    }`}
                             >
                                 {t.label}
                             </button>
@@ -73,7 +72,7 @@ const VendorBookings = () => {
                 ) : filtered.length === 0 ? (
                     <div className="py-20 text-center space-y-8">
                         <div className="max-w-xs mx-auto opacity-80">
-                             <img src="https://img.freepik.com/free-vector/empty-folder-concept-illustration_114360-6101.jpg" alt="No bookings" className="w-full mix-blend-multiply" />
+                            <img src="https://img.freepik.com/free-vector/empty-folder-concept-illustration_114360-6101.jpg" alt="No bookings" className="w-full mix-blend-multiply" />
                         </div>
                         <h3 className="text-xl font-black text-slate-800 tracking-tight">No Bookings Found !</h3>
                     </div>
@@ -94,16 +93,14 @@ const VendorBookings = () => {
                                     <div>
                                         <div className="flex items-center gap-3 mb-1">
                                             <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">{bk._id.slice(-6).toUpperCase()}</span>
-                                            <div className={`w-1.5 h-1.5 rounded-full ${
-                                                bk.status.toLowerCase() === 'confirmed' ? 'bg-emerald-500' : 
-                                                bk.status.toLowerCase() === 'cancelled' ? 'bg-red-500' : 
-                                                'bg-amber-500'
-                                            }`} />
-                                            <span className={`text-[10px] font-black uppercase tracking-widest ${
-                                                bk.status.toLowerCase() === 'confirmed' ? 'text-emerald-500' : 
-                                                bk.status.toLowerCase() === 'cancelled' ? 'text-red-500' : 
-                                                'text-amber-500'
-                                            }`}>{bk.status}</span>
+                                            <div className={`w-1.5 h-1.5 rounded-full ${bk.status.toLowerCase() === 'confirmed' ? 'bg-emerald-500' :
+                                                bk.status.toLowerCase() === 'cancelled' ? 'bg-red-500' :
+                                                    'bg-amber-500'
+                                                }`} />
+                                            <span className={`text-[10px] font-black uppercase tracking-widest ${bk.status.toLowerCase() === 'confirmed' ? 'text-emerald-500' :
+                                                bk.status.toLowerCase() === 'cancelled' ? 'text-red-500' :
+                                                    'text-amber-500'
+                                                }`}>{bk.status}</span>
                                         </div>
                                         <h3 className="text-xl font-black text-slate-900 group-hover:text-primary transition-colors">{bk.packageId?.title || bk.itemTitle}</h3>
                                         <div className="flex flex-wrap items-center gap-4 mt-3">
@@ -140,12 +137,12 @@ const VendorBookings = () => {
 
                                     <div className="flex items-center gap-3 w-full sm:w-auto">
                                         {bk.status.toLowerCase() === 'pending' && (
-                                            <button 
+                                            <button
                                                 onClick={async () => {
                                                     try {
                                                         await API.put(`/bookings/${bk._id}/status`, { status: 'confirmed' });
                                                         // Refresh state or locally update
-                                                        setBookings(prev => prev.map(b => b._id === bk._id ? {...b, status: 'confirmed'} : b));
+                                                        setBookings(prev => prev.map(b => b._id === bk._id ? { ...b, status: 'confirmed' } : b));
                                                     } catch (e) { alert('Failed to confirm'); }
                                                 }}
                                                 className="flex-1 sm:flex-none px-6 py-4 bg-primary text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"

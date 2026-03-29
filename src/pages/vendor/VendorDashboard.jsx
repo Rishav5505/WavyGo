@@ -49,15 +49,15 @@ const PersonalizationItem = ({ icon: Icon, label, color }) => (
 const VendorDashboard = () => {
     const navigate = useNavigate();
     const { user: authUser } = useAuth();
-    
-    // Prioritize context user, then localStorage, then defaults
-    const vendorName = authUser?.name || localStorage.getItem('vendorName') || "Rishav Kumar";
-    const vendorPhone = localStorage.getItem('vendorPhone') || "9508287609";
+
+    // Prioritize context user, then sessionStorage, then defaults
+    const vendorName = authUser?.name || sessionStorage.getItem('vendorName') || "Vendor";
+    const vendorPhone = sessionStorage.getItem('vendorPhone') || "9508287609";
     const vendorEmail = authUser?.email || "rishavkumar33372@gmail.com";
-    const vendorLocation = (authUser?.location && authUser?.location !== "undefined") ? authUser.location : (localStorage.getItem('vendorLocation') !== "undefined" ? localStorage.getItem('vendorLocation') : "Manali") || "Manali";
-    const vendorId = authUser?._id || authUser?.id || localStorage.getItem('vendorId') || "V1";
-    
-    const isDemoVendor = vendorId === "V1" || vendorName === "Ram Rentals";
+    const vendorLocation = (authUser?.location && authUser?.location !== "undefined") ? authUser.location : (sessionStorage.getItem('vendorLocation') !== "undefined" ? sessionStorage.getItem('vendorLocation') : "Manali") || "Manali";
+    const vendorId = sessionStorage.getItem('vendorId') || "V1";
+
+    const isDemoVendor = vendorId === "V1";
 
     const recentBookings = isDemoVendor ? [
         { id: "BK102", bike: "RE Himalayan 450", client: "Amit Singh", status: "Active", date: "Today" },
@@ -73,8 +73,8 @@ const VendorDashboard = () => {
     });
     const [profileImage, setProfileImage] = useState(
         // Check both direct storage and userInfo object
-        localStorage.getItem('profileImage') || 
-        JSON.parse(localStorage.getItem('userInfo') || '{}').profileImage || 
+        localStorage.getItem('profileImage') ||
+        JSON.parse(localStorage.getItem('userInfo') || '{}').profileImage ||
         ''
     );
     const [loading, setLoading] = useState(true);
@@ -93,17 +93,17 @@ const VendorDashboard = () => {
 
         const formData = new FormData();
         formData.append('image', file);
-        
+
         try {
             setUploading(true);
             const { data: imageUrl } = await API.post('/upload', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            
+
             // Format URL to be absolute
             const backendHost = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://wavygo.onrender.com';
             const fullImageUrl = imageUrl.startsWith('http') ? imageUrl : `${backendHost}${imageUrl}`;
-            
+
             // Save to profile
             const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
             const userId = userInfo._id || userInfo.id || localStorage.getItem('vendorId');
@@ -123,7 +123,7 @@ const VendorDashboard = () => {
             // Update all storages
             setProfileImage(fullImageUrl);
             localStorage.setItem('profileImage', fullImageUrl);
-            
+
             // Also update userInfo object so other parts of app see it
             userInfo.profileImage = fullImageUrl;
             localStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -169,7 +169,7 @@ const VendorDashboard = () => {
         <div className="space-y-4 md:space-y-8 pb-10">
             {/* Approval Notification Banner */}
             {isApproved && (
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-center justify-between gap-4 shadow-sm"
@@ -189,19 +189,19 @@ const VendorDashboard = () => {
             {/* Ultra-Compact Premium Header */}
             <div className="bg-white p-3.5 md:p-7 rounded-[2rem] border border-emerald-50 shadow-sm overflow-hidden relative group">
                 <div className="absolute top-0 right-0 w-24 h-full bg-primary/5 rounded-l-[4rem] pointer-events-none" />
-                
+
                 <div className="relative z-10 flex items-center justify-between gap-2 md:gap-6">
                     <div className="flex items-center gap-3">
                         {/* More Compact Mobile Avatar */}
                         <div className="relative shrink-0">
-                            <input 
-                                type="file" 
-                                ref={fileInputRef} 
-                                onChange={handleImageChange} 
-                                className="hidden" 
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleImageChange}
+                                className="hidden"
                                 accept="image/*"
                             />
-                            <div 
+                            <div
                                 onClick={() => fileInputRef.current.click()}
                                 className="w-14 h-14 md:w-24 md:h-24 rounded-[1.5rem] bg-emerald-50 flex items-center justify-center text-primary border-2 md:border-4 border-white shadow-lg overflow-hidden cursor-pointer group/avatar"
                             >
@@ -246,8 +246,8 @@ const VendorDashboard = () => {
             <div className="flex items-center justify-between px-1">
                 <h2 className="text-xs font-black text-slate-400 tracking-[0.2em] uppercase">Control Center</h2>
                 <div className="flex items-center gap-1.5">
-                     <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                     <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{vendorLocation} Live</span>
+                    <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{vendorLocation} Live</span>
                 </div>
             </div>
 
@@ -308,8 +308,8 @@ const VendorDashboard = () => {
                                         </div>
                                     </div>
                                     <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${bk.status === 'Active' ? 'bg-emerald-100 text-emerald-600' :
-                                            bk.status === 'Completed' ? 'bg-slate-100 text-slate-600' :
-                                                'bg-amber-100 text-amber-600'
+                                        bk.status === 'Completed' ? 'bg-slate-100 text-slate-600' :
+                                            'bg-amber-100 text-amber-600'
                                         }`}>
                                         {bk.status}
                                     </span>

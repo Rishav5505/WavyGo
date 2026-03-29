@@ -144,7 +144,7 @@ const Profile = () => {
                         <div className="mb-6 md:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                             <div className="flex items-center gap-4">
                                 {!showMobileMenu && (
-                                    <button 
+                                    <button
                                         onClick={() => setShowMobileMenu(true)}
                                         className="lg:hidden p-3 rounded-xl bg-slate-50 text-slate-500 hover:text-primary transition-all"
                                     >
@@ -216,10 +216,9 @@ const Profile = () => {
                                                 </div>
                                             </div>
                                             <div className="text-right w-full md:w-auto flex md:flex-col justify-between items-center md:items-end">
-                                                <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                                                    bk.status === 'confirmed' ? 'bg-emerald-100 text-emerald-600' : 
-                                                    bk.status === 'cancelled' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-600'
-                                                }`}>
+                                                <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${bk.status === 'confirmed' ? 'bg-emerald-100 text-emerald-600' :
+                                                        bk.status === 'cancelled' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-600'
+                                                    }`}>
                                                     {bk.status}
                                                 </span>
                                                 <p className="font-black text-slate-900 mt-2">₹{bk.totalPrice}</p>

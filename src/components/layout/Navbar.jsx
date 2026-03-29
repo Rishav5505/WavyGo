@@ -134,7 +134,7 @@ const Navbar = () => {
                             {navLinks.map((link) => {
                                 const isDarkHeroPage = ['/', '/about', '/contact', '/packages', '/chakrata'].includes(location.pathname);
                                 const textColor = scrolled ? 'text-slate-700' : (isDarkHeroPage ? 'text-white/90' : 'text-slate-600');
-                                
+
                                 return (
                                     <Link
                                         key={link.name}
@@ -352,31 +352,31 @@ const Navbar = () => {
                                             </Link>
                                         )}
                                         <Link to="/profile" className="group block" onClick={() => setIsOpen(false)}>
-                                             <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-all">
-                                                 <div className="flex items-center gap-3">
-                                                     <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 text-slate-400 flex items-center justify-center group-hover:border-primary/20 group-hover:text-primary transition-all">
-                                                         <User className="w-3.5 h-3.5" />
-                                                     </div>
-                                                     <h3 className="text-base font-bold text-slate-600 group-hover:text-primary transition-colors">
-                                                         My Profile
-                                                     </h3>
-                                                 </div>
-                                                 <ChevronRight className="w-3.5 h-3.5 text-slate-300 transition-transform group-hover:translate-x-1" />
-                                             </div>
-                                         </Link>
-                                         <Link to="/profile?tab=loyalty" className="group block" onClick={() => setIsOpen(false)}>
-                                             <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-primary/5 transition-all">
-                                                 <div className="flex items-center gap-3">
-                                                     <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 text-primary flex items-center justify-center group-hover:border-primary/20 group-hover:bg-primary group-hover:text-white transition-all">
-                                                         <Trophy className="w-3.5 h-3.5" />
-                                                     </div>
-                                                     <h3 className="text-base font-bold text-slate-600 group-hover:text-primary transition-colors">
-                                                         Wavy Pride
-                                                     </h3>
-                                                 </div>
-                                                 <ChevronRight className="w-3.5 h-3.5 text-slate-300 transition-transform group-hover:translate-x-1" />
-                                             </div>
-                                         </Link>
+                                            <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-all">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 text-slate-400 flex items-center justify-center group-hover:border-primary/20 group-hover:text-primary transition-all">
+                                                        <User className="w-3.5 h-3.5" />
+                                                    </div>
+                                                    <h3 className="text-base font-bold text-slate-600 group-hover:text-primary transition-colors">
+                                                        My Profile
+                                                    </h3>
+                                                </div>
+                                                <ChevronRight className="w-3.5 h-3.5 text-slate-300 transition-transform group-hover:translate-x-1" />
+                                            </div>
+                                        </Link>
+                                        <Link to="/profile?tab=loyalty" className="group block" onClick={() => setIsOpen(false)}>
+                                            <div className="flex items-center justify-between p-2.5 rounded-xl hover:bg-primary/5 transition-all">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 text-primary flex items-center justify-center group-hover:border-primary/20 group-hover:bg-primary group-hover:text-white transition-all">
+                                                        <Trophy className="w-3.5 h-3.5" />
+                                                    </div>
+                                                    <h3 className="text-base font-bold text-slate-600 group-hover:text-primary transition-colors">
+                                                        Wavy Pride
+                                                    </h3>
+                                                </div>
+                                                <ChevronRight className="w-3.5 h-3.5 text-slate-300 transition-transform group-hover:translate-x-1" />
+                                            </div>
+                                        </Link>
                                         <button
                                             onClick={() => {
                                                 logout();

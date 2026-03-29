@@ -67,7 +67,7 @@ const AdminUsers = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-indigo-600 rounded-[1.4rem] flex items-center justify-center text-white shadow-xl shadow-indigo-600/20">
+                    <div className="w-14 h-14 bg-emerald-900 rounded-[1.4rem] flex items-center justify-center text-white shadow-xl shadow-emerald-900/20">
                         <Users className="w-7 h-7" />
                     </div>
                     <div>
@@ -79,13 +79,13 @@ const AdminUsers = () => {
                 </div>
 
                 <div className="relative w-full md:w-80 group">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-indigo-600 transition-colors" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-emerald-900 transition-colors" />
                     <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search users..."
-                        className="w-full bg-white border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-indigo-600/40 focus:ring-4 focus:ring-indigo-600/5 transition-all font-bold text-slate-700 text-sm shadow-sm"
+                        className="w-full bg-white border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-emerald-600/40 focus:ring-4 focus:ring-emerald-900/5 transition-all font-bold text-slate-700 text-sm shadow-sm"
                     />
                 </div>
             </div>
@@ -170,8 +170,8 @@ const AdminUsers = () => {
                                         </td>
                                         <td className="px-8 py-6">
                                             <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${user.role === 'admin'
-                                                    ? 'bg-rose-50 text-rose-600 border-rose-100'
-                                                    : 'bg-indigo-50 text-indigo-600 border-indigo-100'
+                                                ? 'bg-rose-50 text-rose-600 border-rose-100'
+                                                : 'bg-emerald-50 text-emerald-900 border-emerald-100'
                                                 }`}>
                                                 {user.role || 'user'}
                                             </span>

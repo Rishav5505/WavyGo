@@ -1,23 +1,52 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Instagram, Facebook, Twitter } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Phone, MapPin, Send, Instagram, Facebook, Twitter, CheckCircle2, Loader2 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Button from '../components/common/Button';
 import AnnouncementBar from '../components/layout/AnnouncementBar';
 import Reveal from '../components/common/Reveal';
+import API from '../utils/api';
 
 const Contact = () => {
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [status, setStatus] = useState({ loading: false, success: false, error: '' });
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setStatus({ loading: true, success: false, error: '' });
+
+        try {
+            await API.post('/contact', formData);
+            setStatus({ loading: false, success: true, error: '' });
+            setFormData({ name: '', email: '', message: '' }); // Clear form
+
+            // Reset success message after 5 seconds
+            setTimeout(() => {
+                setStatus(s => ({ ...s, success: false }));
+            }, 5000);
+        } catch (error) {
+            setStatus({ 
+                loading: false, 
+                success: false, 
+                error: error.response?.data?.message || 'Something went wrong. Please try again later.' 
+            });
+        }
+    };
     return (
         <div className="bg-white min-h-screen selection:bg-primary selection:text-white overflow-x-hidden">
             <Navbar />
 
             {/* Header */}
-            <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 bg-[#035c3e] flex items-center justify-center text-center overflow-hidden">
+            <section className="relative pt-20 pb-20 md:pt-28 md:pb-24 bg-[#035c3e] flex items-center justify-center text-center overflow-hidden">
                 <div className="container-custom relative z-10">
                     <Reveal center width="100%">
-                        <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-4 tracking-[-0.05em] uppercase leading-none">
-                            Contact Us
+                        <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-[-0.05em] uppercase leading-none">
+                            <span className="text-slate-900">Contact</span> <span className="text-white">Us</span>
                         </h1>
                     </Reveal>
                     <motion.p
@@ -57,23 +86,46 @@ const Contact = () => {
                         {/* Form */}
                         <div className="lg:col-span-8">
                             <div className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] p-10 md:p-16 rounded-[2.5rem] shadow-sm border border-[#035c3e]/10">
-                                <form className="space-y-6">
+                                <form onSubmit={handleSubmit} className="space-y-6 relative">
+                                    <AnimatePresence>
+                                        {status.success && (
+                                            <motion.div 
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0 }}
+                                                className="bg-emerald-50 text-emerald-700 p-4 rounded-xl flex items-center gap-3 border border-emerald-100"
+                                            >
+                                                <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+                                                <p className="font-medium text-sm">Thanks for reaching out! We've received your message and will get back to you shortly.</p>
+                                            </motion.div>
+                                        )}
+                                        {status.error && (
+                                            <motion.div 
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0 }}
+                                                className="bg-red-50 text-red-700 p-4 rounded-xl flex items-center gap-3 border border-red-100"
+                                            >
+                                                <p className="font-medium text-sm">{status.error}</p>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
-                                            <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-6 py-4 text-slate-900 focus:outline-none focus:border-primary font-medium" placeholder="John Doe" />
+                                            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full bg-slate-50 border border-slate-200 rounded-xl px-6 py-4 text-slate-900 focus:outline-none focus:border-primary font-medium" placeholder="John Doe" />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Email ID</label>
-                                            <input type="email" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-6 py-4 text-slate-900 focus:outline-none focus:border-primary font-medium" placeholder="john@example.com" />
+                                            <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full bg-slate-50 border border-slate-200 rounded-xl px-6 py-4 text-slate-900 focus:outline-none focus:border-primary font-medium" placeholder="john@example.com" />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Message</label>
-                                        <textarea rows="5" className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-6 text-slate-900 focus:outline-none focus:border-primary font-medium resize-none" placeholder="Tell us how we can help..."></textarea>
+                                        <textarea rows="5" name="message" value={formData.message} onChange={handleChange} required className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-6 text-slate-900 focus:outline-none focus:border-primary font-medium resize-none" placeholder="Tell us how we can help..."></textarea>
                                     </div>
-                                    <Button className="w-full py-5 rounded-xl font-black text-lg flex items-center justify-center gap-3 bg-primary hover:bg-[#024a32] transition-colors shadow-lg shadow-primary/20 uppercase tracking-widest">
-                                        Send Message <Send className="w-5 h-5" />
+                                    <Button disabled={status.loading} className="w-full py-5 rounded-xl font-black text-lg flex items-center justify-center gap-3 bg-primary hover:bg-[#024a32] transition-colors shadow-lg shadow-primary/20 uppercase tracking-widest disabled:opacity-70">
+                                        {status.loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>Send Message <Send className="w-5 h-5" /></>}
                                     </Button>
                                 </form>
                             </div>

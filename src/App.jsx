@@ -97,11 +97,18 @@ const App = () => {
                 <Route path="/admin/login" element={<Navigate to="/auth" />} />
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route path="users" element={<AdminUsers />} />
+                  <Route path="vendors" element={<AdminVendors />} />
+                  <Route path="banners" element={<div className="p-10 text-2xl font-bold">Banner Management Coming Soon...</div>} />
+                  <Route path="bike-types" element={<div className="p-10 text-2xl font-bold">Bike Types Coming Soon...</div>} />
                   <Route path="packages" element={<AdminPackages />} />
                   <Route path="packages/add" element={<AddBike />} />
                   <Route path="bookings" element={<AdminBookings />} />
-                  <Route path="vendors" element={<AdminVendors />} />
-                  <Route path="users" element={<AdminUsers />} />
+                  <Route path="cities" element={<div className="p-10 text-2xl font-bold">Cities Management Coming Soon...</div>} />
+                  <Route path="support" element={<div className="p-10 text-2xl font-bold">Help & Support Coming Soon...</div>} />
+                  <Route path="notifications" element={<div className="p-10 text-2xl font-bold">Notifications Coming Soon...</div>} />
+                  <Route path="testimonials" element={<div className="p-10 text-2xl font-bold">Testimonials Coming Soon...</div>} />
+                  <Route path="coupons" element={<div className="p-10 text-2xl font-bold">Coupons Coming Soon...</div>} />
                   <Route path="financials" element={<AdminFinancials />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>

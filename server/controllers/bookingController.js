@@ -1,5 +1,7 @@
 const Booking = require('../models/bookingModel');
 const Package = require('../models/packageModel');
+const User = require('../models/userModel');
+const { sendEmail } = require('../utils/email');
 
 // @desc    Create new booking
 // @route   POST /api/bookings
@@ -33,6 +35,64 @@ const addBookingItems = async (req, res) => {
         });
 
         const createdBooking = await booking.save();
+
+        // Send confirmation email to User
+        try {
+            await sendEmail({
+                to: email,
+                subject: `Booking Request Sent: ${itemTitle} 🏍️`,
+                htmlContent: `
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <h1 style="color: #035c3e; margin: 0;">Ride Requested!</h1>
+                        </div>
+                        <p>Hi ${userName}, thanks for choosing WavyGo.</p>
+                        <p>Your booking request for <strong>${itemTitle}</strong> has been sent to the vendor. You will be notified once they confirm it.</p>
+                        <div style="background-color: #f8fefc; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #035c3e10;">
+                            <h3 style="margin-top:0; color: #035c3e;">Booking ID: #${createdBooking._id.toString().slice(-6).toUpperCase()}</h3>
+                            <p style="margin: 5px 0;"><strong>Bike:</strong> ${itemTitle}</p>
+                            <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date(travelDate).toLocaleDateString('en-IN', { dateStyle: 'long' })}</p>
+                            <p style="margin: 5px 0;"><strong>Guests:</strong> ${guests}</p>
+                            <p style="margin: 5px 0;"><strong>Amount:</strong> ₹${totalPrice}</p>
+                        </div>
+                        <p>Vendor <strong>${vendorName}</strong> is reviewing your request.</p>
+                        <div style="text-align: center; margin-top: 30px;">
+                            <a href="https://wavygo.com/profile" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold;">Track My Booking</a>
+                        </div>
+                        <p style="font-size: 12px; color: #777; margin-top: 40px; text-align: center;">Team WavyGo - The Best Bike Rentals In India</p>
+                    </div>
+                `
+            });
+
+            // Notify Vendor
+            const vendor = await User.findById(createdBooking.vendorId);
+            if (vendor && vendor.email) {
+                await sendEmail({
+                    to: vendor.email,
+                    subject: 'New Booking Received! 🚀',
+                    htmlContent: `
+                        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                            <h2 style="color: #035c3e; text-align: center;">New Booking on WavyGo!</h2>
+                            <p>Hi ${vendorName},</p>
+                            <p>You have received a new booking for your machine: <strong>${itemTitle}</strong>.</p>
+                            <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                                <p style="margin: 5px 0;"><strong>Customer:</strong> ${userName}</p>
+                                <p style="margin: 5px 0;"><strong>Travel Date:</strong> ${new Date(travelDate).toLocaleDateString()}</p>
+                                <p style="margin: 5px 0;"><strong>Earnings:</strong> ₹${totalPrice}</p>
+                            </div>
+                            <p>Please log in to your dashboard to confirm or manage this booking.</p>
+                            <div style="text-align: center; margin-top: 30px;">
+                                <a href="https://wavygo.com/vendor/dashboard" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Go to Dashboard</a>
+                            </div>
+                        </div>
+                    `
+                });
+            }
+        } catch (emailError) {
+            console.error('Email notification failed but booking was created:', emailError.message);
+            console.log(`Booking details for ${userName}: ID #${createdBooking._id}`);
+        }
+
         res.status(201).json(createdBooking);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -111,8 +171,33 @@ const updateBookingStatus = async (req, res) => {
     try {
         const booking = await Booking.findById(req.params.id);
         if (booking) {
+            const oldStatus = booking.status;
             booking.status = req.body.status || booking.status;
             const updatedBooking = await booking.save();
+
+            // Notify user if status changed to 'confirmed'
+            if (oldStatus !== 'confirmed' && updatedBooking.status === 'confirmed' && updatedBooking.email) {
+                try {
+                    await sendEmail({
+                        to: updatedBooking.email,
+                        subject: `Your Ride Status Updated: ${updatedBooking.status.toUpperCase()} ✅`,
+                        htmlContent: `
+                            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                                <h2 style="color: #035c3e; text-align: center;">Booking Update!</h2>
+                                <p>Hi ${updatedBooking.userName},</p>
+                                <p>The status of your booking for <strong>${updatedBooking.itemTitle}</strong> has been updated to <strong>${updatedBooking.status.toUpperCase()}</strong>.</p>
+                                <p>Get ready for your ride!</p>
+                                <div style="text-align: center; margin-top: 30px;">
+                                    <a href="https://wavygo.com/profile" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">View My Bookings</a>
+                                </div>
+                            </div>
+                        `
+                    });
+                } catch (emailError) {
+                    console.error('Status update email failed:', emailError);
+                }
+            }
+
             res.json(updatedBooking);
         } else {
             res.status(404).json({ message: 'Booking not found' });

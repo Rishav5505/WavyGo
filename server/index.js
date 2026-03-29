@@ -8,6 +8,7 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const campaignRoutes = require('./routes/campaignRoutes');
 const vendorRoutes = require('./routes/vendorRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const contactRoutes = require('./routes/contactRoutes');
 const path = require('path');
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/campaigns', campaignRoutes);
 app.use('/api/vendor', vendorRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Static uploads folder
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

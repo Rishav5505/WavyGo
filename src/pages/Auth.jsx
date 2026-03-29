@@ -24,6 +24,7 @@ const Auth = () => {
         otp: '',
         location: ''
     });
+    const [isOtpSent, setIsOtpSent] = useState(false);
 
     const from = location.state?.from?.pathname || "/";
 
@@ -67,25 +68,16 @@ const Auth = () => {
                 if (step === 1) {
                     if (!formData.location) throw new Error('Please select a location');
                     setStep(2);
+                    setLoading(false);
+                    return;
                 } else if (step === 2) {
+                    // Send real OTP
+                    await API.post('/users/send-otp', { email: formData.email });
+                    setIsOtpSent(true);
                     setStep(3);
-                } else if (step === 3) {
-                    if (formData.otp === '1234') {
-                        // Create REAL vendor in DB
-                        await API.post('/users', {
-                            name: formData.name || formData.email.split('@')[0],
-                            email: formData.email,
-                            password: formData.password,
-                            role: 'vendor',
-                            location: formData.location
-                        });
-                        setStep(4);
-                    } else {
-                        throw new Error('Invalid OTP. Use 1234 for demo.');
-                    }
+                    setLoading(false);
+                    return;
                 }
-                setLoading(false);
-                return;
             }
 
             let response;
@@ -103,18 +95,34 @@ const Auth = () => {
                     password: formData.password
                 });
 
-                // If vendor logic needed after login
-                if (response.data.role === 'vendor') {
-                    localStorage.setItem('vendorId', response.data._id);
-                    localStorage.setItem('vendorName', response.data.name);
-                    localStorage.setItem('vendorLocation', response.data.location);
-                }
+                sessionStorage.setItem('userInfo', JSON.stringify(response.data));
+                sessionStorage.setItem('token', response.data.token);
+                sessionStorage.setItem('userRole', response.data.role);
+                sessionStorage.setItem('userId', response.data._id);
             } else if (mode === 'signup') {
-                response = await API.post('/users', {
-                    name: formData.name,
-                    email: formData.email,
-                    password: formData.password
-                });
+                if (!isOtpSent) {
+                    // Step 1: Send OTP
+                    await API.post('/users/send-otp', { email: formData.email });
+                    setIsOtpSent(true);
+                    setLoading(false);
+                    return;
+                } else {
+                    // Step 2: Verify OTP and Register
+                    response = await API.post('/users/verify-otp', {
+                        name: formData.name,
+                        email: formData.email,
+                        password: formData.password,
+                        role: role,
+                        location: formData.location,
+                        otp: formData.otp
+                    });
+
+                    if (role === 'vendor') {
+                        setStep(4); // Show success screen for vendor
+                        setLoading(false);
+                        return;
+                    }
+                }
             } else {
                 alert('Password reset link sent to your email!');
                 setMode('login');
@@ -166,9 +174,9 @@ const Auth = () => {
                     <div className="hidden lg:flex lg:w-1/2 bg-[#035c3e] relative items-center justify-center p-0 overflow-hidden group">
                         {/* Background Image - High Quality JPG */}
                         <div className="absolute inset-0 z-0">
-                            <img 
-                                src="/assets/images/auth-monkey.jpg" 
-                                alt="Punch Story" 
+                            <img
+                                src="/assets/images/auth-monkey.jpg"
+                                alt="Punch Story"
                                 className="w-full h-full object-cover transition-transform duration-[10s] group-hover:scale-105"
                             />
                         </div>
@@ -301,10 +309,10 @@ const Auth = () => {
                                                         <input
                                                             type="text"
                                                             required
-                                                            maxLength={4}
+                                                            maxLength={6}
                                                             value={formData.otp}
                                                             onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
-                                                            placeholder="Try 1234"
+                                                            placeholder="ENTER 6-DIGIT OTP"
                                                             className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold tracking-[1em] text-center text-slate-700 text-lg"
                                                         />
                                                     </div>
@@ -379,7 +387,7 @@ const Auth = () => {
                                                 </div>
                                             </div>
 
-                                            {mode !== 'forgot' && (
+                                            {mode !== 'forgot' && !isOtpSent && (
                                                 <div className="space-y-2 group">
                                                     <div className="flex justify-between items-center ml-1">
                                                         <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Password</label>
@@ -407,6 +415,25 @@ const Auth = () => {
                                                 </div>
                                             )}
 
+                                            {mode === 'signup' && isOtpSent && (
+                                                <div className="space-y-2 group">
+                                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Enter Verification Code</label>
+                                                    <div className="relative">
+                                                        <ShieldCheck className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary transition-colors" />
+                                                        <input
+                                                            type="text"
+                                                            required
+                                                            maxLength={6}
+                                                            value={formData.otp}
+                                                            onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
+                                                            placeholder="6-DIGIT OTP"
+                                                            className="w-full bg-slate-50 border-2 border-primary/20 rounded-xl md:rounded-2xl py-3.5 md:py-4 pl-12 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-black text-primary text-center tracking-[1em] text-lg"
+                                                        />
+                                                    </div>
+                                                    <p className="text-[10px] text-center text-slate-400 font-bold uppercase tracking-wider">Sent to {formData.email}</p>
+                                                </div>
+                                            )}
+
                                             <Button
                                                 type="submit"
                                                 disabled={loading}
@@ -424,7 +451,7 @@ const Auth = () => {
                                                 {mode === 'login' ? (
                                                     <p className="text-sm font-medium text-slate-500">
                                                         Don't have an account? {' '}
-                                                        <button onClick={() => setMode('signup')} type="button" className="text-primary font-black hover:underline underline-offset-4">Sign Up</button>
+                                                        <button onClick={() => { setMode('signup'); setIsOtpSent(false); }} type="button" className="text-primary font-black hover:underline underline-offset-4">Sign Up</button>
                                                     </p>
                                                 ) : (
                                                     <button

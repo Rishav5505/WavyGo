@@ -119,4 +119,24 @@ const getCategoryStats = async (req, res) => {
     }
 };
 
-module.exports = { getPackages, getPackageById, createPackage, updatePackage, deletePackage, getCategoryStats };
+// @desc    Get all packages for a specific vendor (Admin view)
+// @route   GET /api/packages/vendor/:vendorId
+// @access  Private/Admin
+const getVendorPackagesForAdmin = async (req, res) => {
+    try {
+        const packages = await Package.find({ vendorId: req.params.vendorId });
+        res.json(packages);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { 
+    getPackages, 
+    getPackageById, 
+    createPackage, 
+    updatePackage, 
+    deletePackage, 
+    getCategoryStats,
+    getVendorPackagesForAdmin
+};

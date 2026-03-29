@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { 
-    User, Mail, Phone, MapPin, 
+import {
+    User, Mail, Phone, MapPin,
     Lock, Shield, Star, Camera,
     Save, Bell, ChevronRight, CheckCircle2,
     Building2, FileText, Clock, FileSignature,
@@ -14,13 +14,13 @@ import API from '../../utils/api';
 const VendorSettings = () => {
     const [searchParams] = useSearchParams();
     const activeTab = searchParams.get('tab') || 'profile';
-    
+
     const [formData, setFormData] = useState({
-        businessName: localStorage.getItem('vendorName') || "Rishav Kumar",
-        ownerName: "Owner Name",
-        email: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).email : "rishavkumar33372@gmail.com",
+        businessName: sessionStorage.getItem('vendorName') || "Vendor",
+        ownerName: "Vendor Owner",
+        email: sessionStorage.getItem('userInfo') ? JSON.parse(sessionStorage.getItem('userInfo')).email : "rishavkumar33372@gmail.com",
         phone: "+91 95082 87609",
-        location: localStorage.getItem('vendorLocation') || "Manali",
+        location: sessionStorage.getItem('vendorLocation') || "Manali",
         aboutUs: "Professional bike rentals for all travelers.",
         bankDetails: {
             accountNo: "",
@@ -89,7 +89,7 @@ const VendorSettings = () => {
                     <h1 className="text-3xl font-black text-slate-900 tracking-tight">Business Management</h1>
                     <p className="text-slate-500 font-medium capitalize">Manage your {activeTab.replace('-', ' ')} and preferences.</p>
                 </div>
-                <button 
+                <button
                     onClick={handleSave}
                     className="w-full md:w-auto px-8 py-4 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition-all"
                 >
@@ -112,7 +112,7 @@ const VendorSettings = () => {
                         </div>
                         <h2 className="text-2xl font-black text-slate-900 leading-tight">{formData.businessName}</h2>
                         <p className="text-primary text-[10px] font-black uppercase tracking-widest mt-1 italic">Verified Professional Partner</p>
-                        
+
                         <div className="mt-8 pt-8 border-t border-slate-50">
                             <div className="flex items-center justify-between mb-4">
                                 <span className="text-xs font-bold text-slate-400">Profile Completion</span>
@@ -136,7 +136,7 @@ const VendorSettings = () => {
                 {/* Right Side: Dynamic Content based on activeTab */}
                 <div className="lg:col-span-2">
                     <div className="bg-white rounded-[2.5rem] border border-emerald-50 shadow-sm p-8 md:p-12 min-h-[500px]">
-                        
+
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeTab}
@@ -154,10 +154,10 @@ const VendorSettings = () => {
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Business Name</label>
                                                 <div className="relative">
                                                     <Landmark className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-                                                    <input 
-                                                        type="text" 
+                                                    <input
+                                                        type="text"
                                                         value={formData.businessName}
-                                                        onChange={(e) => setFormData({...formData, businessName: e.target.value})}
+                                                        onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
                                                         className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm"
                                                     />
                                                 </div>
@@ -166,20 +166,20 @@ const VendorSettings = () => {
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Base Location</label>
                                                 <div className="relative">
                                                     <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-                                                    <input 
-                                                        type="text" 
+                                                    <input
+                                                        type="text"
                                                         value={formData.location}
-                                                        onChange={(e) => setFormData({...formData, location: e.target.value})}
+                                                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                                                         className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm"
                                                     />
                                                 </div>
                                             </div>
                                             <div className="md:col-span-2 space-y-2">
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">About Us / Description</label>
-                                                <textarea 
-                                                    rows="5" 
+                                                <textarea
+                                                    rows="5"
                                                     value={formData.aboutUs}
-                                                    onChange={(e) => setFormData({...formData, aboutUs: e.target.value})}
+                                                    onChange={(e) => setFormData({ ...formData, aboutUs: e.target.value })}
                                                     className="w-full bg-slate-50 border border-slate-100 rounded-[2rem] py-5 px-8 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm resize-none"
                                                     placeholder="Tell customers about your rentals..."
                                                 />
@@ -195,37 +195,37 @@ const VendorSettings = () => {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Bank Name</label>
-                                                <input 
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={formData.bankDetails?.bankName || ''}
-                                                    onChange={(e) => setFormData({...formData, bankDetails: {...formData.bankDetails, bankName: e.target.value}})}
+                                                    onChange={(e) => setFormData({ ...formData, bankDetails: { ...formData.bankDetails, bankName: e.target.value } })}
                                                     className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm"
                                                 />
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Account Holder</label>
-                                                <input 
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={formData.bankDetails?.accountHolder || ''}
-                                                    onChange={(e) => setFormData({...formData, bankDetails: {...formData.bankDetails, accountHolder: e.target.value}})}
+                                                    onChange={(e) => setFormData({ ...formData, bankDetails: { ...formData.bankDetails, accountHolder: e.target.value } })}
                                                     className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm"
                                                 />
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Account Number</label>
-                                                <input 
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={formData.bankDetails?.accountNo || ''}
-                                                    onChange={(e) => setFormData({...formData, bankDetails: {...formData.bankDetails, accountNo: e.target.value}})}
+                                                    onChange={(e) => setFormData({ ...formData, bankDetails: { ...formData.bankDetails, accountNo: e.target.value } })}
                                                     className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm"
                                                 />
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">IFSC Code</label>
-                                                <input 
-                                                    type="text" 
+                                                <input
+                                                    type="text"
                                                     value={formData.bankDetails?.ifscCode || ''}
-                                                    onChange={(e) => setFormData({...formData, bankDetails: {...formData.bankDetails, ifscCode: e.target.value}})}
+                                                    onChange={(e) => setFormData({ ...formData, bankDetails: { ...formData.bankDetails, ifscCode: e.target.value } })}
                                                     className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm"
                                                 />
                                             </div>
@@ -267,19 +267,19 @@ const VendorSettings = () => {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Opening Time</label>
-                                                <input 
-                                                    type="time" 
+                                                <input
+                                                    type="time"
                                                     value={formData.businessTiming?.open || '09:00'}
-                                                    onChange={(e) => setFormData({...formData, businessTiming: {...formData.businessTiming, open: e.target.value}})}
+                                                    onChange={(e) => setFormData({ ...formData, businessTiming: { ...formData.businessTiming, open: e.target.value } })}
                                                     className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm"
                                                 />
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Closing Time</label>
-                                                <input 
-                                                    type="time" 
+                                                <input
+                                                    type="time"
                                                     value={formData.businessTiming?.close || '21:00'}
-                                                    onChange={(e) => setFormData({...formData, businessTiming: {...formData.businessTiming, close: e.target.value}})}
+                                                    onChange={(e) => setFormData({ ...formData, businessTiming: { ...formData.businessTiming, close: e.target.value } })}
                                                     className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm"
                                                 />
                                             </div>
@@ -294,19 +294,19 @@ const VendorSettings = () => {
                                         <div className="space-y-6">
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Terms & Conditions</label>
-                                                <textarea 
-                                                    rows="4" 
+                                                <textarea
+                                                    rows="4"
                                                     value={formData.policies?.termsAndConditions || ''}
-                                                    onChange={(e) => setFormData({...formData, policies: {...formData.policies, termsAndConditions: e.target.value}})}
+                                                    onChange={(e) => setFormData({ ...formData, policies: { ...formData.policies, termsAndConditions: e.target.value } })}
                                                     className="w-full bg-slate-50 border border-slate-100 rounded-[2rem] py-5 px-8 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm resize-none"
                                                 />
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Refund Policy</label>
-                                                <textarea 
-                                                    rows="4" 
+                                                <textarea
+                                                    rows="4"
                                                     value={formData.policies?.refundPolicy || ''}
-                                                    onChange={(e) => setFormData({...formData, policies: {...formData.policies, refundPolicy: e.target.value}})}
+                                                    onChange={(e) => setFormData({ ...formData, policies: { ...formData.policies, refundPolicy: e.target.value } })}
                                                     className="w-full bg-slate-50 border border-slate-100 rounded-[2rem] py-5 px-8 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm resize-none"
                                                 />
                                             </div>
@@ -323,10 +323,10 @@ const VendorSettings = () => {
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Public Phone</label>
                                                 <div className="relative">
                                                     <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-                                                    <input 
-                                                        type="text" 
+                                                    <input
+                                                        type="text"
                                                         value={formData.phone}
-                                                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                                         className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 text-sm"
                                                     />
                                                 </div>
@@ -335,8 +335,8 @@ const VendorSettings = () => {
                                                 <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Support Email</label>
                                                 <div className="relative">
                                                     <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-                                                    <input 
-                                                        type="email" 
+                                                    <input
+                                                        type="email"
                                                         value={formData.email}
                                                         readOnly
                                                         className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 font-bold text-slate-400 text-sm opacity-60 cursor-not-allowed"

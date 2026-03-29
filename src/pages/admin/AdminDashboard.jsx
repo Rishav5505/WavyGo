@@ -14,7 +14,7 @@ const StatCard = ({ label, value, icon: Icon, color, trend, onClick }) => (
         whileHover={{ y: -5 }}
         animate={{ opacity: 1, scale: 1 }}
         onClick={onClick}
-        className="bg-[#f8fefc] p-4 md:p-7 rounded-[1.5rem] md:rounded-[2.2rem] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-emerald-100/50 relative overflow-hidden group cursor-pointer h-full"
+        className="bg-white/80 backdrop-blur-sm p-4 md:p-7 rounded-[1.5rem] md:rounded-[2.2rem] shadow-[0_10px_40px_-15px_rgba(0,128,128,0.08)] border border-emerald-100/50 relative overflow-hidden group cursor-pointer h-full"
     >
         <div className={`absolute -right-4 -top-4 w-16 h-16 md:w-24 md:h-24 ${color.split(' ')[0]} opacity-10 rounded-full transition-transform group-hover:scale-150`} />
 
@@ -44,11 +44,11 @@ const AdminDashboard = () => {
         confirmedBookings: 0,
         totalPackages: 0,
         pendingVendors: 1,
-        totalUsers: 24 
+        totalUsers: 24
     });
     const [recentBookings, setRecentBookings] = useState([]);
     const [categoryStats, setCategoryStats] = useState([]);
-    const [loading, setLoading] =  useState(true);
+    const [loading, setLoading] = useState(true);
     const [liveVisitors, setLiveVisitors] = useState(12);
 
     useEffect(() => {
@@ -75,7 +75,7 @@ const AdminDashboard = () => {
                 if (catStatsRes.data && catStatsRes.data.length > 0) {
                     setCategoryStats(catStatsRes.data);
                 }
-                
+
                 const realBookings = bookingsRes.data.slice(0, 4);
                 setRecentBookings(realBookings);
             } catch (error) {
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
             {/* Ultra Modern Navbar */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-slate-900 rounded-[1.4rem] flex items-center justify-center text-white shadow-xl shadow-slate-900/20">
+                    <div className="w-14 h-14 bg-emerald-900 rounded-[1.4rem] flex items-center justify-center text-white shadow-xl shadow-emerald-900/20">
                         <LayoutDashboard className="w-7 h-7" />
                     </div>
                     <div>
@@ -176,23 +176,23 @@ const AdminDashboard = () => {
                 <div className="lg:col-span-8 space-y-10">
 
                     {/* Visual Analytics Chart & Live Traffic */}
-                    <div className="bg-[#f8fefc] p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-emerald-100/50 shadow-sm overflow-hidden relative group">
+                    <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-emerald-100/50 shadow-[0_20px_50px_-20px_rgba(0,128,128,0.1)] overflow-hidden relative group">
                         <div className="flex flex-col sm:flex-row justify-between items-start mb-8 md:mb-12 gap-6">
                             <div>
                                 <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Revenue Analytics</h3>
                                 <p className="text-slate-400 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">Projected vs Actual growth</p>
-                            </div>
-
-                            {/* Live Traffic Widget */}
-                            <div className="flex items-center gap-3 md:gap-4 bg-slate-900 text-white px-4 md:px-6 py-2.5 md:py-3 rounded-2xl shadow-xl shadow-slate-900/10">
-                                <div className="p-1.5 md:p-2 bg-white/10 rounded-lg">
-                                    <Globe className="w-4 h-4 md:w-5 md:h-5 text-primary animate-spin-slow" />
+                                                        </div>
+                            {/* Live Traffic Widget - Precise Image Match */}
+                            <div className="flex items-center gap-4 bg-[#035c3e] text-white p-4 pr-10 rounded-[2rem] shadow-2xl shadow-[#035c3e]/20 group/live relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -translate-y-10 translate-x-10" />
+                                <div className="p-3 bg-black/20 rounded-2xl border border-white/5">
+                                    <Globe className="w-6 h-6 text-emerald-400 animate-pulse" />
                                 </div>
-                                <div className="min-w-[80px]">
-                                    <p className="text-[8px] md:text-[10px] font-black text-primary/80 uppercase leading-none mb-1">Live Visitors</p>
-                                    <div className="flex items-center gap-2">
-                                        <h4 className="text-sm md:text-lg font-black">{liveVisitors}</h4>
-                                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-emerald-400 rounded-full animate-pulse" />
+                                <div className="relative z-10 flex flex-col justify-center">
+                                    <p className="text-[9px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">Live Visitors</p>
+                                    <div className="flex items-center gap-3">
+                                        <h4 className="text-2xl font-black text-white leading-none">{liveVisitors}</h4>
+                                        <div className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(52,211,153,0.8)]" />
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@ const AdminDashboard = () => {
                                             <stop offset="100%" stopColor="#cbd5e1" />
                                         </linearGradient>
                                     </defs>
-                                    
+
                                     <motion.circle
                                         cx="50" cy="50" r="40"
                                         fill="transparent"
@@ -227,7 +227,7 @@ const AdminDashboard = () => {
                                         animate={{ strokeDashoffset: 0 }}
                                         transition={{ duration: 1.5, ease: "easeInOut" }}
                                     />
-                                    
+
                                     <motion.circle
                                         cx="50" cy="50" r="40"
                                         fill="transparent"
@@ -252,20 +252,19 @@ const AdminDashboard = () => {
                                         className="drop-shadow-lg"
                                     />
                                 </svg>
-                                
+
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                                     <p className="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5 mt-1">Growth</p>
                                     <p className="text-xl md:text-3xl font-black text-slate-900 group-hover:scale-110 transition-transform">+24%</p>
                                 </div>
                             </div>
-                            
+
                             <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden sm:block space-y-4 pr-4">
                                 {categoryStats.length > 0 ? (
                                     categoryStats.map((stat, idx) => (
                                         <div key={idx} className="flex items-center gap-3">
-                                            <div className={`w-3 h-3 rounded-full shadow-sm ring-2 ring-white ${
-                                                idx === 0 ? 'bg-[#035c3e]' : idx === 1 ? 'bg-emerald-400' : 'bg-slate-300'
-                                            }`} />
+                                            <div className={`w-3 h-3 rounded-full shadow-sm ring-2 ring-white ${idx === 0 ? 'bg-[#035c3e]' : idx === 1 ? 'bg-emerald-400' : 'bg-slate-300'
+                                                }`} />
                                             <span className="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-wider">
                                                 {stat.label} ({stat.value}%)
                                             </span>
@@ -362,35 +361,35 @@ const AdminDashboard = () => {
                 {/* Sidebar - 4 Columns */}
                 <div className="lg:col-span-4 space-y-10">
 
-                    {/* Marketing Campaign Center */}
-                    <div className="bg-slate-900 p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-2xl shadow-primary/30 text-white relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-primary/20 rounded-bl-full transform translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform" />
+                    {/* Marketing Campaign Center - Light Mint Upgrade */}
+                    <div className="bg-[#effaf6] p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,128,128,0.15)] text-slate-900 relative border border-emerald-100/50 overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-200/20 rounded-bl-full transform translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform" />
 
                         <div className="flex items-center gap-3 mb-8">
-                            <Megaphone className="w-6 h-6 text-primary" />
-                            <h3 className="text-xl font-black tracking-tight">Campaign Center</h3>
+                            <Megaphone className="w-6 h-6 text-emerald-900" />
+                            <h3 className="text-xl font-black tracking-tight text-emerald-900">Campaign Center</h3>
                         </div>
 
                         <div className="space-y-6">
-                            <div className="bg-white/5 p-6 rounded-2xl border border-white/5 hover:bg-white/10 transition-all cursor-pointer group/card" onClick={() => navigate('/admin/settings')}>
+                            <div className="bg-white p-6 rounded-2xl border border-emerald-100/50 shadow-sm hover:shadow-md transition-all cursor-pointer group/card" onClick={() => navigate('/admin/settings')}>
                                 <div className="flex justify-between items-start mb-4">
-                                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Active Campaign</p>
-                                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                                    <p className="text-[10px] font-black text-emerald-600 uppercase tracking-[0.2em]">Active Campaign</p>
+                                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
                                 </div>
-                                <h4 className="font-black text-lg mb-1 group-hover/card:text-primary transition-colors">Winter Wonderland Sale ❄️</h4>
-                                <p className="text-xs text-slate-400 font-medium leading-relaxed">Boost bookings by 15% with seasonal coupons for Himalayan treks.</p>
+                                <h4 className="font-black text-lg mb-1 group-hover/card:text-emerald-700 transition-colors text-emerald-900">Winter Wonderland Sale ❄️</h4>
+                                <p className="text-xs text-slate-500 font-medium leading-relaxed">Boost bookings by 15% with seasonal coupons for Himalayan treks.</p>
 
                                 <div className="mt-6">
                                     <div className="flex justify-between text-[9px] font-black uppercase tracking-widest mb-2">
-                                        <span className="text-primary/70">Conversion Rate</span>
-                                        <span>65%</span>
+                                        <span className="text-emerald-600">Conversion Rate</span>
+                                        <span className="text-emerald-900">65%</span>
                                     </div>
-                                    <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                    <div className="w-full h-1.5 bg-emerald-100 rounded-full overflow-hidden">
                                         <motion.div
                                             initial={{ width: 0 }}
                                             animate={{ width: '65%' }}
                                             transition={{ duration: 1.5 }}
-                                            className="h-full bg-primary"
+                                            className="h-full bg-emerald-600"
                                         />
                                     </div>
                                 </div>

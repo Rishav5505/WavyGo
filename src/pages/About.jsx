@@ -34,11 +34,11 @@ const About = () => {
             <Navbar />
 
             {/* Premium Hero Section - Brand Green */}
-            <section className="relative pt-24 pb-32 md:pt-32 md:pb-40 bg-[#035c3e] flex items-center justify-center overflow-hidden">
+            <section className="relative pt-20 pb-24 md:pt-28 md:pb-36 bg-[#035c3e] flex items-center justify-center overflow-hidden">
                 <div className="relative z-10 text-center text-white px-4">
                     <Reveal center width="100%">
-                        <h1 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter leading-none uppercase">
-                            Our <span className="text-white">Story</span>
+                        <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-tighter leading-none uppercase">
+                            <span className="text-slate-900">Our</span> <span className="text-white">Story</span>
                         </h1>
                     </Reveal>
                     <motion.div

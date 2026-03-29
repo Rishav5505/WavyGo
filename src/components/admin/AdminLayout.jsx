@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Map, Calendar, LogOut, Settings, Package as PackageIcon, Users, IndianRupee } from 'lucide-react';
+import {
+    LayoutDashboard, Map, Calendar, LogOut, Settings,
+    Package as PackageIcon, Users, IndianRupee, Bike,
+    MessageSquare, Bell, CreditCard, Ticket
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 
@@ -19,10 +23,18 @@ const AdminLayout = () => {
 
     const menuItems = [
         { name: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
-        { name: 'Bookings', icon: Calendar, path: '/admin/bookings' },
-        { name: 'Vendors', icon: Users, path: '/admin/vendors' },
-        { name: 'Financials', icon: IndianRupee, path: '/admin/financials' },
-        { name: 'Registered Users', icon: Users, path: '/admin/users' },
+        { name: 'Users', icon: Users, path: '/admin/users' },
+        { name: 'Dealers', icon: Users, path: '/admin/vendors' },
+        { name: 'Banners', icon: Map, path: '/admin/banners' },
+        { name: 'BikeTypes', icon: Bike, path: '/admin/bike-types' },
+        { name: 'Bike', icon: PackageIcon, path: '/admin/packages' },
+        { name: 'Booking', icon: Calendar, path: '/admin/bookings' },
+        { name: 'Cities', icon: Map, path: '/admin/cities' },
+        { name: 'HelpSupport', icon: MessageSquare, path: '/admin/support' },
+        { name: 'Send Notifications', icon: Bell, path: '/admin/notifications' },
+        { name: 'Testimonials', icon: MessageSquare, path: '/admin/testimonials' },
+        { name: 'Coupons', icon: Ticket, path: '/admin/coupons' },
+        { name: 'Wallet', icon: CreditCard, path: '/admin/financials' },
         { name: 'Settings', icon: Settings, path: '/admin/settings' },
     ];
 
@@ -83,22 +95,22 @@ const AdminLayout = () => {
             {/* Desktop Sidebar */}
             <aside className="hidden lg:flex w-80 bg-[#effaf6] border-r border-slate-100 flex-col fixed h-screen z-10 shadow-[20px_0_40px_rgba(0,0,0,0.02)]">
                 <div className="p-10">
-                    <div className="flex items-center gap-4 mb-16">
-                        <div className="w-12 h-12 bg-[#035c3e] rounded-[1.2rem] flex items-center justify-center shadow-xl shadow-[#035c3e]/20">
+                    <div className="flex items-center gap-3 mb-16 px-1">
+                        <div className="w-12 h-12 bg-emerald-900 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-900/20">
                             <PackageIcon className="w-6 h-6 text-white" />
                         </div>
-                        <h1 className="text-2xl font-black text-slate-900 tracking-tighter">Wavy<span className="text-primary">Go Pro</span></h1>
+                        <h1 className="text-2xl font-black text-slate-800 tracking-tighter leading-none">Wavy<span className="text-emerald-900 font-black">Go</span> <span className="text-emerald-900 font-extrabold">Pro</span></h1>
                     </div>
 
-                    <nav className="space-y-2">
+                    <nav className="space-y-1 overflow-y-auto max-h-[70vh] pr-2 scrollbar-hide">
                         {menuItems.map((item) => (
                             <NavLink
                                 key={item.name}
                                 to={item.path}
                                 className={({ isActive }) =>
-                                    `flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-300 font-bold group relative ${isActive
-                                        ? 'bg-[#035c3e] text-white shadow-2xl shadow-[#035c3e]/20 scale-[1.02]'
-                                        : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'
+                                    `flex items-center gap-4 px-6 py-3.5 rounded-2xl transition-all duration-300 font-bold group relative ${isActive
+                                        ? 'bg-primary text-white shadow-xl shadow-primary/20 scale-[1.02]'
+                                        : 'text-slate-400 hover:text-slate-900 hover:bg-slate-100'
                                     }`
                                 }
                             >
@@ -128,11 +140,11 @@ const AdminLayout = () => {
             <div className="lg:hidden">
                 {/* Minimal Header */}
                 <header className="fixed top-0 left-0 right-0 h-20 bg-[#effaf6]/80 backdrop-blur-xl border-b border-slate-50 flex items-center justify-between px-6 z-[60]">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-[#035c3e] rounded-lg flex items-center justify-center shadow-lg shadow-[#035c3e]/20">
-                            <PackageIcon className="w-4 h-4 text-white" />
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-emerald-900 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-900/20">
+                            <PackageIcon className="w-5 h-5 text-white" />
                         </div>
-                        <span className="font-black text-lg tracking-tighter">Wavy<span className="text-primary">Go Admin</span></span>
+                        <span className="font-extrabold text-xl tracking-tighter text-slate-800">Wavy<span className="text-emerald-900 font-extrabold underline-offset-4 decoration-emerald-900/20 underline decoration-2">Go</span> <span className="text-emerald-900 font-black">Pro</span></span>
                     </div>
 
                     <button

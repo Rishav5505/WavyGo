@@ -76,6 +76,8 @@ const Home = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
     const [isCityModalOpen, setIsCityModalOpen] = useState(false);
+    const pickupInputRef = useRef(null);
+    const dropoffInputRef = useRef(null);
 
     // Date & Time State
     const [pickupDate, setPickupDate] = useState(() => {
@@ -90,6 +92,12 @@ const Home = () => {
         nextDay.setMinutes(nextDay.getMinutes() - nextDay.getTimezoneOffset());
         return nextDay.toISOString().slice(0, 16);
     });
+
+    const getLocalISOString = (date = new Date()) => {
+        const d = new Date(date);
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+        return d.toISOString().slice(0, 16);
+    };
 
     const INDIAN_CITIES = [
         "Agra, Uttar Pradesh", "Ahmedabad, Gujarat", "Ajmer, Rajasthan", "Aligarh, Uttar Pradesh", "Allahabad, Uttar Pradesh",
@@ -244,13 +252,18 @@ const Home = () => {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-1.5">
                                         <label className="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-1">Pickup</label>
-                                        <div className="relative group overflow-hidden">
+                                        <div 
+                                            className="relative group overflow-hidden cursor-pointer"
+                                            onClick={() => pickupInputRef.current?.showPicker()}
+                                        >
                                             <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none z-10" />
 
                                             {/* Hidden Native Picker */}
                                             <input
+                                                ref={pickupInputRef}
                                                 type="datetime-local"
                                                 value={pickupDate}
+                                                min={getLocalISOString()}
                                                 onChange={(e) => setPickupDate(e.target.value)}
                                                 className="absolute inset-0 opacity-0 cursor-pointer z-20"
                                             />
@@ -270,13 +283,18 @@ const Home = () => {
 
                                     <div className="space-y-1.5">
                                         <label className="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-1">Dropoff</label>
-                                        <div className="relative group overflow-hidden">
+                                        <div 
+                                            className="relative group overflow-hidden cursor-pointer"
+                                            onClick={() => dropoffInputRef.current?.showPicker()}
+                                        >
                                             <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none z-10" />
 
                                             {/* Hidden Native Picker */}
                                             <input
+                                                ref={dropoffInputRef}
                                                 type="datetime-local"
                                                 value={dropoffDate}
+                                                min={pickupDate}
                                                 onChange={(e) => setDropoffDate(e.target.value)}
                                                 className="absolute inset-0 opacity-0 cursor-pointer z-20"
                                             />

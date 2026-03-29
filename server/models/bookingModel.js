@@ -10,14 +10,14 @@ const bookingSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    vendorId: { 
-        type: String 
+    vendorId: {
+        type: String
     },
-    vendorName: { 
-        type: String 
+    vendorName: {
+        type: String
     },
-    itemTitle: { 
-        type: String 
+    itemTitle: {
+        type: String
     },
     userName: { type: String, required: true },
     email: { type: String, required: true },

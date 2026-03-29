@@ -33,7 +33,7 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest}']
+        globPatterns: ['**/*.{js,css,html,ico,png,jpg,jpeg,svg,webmanifest}']
       },
       devOptions: {
         enabled: true
@@ -41,7 +41,8 @@ export default defineConfig({
     })
   ],
   server: {
-    port: 5174,
+    host: '127.0.0.1',
+    port: 3000,
     strictPort: true,
   }
 })

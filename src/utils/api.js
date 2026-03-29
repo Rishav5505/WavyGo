@@ -8,7 +8,7 @@ const API = axios.create({
 
 // Add token to requests if available
 API.interceptors.request.use((req) => {
-    const storedUser = localStorage.getItem('userInfo');
+    const storedUser = sessionStorage.getItem('userInfo');
     if (storedUser) {
         const token = JSON.parse(storedUser).token;
         if (token) {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-    User, Mail, Phone, MapPin, 
-    Bike, Building2, FileText, Clock, 
-    CalendarCheck, FileSignature, Info, 
+import {
+    User, Mail, Phone, MapPin,
+    Bike, Building2, FileText, Clock,
+    CalendarCheck, FileSignature, Info,
     RotateCcw, LogOut, ChevronRight, Edit2
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -22,12 +22,12 @@ const PersonalizationItem = ({ icon: Icon, label, color }) => (
 
 const VendorProfile = () => {
     const navigate = useNavigate();
-    const vendorName = localStorage.getItem('vendorName') || "Rishav Kumar";
+    const vendorName = localStorage.getItem('vendorName') || "Vendor";
     const vendorPhone = localStorage.getItem('vendorPhone') || "9508287609";
     const vendorEmail = JSON.parse(localStorage.getItem('userInfo') || '{}').email || "rishavkumar33372@gmail.com";
-    const profileImage = localStorage.getItem('profileImage') || 
-                         JSON.parse(localStorage.getItem('userInfo') || '{}').profileImage || 
-                         '';
+    const profileImage = localStorage.getItem('profileImage') ||
+        JSON.parse(localStorage.getItem('userInfo') || '{}').profileImage ||
+        '';
 
     return (
         <div className="space-y-4 md:space-y-8 pb-32 max-w-md mx-auto md:max-w-none px-2">
@@ -94,7 +94,7 @@ const VendorProfile = () => {
             </div>
 
             {/* Logout Button */}
-            <button 
+            <button
                 onClick={() => {
                     localStorage.clear();
                     navigate('/auth');

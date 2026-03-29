@@ -47,9 +47,9 @@ const AdminPackages = () => {
     };
 
     const filteredPackages = packages.filter(pkg => {
-        const matchesSearch = pkg.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                             pkg.location.toLowerCase().includes(searchTerm.toLowerCase());
-        
+        const matchesSearch = pkg.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            pkg.location.toLowerCase().includes(searchTerm.toLowerCase());
+
         if (userRole === 'Vendor') {
             return matchesSearch && pkg.vendorName === vendorName;
         }
@@ -68,7 +68,7 @@ const AdminPackages = () => {
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <select 
+                    <select
                         className="bg-[#effaf6] border border-emerald-100/50 rounded-xl px-4 py-3 font-bold text-slate-700 focus:outline-none"
                         value={userRole}
                         onChange={(e) => setUserRole(e.target.value)}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-    Bell, Calendar, Wallet, CreditCard, 
+import {
+    Bell, Calendar, Wallet, CreditCard,
     Clock, CheckCircle2, XCircle, AlertCircle,
     TrendingUp, ArrowUpRight
 } from 'lucide-react';
@@ -12,7 +12,7 @@ const VendorInsights = () => {
     const [statsData, setStatsData] = useState(null);
     const [loading, setLoading] = useState(true);
     const vendorId = localStorage.getItem('vendorId') || 'V1';
-    const vendorName = localStorage.getItem('vendorName') || 'Rishav';
+    const vendorName = localStorage.getItem('vendorName') || 'Vendor';
 
     useEffect(() => {
         const fetchInsights = async () => {
@@ -69,11 +69,10 @@ const VendorInsights = () => {
                     <button
                         key={t}
                         onClick={() => setTimeframe(t)}
-                        className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace-nowrap flex-1 ${
-                            timeframe === t 
-                            ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-100' 
+                        className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace-nowrap flex-1 ${timeframe === t
+                            ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-100'
                             : 'text-slate-400 hover:text-slate-600 scale-95 opacity-70'
-                        }`}
+                            }`}
                     >
                         {t}
                     </button>
@@ -93,7 +92,7 @@ const VendorInsights = () => {
                         <p className={`text-[10px] md:text-sm font-black uppercase tracking-[0.2em] opacity-60 mb-2`}>{stat.label}</p>
                         <h3 className="text-2xl md:text-4xl font-black">{stat.value}</h3>
                         <div className="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
-                             <TrendingUp className="w-24 h-24 md:w-32 md:h-32" />
+                            <TrendingUp className="w-24 h-24 md:w-32 md:h-32" />
                         </div>
                     </motion.div>
                 ))}

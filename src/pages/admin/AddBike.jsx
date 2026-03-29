@@ -153,7 +153,7 @@ const AddBike = () => {
                                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 block ml-1">Upload Machine Image</label>
                                 <div className="relative group/upload h-[64px]">
                                     <input
-                                        type="file" 
+                                        type="file"
                                         onChange={handleUpload}
                                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
                                         accept="image/*"
@@ -179,9 +179,9 @@ const AddBike = () => {
                                         <div className="w-20 h-20 bg-emerald-50 rounded-xl overflow-hidden p-2">
                                             <img src={formData.image} alt="Preview" className="w-full h-full object-contain" />
                                         </div>
-                                        <button 
-                                            type="button" 
-                                            onClick={() => setFormData({...formData, image: ''})}
+                                        <button
+                                            type="button"
+                                            onClick={() => setFormData({ ...formData, image: '' })}
                                             className="text-rose-500 hover:text-rose-700 p-4 transition-colors"
                                         >
                                             <Trash2 className="w-5 h-5" />

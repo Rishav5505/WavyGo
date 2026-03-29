@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-    LayoutDashboard, Bike, Calendar, Settings, 
+import {
+    LayoutDashboard, Bike, Calendar, Settings,
     LogOut, Bell, Menu, X, User, ChevronRight,
-    Star, Heart, Building2, FileText, Clock, 
-    CalendarCheck, FileSignature, Info, RotateCcw, 
-    ShieldCheck, HelpCircle, Phone, Share2, 
+    Star, Heart, Building2, FileText, Clock,
+    CalendarCheck, FileSignature, Info, RotateCcw,
+    ShieldCheck, HelpCircle, Phone, Share2,
     LineChart, Wallet, CreditCard, Home
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -44,7 +44,7 @@ const VendorLayout = () => {
             {/* Mobile Sidebar Overlay */}
             <AnimatePresence>
                 {isSidebarOpen && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -72,11 +72,10 @@ const VendorLayout = () => {
                             <Link
                                 key={item.path}
                                 to={item.path}
-                                className={`flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 group ${
-                                    location.pathname === item.path 
-                                    ? 'bg-primary text-white shadow-xl shadow-primary/20' 
-                                    : 'text-slate-500 hover:bg-emerald-50 hover:text-primary'
-                                }`}
+                                className={`flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 group ${location.pathname === item.path
+                                        ? 'bg-primary text-white shadow-xl shadow-primary/20'
+                                        : 'text-slate-500 hover:bg-emerald-50 hover:text-primary'
+                                    }`}
                             >
                                 <div className="flex items-center gap-4">
                                     <item.icon className={`w-5 h-5 ${location.pathname === item.path ? 'animate-pulse' : ''}`} />
@@ -93,11 +92,10 @@ const VendorLayout = () => {
                                     <Link
                                         key={item.label}
                                         to={item.path}
-                                        className={`flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 group ${
-                                            location.pathname === item.path 
-                                            ? 'bg-primary text-white' 
-                                            : 'text-slate-500 hover:bg-emerald-50 hover:text-primary'
-                                        }`}
+                                        className={`flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 group ${location.pathname === item.path
+                                                ? 'bg-primary text-white'
+                                                : 'text-slate-500 hover:bg-emerald-50 hover:text-primary'
+                                            }`}
                                     >
                                         <div className="flex items-center gap-4">
                                             <item.icon className="w-5 h-5" />
@@ -119,7 +117,7 @@ const VendorLayout = () => {
                             <p className="text-xs font-bold text-slate-500 mb-1">Weekly Views</p>
                             <p className="text-xl font-black text-primary tracking-tight">1,240 <span className="text-[10px] text-emerald-500">+12%</span></p>
                         </div>
-                        <button 
+                        <button
                             onClick={() => navigate('/auth')}
                             className="flex items-center gap-4 w-full px-4 py-4 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-2xl transition-all font-bold text-sm group"
                         >
@@ -136,8 +134,8 @@ const VendorLayout = () => {
                 <header className="hidden lg:flex h-24 bg-white/80 backdrop-blur-xl border-b border-emerald-50 items-center justify-between px-6 md:px-10 shrink-0 sticky top-0 z-40">
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-3">
-                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Live Connection Status: Excellent</span>
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Live Connection Status: Excellent</span>
                         </div>
                     </div>
 
@@ -146,19 +144,19 @@ const VendorLayout = () => {
                             <Bell className="w-6 h-6 text-slate-400 group-hover:text-primary transition-colors" />
                             <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 border-2 border-white rounded-full" />
                         </div>
-                        
+
                         <div className="h-10 w-[1px] bg-slate-100" />
 
                         <div className="flex items-center gap-4 bg-slate-50 p-1.5 md:pr-4 rounded-2xl border border-slate-100 hover:bg-white hover:shadow-xl transition-all group cursor-pointer">
                             <div className="w-9 h-9 md:w-11 md:h-11 rounded-xl bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/20 relative">
                                 <User className="w-5 h-5 md:w-6 md:h-6" />
                                 <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center border-2 border-slate-50">
-                                     <Heart className="w-2.5 h-2.5 text-rose-500 fill-rose-500" />
+                                    <Heart className="w-2.5 h-2.5 text-rose-500 fill-rose-500" />
                                 </div>
                             </div>
                             <div className="hidden md:block">
-                                <p className="text-xs font-black text-slate-900 leading-tight">{localStorage.getItem('vendorName') || 'Vendor'}</p>
-                                <p className="text-[9px] font-black text-primary uppercase tracking-widest mt-0.5 leading-none">Vendor ID #{localStorage.getItem('vendorId')?.substring(1, 5) || '722'}</p>
+                                <p className="text-xs font-black text-slate-900 leading-tight">{sessionStorage.getItem('vendorName') || 'Vendor'}</p>
+                                <p className="text-[9px] font-black text-primary uppercase tracking-widest mt-0.5 leading-none">Vendor ID #{sessionStorage.getItem('vendorId')?.substring(1, 5) || '722'}</p>
                             </div>
                         </div>
                     </div>
@@ -179,21 +177,20 @@ const VendorLayout = () => {
                         { icon: Wallet, label: 'Earnings', path: '/vendor/earnings' },
                         { icon: User, label: 'Profile', path: '/vendor/profile' }
                     ].map((item) => (
-                        <Link 
+                        <Link
                             key={item.label}
                             to={item.path}
-                            className={`flex flex-col items-center gap-1.5 transition-all ${
-                                location.pathname === item.path ? 'text-primary' : 'text-slate-400'
-                            }`}
+                            className={`flex flex-col items-center gap-1.5 transition-all ${location.pathname === item.path ? 'text-primary' : 'text-slate-400'
+                                }`}
                         >
                             <item.icon className={`w-6 h-6 ${location.pathname === item.path ? 'fill-primary/10 stroke-[2.5]' : 'stroke-[1.5]'}`} />
                             <span className={`text-[10px] font-black uppercase tracking-widest ${location.pathname === item.path ? 'opacity-100' : 'opacity-60'}`}>
                                 {item.label}
                             </span>
                             {location.pathname === item.path && (
-                                <motion.div 
+                                <motion.div
                                     layoutId="bottomTab"
-                                    className="w-1.5 h-1.5 bg-primary rounded-full absolute -top-1" 
+                                    className="w-1.5 h-1.5 bg-primary rounded-full absolute -top-1"
                                 />
                             )}
                         </Link>

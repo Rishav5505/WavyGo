@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { 
-    Plus, Search, Edit, Trash2, MapPin, 
+import {
+    Plus, Search, Edit, Trash2, MapPin,
     IndianRupee, Bike, Eye, TrendingUp, MoreVertical
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -11,10 +11,10 @@ const VendorPackages = () => {
     const [packages, setPackages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
-    
+
     // Dynamic vendor info from login session
-    const vendorName = localStorage.getItem('vendorName') || "Ram Rentals"; 
-    const vendorId = localStorage.getItem('vendorId') || "V1"; 
+    const vendorName = localStorage.getItem('vendorName') || "Vendor";
+    const vendorId = localStorage.getItem('vendorId') || "V1";
     const locationName = localStorage.getItem('vendorLocation') || "Delhi";
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const VendorPackages = () => {
         } catch (error) {
             console.error("Error fetching vendor packages, using mock", error);
             // Only show mock data for the demo account
-            if (vendorName === "Ram Rentals") {
+            if (!vendorName) {
                 const mockData = [
                     {
                         _id: "65e5a2e1f1a2b3c4d5e6f001",

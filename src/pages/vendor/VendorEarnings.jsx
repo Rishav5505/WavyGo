@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-    Bell, IndianRupee, Wallet, CreditCard, 
-    ArrowRight, Clock, CheckCircle2, XCircle, 
+import {
+    Bell, IndianRupee, Wallet, CreditCard,
+    ArrowRight, Clock, CheckCircle2, XCircle,
     AlertCircle, TrendingUp, History, User
 } from 'lucide-react';
 import API from '../../utils/api';
@@ -65,12 +65,12 @@ const VendorEarnings = () => {
                         key={idx}
                         className={`${stat.color} ${stat.textColor} ${stat.fullWidth ? 'col-span-2 md:col-span-1' : ''} p-6 md:p-8 rounded-[1.8rem] border shadow-sm relative group`}
                     >
-                         <div className="flex justify-between items-start mb-4">
+                        <div className="flex justify-between items-start mb-4">
                             <p className="text-[10px] md:text-sm font-black uppercase tracking-[0.2em] opacity-60">{stat.label}</p>
                             <stat.icon className="w-4 h-4 md:w-6 md:h-6 opacity-30" />
                         </div>
                         <h3 className="text-2xl md:text-4xl font-black flex items-center gap-1 leading-none">
-                             {stat.value.toLocaleString()}
+                            {stat.value.toLocaleString()}
                         </h3>
                     </motion.div>
                 ))}
@@ -80,8 +80,8 @@ const VendorEarnings = () => {
             <div className="bg-white p-6 md:p-10 rounded-[2.5rem] border border-emerald-50 shadow-sm space-y-6">
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1 relative">
-                        <input 
-                            type="number" 
+                        <input
+                            type="number"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
                             className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-5 px-6 font-black text-slate-700 text-lg focus:outline-none focus:border-primary transition-all"

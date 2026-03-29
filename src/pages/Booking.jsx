@@ -141,9 +141,9 @@ const Booking = () => {
             <Navbar />
 
             {/* Simple Header */}
-            <div className="bg-slate-900 py-12 md:py-16 pt-24 md:pt-32 text-center text-white px-6">
-                <h1 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4 tracking-tight">Plan Your Trip</h1>
-                <p className="text-sm md:text-base text-slate-400">Simple 3-step process to secure your mountain adventure.</p>
+            <div className="bg-[#E1F1EA] py-12 md:py-16 pt-24 md:pt-32 text-center px-6 border-b border-emerald-100/50">
+                <h1 className="text-3xl md:text-5xl font-bold mb-3 md:mb-4 tracking-tight text-slate-900">Plan Your Trip</h1>
+                <p className="text-sm md:text-base text-emerald-800/70 font-medium">Simple step-by-step process to secure your mountain adventure.</p>
             </div>
 
             <main className="container-custom py-10 md:py-16 -mt-8 md:-mt-10 mb-20 px-4 md:px-0">
@@ -262,7 +262,7 @@ const Booking = () => {
                                                             key={item.id}
                                                             whileHover={{ y: -5 }}
                                                             onClick={() => {
-                                                                const newGear = isSelected 
+                                                                const newGear = isSelected
                                                                     ? formData.selectedGear.filter(id => id !== item.id)
                                                                     : [...formData.selectedGear, item.id];
                                                                 setFormData({ ...formData, selectedGear: newGear });
@@ -285,7 +285,7 @@ const Booking = () => {
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             {/* Checkmark overlay */}
                                                             <div className={`absolute top-4 right-4 w-6 h-6 rounded-full flex items-center justify-center transition-all ${isSelected ? 'bg-primary scale-110' : 'bg-slate-100 scale-100'}`}>
                                                                 {isSelected ? <Check className="w-3.5 h-3.5 text-white" /> : <Plus className="w-3.5 h-3.5 text-slate-300" />}
@@ -340,7 +340,7 @@ const Booking = () => {
                                                     <span className="text-slate-400 font-medium tracking-tight">Selected Journey</span>
                                                     <span className="text-slate-900 font-bold">{packages.find(p => p._id === formData.packageId)?.title}</span>
                                                 </div>
-                                                
+
                                                 {/* Gear Summary */}
                                                 <div className="border-b border-slate-200 pb-4">
                                                     <span className="text-slate-400 font-medium tracking-tight block mb-3">Add-on Gears</span>
