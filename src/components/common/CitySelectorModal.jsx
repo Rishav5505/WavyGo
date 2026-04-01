@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Search, MapPin } from 'lucide-react';
+import API from '../../utils/api';
 
 const POPULAR_CITIES = [
     { name: "Delhi", img: "https://images.weserv.nl/?url=images.unsplash.com/photo-1587474260584-136574528ed5&w=400&h=400&fit=cover" },
@@ -20,17 +21,32 @@ const POPULAR_CITIES = [
 const CitySelectorModal = ({ isOpen, onClose, onSelect, allCities }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredCities, setFilteredCities] = useState([]);
+    const [dbCities, setDbCities] = useState([]);
+
+    useEffect(() => {
+        const fetchDbCities = async () => {
+            try {
+                const { data } = await API.get('/cities');
+                setDbCities(data.filter(c => c.isActive));
+            } catch (error) {
+                console.error("Failed to fetch cities for modal:", error);
+            }
+        };
+        fetchDbCities();
+    }, []);
 
     useEffect(() => {
         if (searchTerm.trim() === '') {
             setFilteredCities([]);
         } else {
-            const results = allCities.filter(city =>
+            // Combine hardcoded and DB cities for search
+            const combined = [...new Set([...allCities, ...dbCities.map(c => c.name)])];
+            const results = combined.filter(city =>
                 city.toLowerCase().includes(searchTerm.toLowerCase())
             ).slice(0, 10);
             setFilteredCities(results);
         }
-    }, [searchTerm, allCities]);
+    }, [searchTerm, allCities, dbCities]);
 
     return (
         <AnimatePresence>
@@ -121,8 +137,37 @@ const CitySelectorModal = ({ isOpen, onClose, onSelect, allCities }) => {
                             {/* Popular Cities Grid */}
                             <div>
                                 <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-6 ml-1">Popular Destinations</h4>
+                                {dbCities.length > 0 && (
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6 mb-10">
+                                        {dbCities.map((city, idx) => (
+                                            <motion.button
+                                                key={`db-${idx}`}
+                                                whileHover={{ y: -5 }}
+                                                onClick={() => {
+                                                    onSelect(city.name);
+                                                    onClose();
+                                                }}
+                                                className="group flex flex-col items-center gap-3"
+                                            >
+                                                <div className="relative w-full aspect-square rounded-2xl md:rounded-[1.5rem] overflow-hidden shadow-lg group-hover:shadow-emerald-500/20 transition-all border-2 border-transparent group-hover:border-emerald-500">
+                                                    <img
+                                                        src={city.image}
+                                                        alt={city.name}
+                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                </div>
+                                                <span className="text-sm font-black text-slate-700 group-hover:text-emerald-600 transition-colors uppercase tracking-tight">
+                                                    {city.name}
+                                                </span>
+                                            </motion.button>
+                                        ))}
+                                    </div>
+                                )}
+
+                                <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-6 ml-1">Other Popular Destinations</h4>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
-                                    {POPULAR_CITIES.map((city, idx) => (
+                                    {POPULAR_CITIES.filter(pc => !dbCities.some(db => db.name.toLowerCase() === pc.name.toLowerCase())).map((city, idx) => (
                                         <motion.button
                                             key={idx}
                                             whileHover={{ y: -5 }}

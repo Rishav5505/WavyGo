@@ -9,17 +9,57 @@ import API from '../../utils/api';
 
 const AdminSettings = () => {
     const [activeTab, setActiveTab] = useState('profile');
+    const [siteSettings, setSiteSettings] = useState({ isMaintenanceMode: false, maintenanceMessage: '' });
+    const [updatingSettings, setUpdatingSettings] = useState(false);
     const [showCampaignModal, setShowCampaignModal] = useState(false);
     const [selectedCampaignType, setSelectedCampaignType] = useState(null);
     const [campaigns, setCampaigns] = useState([]);
     const [loading, setLoading] = useState(false);
     const [submitting, setSubmitting] = useState(false);
-
     useEffect(() => {
+        const fetchSiteSettings = async () => {
+            try {
+                const { data } = await API.get('/settings');
+                setSiteSettings(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchSiteSettings();
         if (activeTab === 'campaigns') {
             fetchCampaigns();
         }
     }, [activeTab]);
+
+    const handleToggleMaintenance = async () => {
+        setUpdatingSettings(true);
+        try {
+            const { data } = await API.put('/settings', { 
+                isMaintenanceMode: !siteSettings.isMaintenanceMode 
+            });
+            setSiteSettings(data);
+        } catch (error) {
+            alert('Failed to update status');
+        } finally {
+            setUpdatingSettings(false);
+        }
+    };
+
+    const handleUpdateMessage = async (e) => {
+        e.preventDefault();
+        setUpdatingSettings(true);
+        try {
+            const { data } = await API.put('/settings', { 
+                maintenanceMessage: siteSettings.maintenanceMessage 
+            });
+            setSiteSettings(data);
+            alert('Message updated successfully');
+        } catch (error) {
+            alert('Failed to update message');
+        } finally {
+            setUpdatingSettings(false);
+        }
+    };
 
     const fetchCampaigns = async () => {
         setLoading(true);
@@ -192,6 +232,9 @@ const AdminSettings = () => {
                     <button onClick={() => setActiveTab('campaigns')} className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all font-bold ${activeTab === 'campaigns' ? 'bg-[#035c3e] text-white shadow-xl shadow-emerald-200' : 'bg-[#f8fefc] border border-emerald-100 text-slate-400 hover:border-emerald-300'}`}>
                         <Megaphone className="w-5 h-5" /> Campaign Hub
                     </button>
+                    <button onClick={() => setActiveTab('status')} className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all font-bold ${activeTab === 'status' ? 'bg-[#035c3e] text-white shadow-xl shadow-emerald-200' : 'bg-[#f8fefc] border border-emerald-100 text-slate-400 hover:border-emerald-300'}`}>
+                        <Settings className="w-5 h-5" /> Site Status
+                    </button>
                 </div>
 
                 <div className="md:col-span-9">
@@ -208,6 +251,63 @@ const AdminSettings = () => {
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Primary Email Node</label>
                                         <input type="email" readOnly value="admin@wavygo.com" className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 font-bold text-slate-800" />
                                     </div>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {activeTab === 'status' && (
+                            <motion.div key="status" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="bg-[#f8fefc] p-10 rounded-[2.5rem] border border-emerald-100 shadow-sm">
+                                <div className="flex justify-between items-center mb-10">
+                                    <div>
+                                        <h3 className="text-xl font-black text-slate-900 mb-1">Site Lifecycle</h3>
+                                        <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Maintenance Control</p>
+                                    </div>
+                                    <button 
+                                        onClick={handleToggleMaintenance}
+                                        disabled={updatingSettings}
+                                        className={`px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${siteSettings.isMaintenanceMode ? 'bg-rose-500 text-white shadow-lg shadow-rose-200' : 'bg-emerald-500 text-white shadow-lg shadow-emerald-200'}`}
+                                    >
+                                        {updatingSettings ? <Loader2 className="w-4 h-4 animate-spin" /> : siteSettings.isMaintenanceMode ? 'Exit Maintenance' : 'Go Maintenance'}
+                                    </button>
+                                </div>
+
+                                <div className="space-y-8 max-w-xl">
+                                    <div className={`p-6 rounded-2xl border ${siteSettings.isMaintenanceMode ? 'bg-rose-50 border-rose-100' : 'bg-emerald-50 border-emerald-100'}`}>
+                                        <div className="flex items-center gap-4">
+                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${siteSettings.isMaintenanceMode ? 'bg-rose-500 text-white' : 'bg-emerald-500 text-white'}`}>
+                                                <Settings className="w-6 h-6" />
+                                            </div>
+                                            <div>
+                                                <p className="font-black text-slate-900 leading-none mb-1">
+                                                    {siteSettings.isMaintenanceMode ? 'Site is UNDER MAINTENANCE' : 'Site is LIVE & Public'}
+                                                </p>
+                                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                                                    {siteSettings.isMaintenanceMode ? 'Only admins can view the website content.' : 'Anyone can browse and book bikes.'}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <form onSubmit={handleUpdateMessage} className="space-y-4">
+                                        <div className="flex flex-col gap-2">
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Maintenance Message</label>
+                                            <textarea 
+                                                value={siteSettings.maintenanceMessage}
+                                                onChange={(e) => setSiteSettings({...siteSettings, maintenanceMessage: e.target.value})}
+                                                className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 font-bold text-slate-800 h-32 resize-none"
+                                                placeholder="Tell your users why the site is down..."
+                                            />
+                                        </div>
+                                        <div className="flex justify-end">
+                                            <button 
+                                                disabled={updatingSettings}
+                                                type="submit"
+                                                className="px-10 py-4 bg-emerald-900 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-emerald-900/10 flex items-center gap-2"
+                                            >
+                                                {updatingSettings ? <Loader2 className="w-4 h-4 animate-spin" /> : <><CheckCircle2 className="w-4 h-4" /> Save Message</>}
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </motion.div>
                         )}

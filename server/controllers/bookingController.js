@@ -1,6 +1,7 @@
 const Booking = require('../models/bookingModel');
 const Package = require('../models/packageModel');
 const User = require('../models/userModel');
+const Coupon = require('../models/couponModel');
 const { sendEmail } = require('../utils/email');
 
 // @desc    Create new booking
@@ -11,14 +12,16 @@ const { sendEmail } = require('../utils/email');
 // @access  Public
 const addBookingItems = async (req, res) => {
     try {
-        const { packageId, userId, vendorId, vendorName, itemTitle, userName, email, phone, travelDate, guests } = req.body;
+        const { 
+            packageId, userId, vendorId, vendorName, itemTitle, 
+            userName, email, phone, travelDate, guests,
+            totalAmount, discountApplied, couponUsed 
+        } = req.body;
 
         const pkg = await Package.findById(packageId);
         if (!pkg) {
             return res.status(404).json({ message: 'Selected bike not found' });
         }
-
-        const totalPrice = pkg.price * guests;
 
         const booking = new Booking({
             packageId,
@@ -31,10 +34,20 @@ const addBookingItems = async (req, res) => {
             phone,
             travelDate,
             guests,
-            totalPrice
+            totalPrice: totalAmount,
+            discountAmount: discountApplied,
+            couponUsed
         });
 
         const createdBooking = await booking.save();
+
+        // Increment coupon usage
+        if (couponUsed) {
+            await Coupon.findOneAndUpdate(
+                { code: couponUsed },
+                { $inc: { usedCount: 1 } }
+            );
+        }
 
         // Send confirmation email to User
         try {
@@ -53,7 +66,7 @@ const addBookingItems = async (req, res) => {
                             <p style="margin: 5px 0;"><strong>Bike:</strong> ${itemTitle}</p>
                             <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date(travelDate).toLocaleDateString('en-IN', { dateStyle: 'long' })}</p>
                             <p style="margin: 5px 0;"><strong>Guests:</strong> ${guests}</p>
-                            <p style="margin: 5px 0;"><strong>Amount:</strong> ₹${totalPrice}</p>
+                            <p style="margin: 5px 0;"><strong>Amount:</strong> ₹${totalAmount}</p>
                         </div>
                         <p>Vendor <strong>${vendorName}</strong> is reviewing your request.</p>
                         <div style="text-align: center; margin-top: 30px;">
@@ -78,7 +91,7 @@ const addBookingItems = async (req, res) => {
                             <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
                                 <p style="margin: 5px 0;"><strong>Customer:</strong> ${userName}</p>
                                 <p style="margin: 5px 0;"><strong>Travel Date:</strong> ${new Date(travelDate).toLocaleDateString()}</p>
-                                <p style="margin: 5px 0;"><strong>Earnings:</strong> ₹${totalPrice}</p>
+                                <p style="margin: 5px 0;"><strong>Earnings:</strong> ₹${totalAmount}</p>
                             </div>
                             <p>Please log in to your dashboard to confirm or manage this booking.</p>
                             <div style="text-align: center; margin-top: 30px;">

@@ -55,8 +55,7 @@ const VendorDashboard = () => {
     const vendorPhone = sessionStorage.getItem('vendorPhone') || "9508287609";
     const vendorEmail = authUser?.email || "rishavkumar33372@gmail.com";
     const vendorLocation = (authUser?.location && authUser?.location !== "undefined") ? authUser.location : (sessionStorage.getItem('vendorLocation') !== "undefined" ? sessionStorage.getItem('vendorLocation') : "Manali") || "Manali";
-    const vendorId = sessionStorage.getItem('vendorId') || "V1";
-
+    const vendorId = authUser?._id || authUser?.id || sessionStorage.getItem('userId') || "V1";
     const isDemoVendor = vendorId === "V1";
 
     const recentBookings = isDemoVendor ? [
@@ -73,8 +72,8 @@ const VendorDashboard = () => {
     });
     const [profileImage, setProfileImage] = useState(
         // Check both direct storage and userInfo object
-        localStorage.getItem('profileImage') ||
-        JSON.parse(localStorage.getItem('userInfo') || '{}').profileImage ||
+        sessionStorage.getItem('profileImage') ||
+        JSON.parse(sessionStorage.getItem('userInfo') || '{}').profileImage ||
         ''
     );
     const [loading, setLoading] = useState(true);
@@ -101,12 +100,13 @@ const VendorDashboard = () => {
             });
 
             // Format URL to be absolute
-            const backendHost = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://wavygo.onrender.com';
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const backendHost = isLocal ? 'http://localhost:5000' : 'https://wavygo.onrender.com';
             const fullImageUrl = imageUrl.startsWith('http') ? imageUrl : `${backendHost}${imageUrl}`;
 
             // Save to profile
-            const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-            const userId = userInfo._id || userInfo.id || localStorage.getItem('vendorId');
+            const userInfo = JSON.parse(sessionStorage.getItem('userInfo') || '{}');
+            const userId = userInfo._id || userInfo.id || sessionStorage.getItem('userId');
 
             if (userId) {
                 try {
@@ -122,11 +122,11 @@ const VendorDashboard = () => {
 
             // Update all storages
             setProfileImage(fullImageUrl);
-            localStorage.setItem('profileImage', fullImageUrl);
+            sessionStorage.setItem('profileImage', fullImageUrl);
 
             // Also update userInfo object so other parts of app see it
             userInfo.profileImage = fullImageUrl;
-            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+            sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
 
             alert("Photo updated successfully!");
         } catch (error) {
@@ -155,6 +155,12 @@ const VendorDashboard = () => {
                 if (vendorId !== "V1") {
                     const { data: profile } = await API.get(`/users/profile/${vendorId}`);
                     setIsApproved(profile.isApproved);
+                    if (profile.profileImage) {
+                        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                        const backendHost = isLocal ? 'http://localhost:5000' : 'https://wavygo.onrender.com';
+                        const finalImg = profile.profileImage.startsWith('http') ? profile.profileImage : `${backendHost}${profile.profileImage}`;
+                        setProfileImage(finalImg);
+                    }
                 }
             } catch (error) {
                 console.error("Failed to fetch vendor stats or profile", error);

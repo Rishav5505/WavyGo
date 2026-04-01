@@ -9,6 +9,11 @@ const campaignRoutes = require('./routes/campaignRoutes');
 const vendorRoutes = require('./routes/vendorRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+const cityRoutes = require('./routes/cityRoutes');
+const testimonialRoutes = require('./routes/testimonialRoutes');
+const couponRoutes = require('./routes/couponRoutes');
+const settingsRoutes = require('./routes/settingsRoutes');
 const path = require('path');
 
 dotenv.config();
@@ -30,6 +35,11 @@ app.use('/api/campaigns', campaignRoutes);
 app.use('/api/vendor', vendorRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/cities', cityRoutes);
+app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/coupons', couponRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // Static uploads folder
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

@@ -25,8 +25,6 @@ const AdminLayout = () => {
         { name: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
         { name: 'Users', icon: Users, path: '/admin/users' },
         { name: 'Dealers', icon: Users, path: '/admin/vendors' },
-        { name: 'Banners', icon: Map, path: '/admin/banners' },
-        { name: 'BikeTypes', icon: Bike, path: '/admin/bike-types' },
         { name: 'Bike', icon: PackageIcon, path: '/admin/packages' },
         { name: 'Booking', icon: Calendar, path: '/admin/bookings' },
         { name: 'Cities', icon: Map, path: '/admin/cities' },

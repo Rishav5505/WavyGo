@@ -25,6 +25,8 @@ const bookingSchema = mongoose.Schema({
     travelDate: { type: Date, required: true },
     guests: { type: Number, required: true },
     totalPrice: { type: Number, default: 0 },
+    discountAmount: { type: Number, default: 0 },
+    couponUsed: { type: String },
     paymentMethod: {
         type: String,
         enum: ['Cash', 'Online', 'Wallet'],

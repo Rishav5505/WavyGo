@@ -12,18 +12,13 @@ const AddBike = () => {
     const [loading, setLoading] = useState(false);
 
     // Get current user info
-    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo') || '{}');
     const isVendor = userInfo.role === 'vendor';
 
     const [formData, setFormData] = useState({
         title: '',
-        location: isVendor ? (localStorage.getItem('vendorLocation') || 'Delhi') : '',
-        price: '',
-        category: 'Cruiser',
-        image: '',
-        duration: '24 Hours',
-        vendorName: isVendor ? (localStorage.getItem('vendorName') || 'New Vendor') : '',
-        vendorId: isVendor ? (localStorage.getItem('vendorId') || 'V1') : '',
+        vendorName: isVendor ? (userInfo.name || sessionStorage.getItem('vendorName') || 'New Vendor') : '',
+        vendorId: isVendor ? (userInfo._id || userInfo.id || sessionStorage.getItem('vendorId') || 'V1') : '',
         specs: {
             cc: '',
             terrain: 'City',

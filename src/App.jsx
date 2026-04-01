@@ -9,6 +9,8 @@ import Contact from './pages/Contact';
 import Packages from './pages/Packages';
 import DestinationDetails from './pages/DestinationDetails';
 import BikeDetails from './pages/BikeDetails';
+import Maintenance from './pages/Maintenance';
+import API from './utils/api';
 import Auth from './pages/Auth';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -27,6 +29,11 @@ import AdminSettings from './pages/admin/AdminSettings';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminVendors from './pages/admin/AdminVendors';
 import AdminFinancials from './pages/admin/AdminFinancials';
+import AdminNotifications from './pages/admin/AdminNotifications';
+import AdminCities from './pages/admin/AdminCities';
+import AdminSupport from './pages/admin/AdminSupport';
+import AdminTestimonials from './pages/admin/AdminTestimonials';
+import AdminCoupons from './pages/admin/AdminCoupons';
 
 // Vendor Pages
 import VendorLayout from './components/vendor/VendorLayout';
@@ -40,6 +47,22 @@ import VendorProfile from './pages/vendor/VendorProfile';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
+  const [maintenance, setMaintenance] = useState({ active: false, message: '' });
+  const [checkingMaintenance, setCheckingMaintenance] = useState(true);
+
+  useEffect(() => {
+    const fetchMaintenance = async () => {
+      try {
+        const { data } = await API.get('/settings');
+        setMaintenance({ active: data.isMaintenanceMode, message: data.maintenanceMessage });
+      } catch (error) {
+        console.error('Failed to fetch site settings', error);
+      } finally {
+        setCheckingMaintenance(false);
+      }
+    };
+    fetchMaintenance();
+  }, []);
 
   useEffect(() => {
     // Disable automatic scroll restoration
@@ -64,7 +87,17 @@ const App = () => {
             {loading && <Loader key="loader" />}
           </AnimatePresence>
 
-          {!loading && (
+          {!loading && !checkingMaintenance && maintenance.active && 
+            !location.pathname.startsWith('/admin') && 
+            (!JSON.parse(sessionStorage.getItem('userInfo'))?.isAdmin) && (
+            <Maintenance message={maintenance.message} />
+          )}
+
+          {!loading && !checkingMaintenance && (
+            !maintenance.active || 
+            location.pathname.startsWith('/admin') || 
+            JSON.parse(sessionStorage.getItem('userInfo'))?.isAdmin
+          ) && (
             <>
               <FloatingActions />
               <Routes>
@@ -104,11 +137,11 @@ const App = () => {
                   <Route path="packages" element={<AdminPackages />} />
                   <Route path="packages/add" element={<AddBike />} />
                   <Route path="bookings" element={<AdminBookings />} />
-                  <Route path="cities" element={<div className="p-10 text-2xl font-bold">Cities Management Coming Soon...</div>} />
-                  <Route path="support" element={<div className="p-10 text-2xl font-bold">Help & Support Coming Soon...</div>} />
-                  <Route path="notifications" element={<div className="p-10 text-2xl font-bold">Notifications Coming Soon...</div>} />
-                  <Route path="testimonials" element={<div className="p-10 text-2xl font-bold">Testimonials Coming Soon...</div>} />
-                  <Route path="coupons" element={<div className="p-10 text-2xl font-bold">Coupons Coming Soon...</div>} />
+                  <Route path="cities" element={<AdminCities />} />
+                  <Route path="support" element={<AdminSupport />} />
+                  <Route path="notifications" element={<AdminNotifications />} />
+                  <Route path="testimonials" element={<AdminTestimonials />} />
+                  <Route path="coupons" element={<AdminCoupons />} />
                   <Route path="financials" element={<AdminFinancials />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
