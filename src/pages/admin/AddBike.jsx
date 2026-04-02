@@ -19,13 +19,18 @@ const AddBike = () => {
         title: '',
         vendorName: isVendor ? (userInfo.name || sessionStorage.getItem('vendorName') || 'New Vendor') : '',
         vendorId: isVendor ? (userInfo._id || userInfo.id || sessionStorage.getItem('vendorId') || 'V1') : '',
+        location: userInfo.location || '',
+        price: '',
+        duration: 'Per Day',
+        category: 'Cruiser',
+        image: '',
         specs: {
             cc: '',
             terrain: 'City',
             comfort: 4,
             mileage: ''
         },
-        description: ''
+        description: 'Quality ride available for rent. Well maintained and serviced regularly.'
     });
 
     const [uploading, setUploading] = useState(false);
@@ -131,6 +136,21 @@ const AddBike = () => {
                                 </select>
                             </div>
                             <div>
+                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 block ml-1">Rental Duration Type</label>
+                                <div className="relative">
+                                    <Clock className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
+                                    <select
+                                        name="duration" value={formData.duration} onChange={handleChange}
+                                        className="w-full bg-white border border-slate-100 rounded-2xl py-5 pl-14 pr-8 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 shadow-sm appearance-none"
+                                    >
+                                        <option>Per Hour</option>
+                                        <option>Per Day</option>
+                                        <option>Per Week</option>
+                                        <option>Trip Based</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
                                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 block ml-1">Daily Rental (₹)</label>
                                 <div className="relative">
                                     <IndianRupee className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
@@ -190,10 +210,13 @@ const AddBike = () => {
                                     <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
                                     <input
                                         type="text" name="location" value={formData.location} onChange={handleChange}
-                                        className="w-full bg-white border border-slate-100 rounded-2xl py-5 pl-14 pr-8 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 shadow-sm"
+                                        className={`w-full bg-white border border-slate-100 rounded-2xl py-5 pl-14 pr-8 focus:outline-none focus:border-primary transition-all font-bold text-slate-700 shadow-sm ${isVendor && formData.location ? 'bg-slate-50 cursor-not-allowed opacity-70' : ''}`}
                                         placeholder="Delhi, Goa, etc." required
-                                        readOnly={isVendor}
+                                        readOnly={isVendor && formData.location}
                                     />
+                                    {isVendor && formData.location && (
+                                        <p className="text-[9px] text-primary/60 font-medium mt-2 ml-1 italic group-hover:animate-pulse">Verified Service Location</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -248,6 +271,14 @@ const AddBike = () => {
                                 type="number" name="specs.comfort" min="1" max="5" value={formData.specs.comfort} onChange={handleChange}
                                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-8 focus:outline-none focus:border-primary transition-all font-bold text-white"
                                 placeholder="5" required
+                            />
+                        </div>
+                        <div className="md:col-span-2 space-y-2">
+                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-3 block ml-1">Detailed Description (Rider info, conditions, etc.)</label>
+                            <textarea
+                                name="description" value={formData.description} onChange={handleChange}
+                                className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-8 focus:outline-none focus:border-primary transition-all font-bold text-white min-h-[120px] resize-none"
+                                placeholder="Tell riders about your machine..." required
                             />
                         </div>
                     </div>

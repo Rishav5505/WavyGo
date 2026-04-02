@@ -88,14 +88,14 @@ const App = () => {
           </AnimatePresence>
 
           {!loading && !checkingMaintenance && maintenance.active && 
-            !location.pathname.startsWith('/admin') && 
+            !window.location.pathname.startsWith('/admin') && 
             (!JSON.parse(sessionStorage.getItem('userInfo'))?.isAdmin) && (
             <Maintenance message={maintenance.message} />
           )}
 
           {!loading && !checkingMaintenance && (
             !maintenance.active || 
-            location.pathname.startsWith('/admin') || 
+            window.location.pathname.startsWith('/admin') || 
             JSON.parse(sessionStorage.getItem('userInfo'))?.isAdmin
           ) && (
             <>
