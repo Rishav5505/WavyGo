@@ -84,7 +84,7 @@ const App = () => {
         <ScrollToTop />
         <div className="antialiased text-slate-900 bg-white min-h-screen relative">
           <AnimatePresence mode="wait">
-            {loading && <Loader key="loader" />}
+            {(loading || checkingMaintenance) && <Loader key="loader" />}
           </AnimatePresence>
 
           {!loading && !checkingMaintenance && maintenance.active && 

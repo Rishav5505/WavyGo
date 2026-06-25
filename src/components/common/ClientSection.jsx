@@ -6,32 +6,32 @@ const clients = [
     {
         id: 1,
         name: "NASA",
-        logo: "https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/400px-NASA_logo.svg.png",
+        logo: "/logos/nasa.svg",
     },
     {
         id: 2,
         name: "Surat Municipal Corporation",
-        logo: "https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Surat_Municipal_Corporation_2023.svg/400px-Surat_Municipal_Corporation_2023.svg.png",
+        logo: "/logos/surat.svg",
     },
     {
         id: 3,
         name: "TIECON",
-        logo: "https://images.weserv.nl/?url=tievadodara.com/wp-content/themes/tie-vadodara/assets/images/logo.png",
+        logo: "/logos/tiecon.svg",
     },
     {
         id: 4,
         name: "Saurashtra University",
-        logo: "https://images.weserv.nl/?url=www.saurashtrauniversity.ac.in/img/logo.png&w=400",
+        logo: "/logos/su.svg",
     },
     {
         id: 5,
         name: "Google",
-        logo: "https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/400px-Google_2015_logo.svg.png",
+        logo: "/logos/google.svg",
     },
     {
         id: 6,
         name: "IIM Ahmedabad",
-        logo: "https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/1/1f/IIM-A_text_logo.svg/800px-IIM-A_text_logo.svg.png",
+        logo: "/logos/iima.svg",
     }
 ];
 

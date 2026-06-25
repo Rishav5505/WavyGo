@@ -212,13 +212,13 @@ const Home = () => {
                 <div className="w-full relative z-10 pt-28 pb-20 md:pt-40 md:pb-20 px-6 md:px-16 lg:px-24">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full max-w-[1800px] mx-auto" style={{ perspective: '2000px' }}>
 
-                        {/* Kona Left: Refined Premium Search Card */}
+                                        {/* Kona Left: Refined Premium Search Card */}
                         <motion.div
                             initial={{ opacity: 0, x: -80, rotateY: 15 }}
                             whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: "circOut" }}
-                            className="w-full max-w-sm lg:max-w-[440px] bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] backdrop-blur-3xl rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-11 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-[#035c3e]/10"
+                            className="w-full max-w-sm lg:max-w-[440px] bg-white/75 backdrop-blur-2xl rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-11 shadow-[0_50px_100px_-25px_rgba(3,92,62,0.12)] border border-white/60"
                         >
                             <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2 tracking-tighter leading-tight md:leading-none">
                                 Looking for <span className="text-primary">Best</span> <br />Bike Rentals?
@@ -236,7 +236,7 @@ const Home = () => {
                                             placeholder="Pick Your City..."
                                             value={destination}
                                             onClick={() => setIsCityModalOpen(true)}
-                                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 md:py-4.5 pl-14 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm hover:shadow-inner cursor-pointer"
+                                            className="w-full bg-slate-50/70 border border-slate-200/80 rounded-2xl py-3.5 md:py-4.5 pl-14 pr-4 focus:outline-none focus:border-primary/40 focus:bg-white transition-all font-bold text-slate-700 text-sm hover:shadow-inner cursor-pointer"
                                         />
                                         <div className="absolute bottom-0 left-0 right-0 h-0.5 overflow-hidden rounded-b-2xl">
                                             <motion.div
@@ -268,7 +268,7 @@ const Home = () => {
                                                 className="absolute inset-0 opacity-0 cursor-pointer z-20"
                                             />
 
-                                            <div className="w-full bg-white border border-slate-300 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[9px] md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
+                                            <div className="w-full bg-slate-50/70 border border-slate-200/80 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[9px] md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
                                                 {new Date(pickupDate).toLocaleString('en-IN', {
                                                     day: '2-digit',
                                                     month: '2-digit',
@@ -300,7 +300,7 @@ const Home = () => {
                                             />
 
                                             {/* Visible Custom Formatted Display */}
-                                            <div className="w-full bg-white border border-slate-300 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[9px] md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
+                                            <div className="w-full bg-slate-50/70 border border-slate-200/80 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[9px] md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
                                                 {new Date(dropoffDate).toLocaleString('en-IN', {
                                                     day: '2-digit',
                                                     month: '2-digit',
@@ -316,10 +316,10 @@ const Home = () => {
 
                                 <Link to={`/packages`} state={{ selectedCity: destination }}>
                                     <motion.div
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
+                                        whileHover={{ scale: 1.01 }}
+                                        whileTap={{ scale: 0.99 }}
                                     >
-                                        <Button className="w-full h-14 md:h-16 rounded-2xl bg-primary text-white font-black text-base md:text-lg uppercase tracking-[0.3em] md:tracking-[0.4em] shadow-2xl shadow-primary/40 transition-all mt-2 md:mt-4 border-b-4 border-black/20 active:translate-y-1 active:border-b-0 flex items-center justify-center">
+                                        <Button className="w-full h-14 md:h-16 rounded-2xl bg-gradient-to-r from-primary to-primary-light text-white font-black text-base md:text-lg uppercase tracking-[0.3em] md:tracking-[0.4em] shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all mt-2 md:mt-4 flex items-center justify-center border-none">
                                             SEARCH
                                         </Button>
                                     </motion.div>
@@ -393,16 +393,16 @@ const Home = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1, duration: 0.6 }}
                                     whileHover={{ y: -8, scale: 1.02 }}
-                                    className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-5 flex flex-col items-start gap-2 border border-white hover:border-primary/20 transition-all duration-700 shadow-lg shadow-slate-200/50 group"
+                                    className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-5 flex flex-col items-start gap-4 border border-slate-100 hover:border-primary/20 transition-all duration-500 shadow-[0_15px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_25px_50px_rgba(3,92,62,0.06)] group"
                                 >
-                                    <h4 className="text-sm md:text-base font-black text-slate-900 tracking-tight uppercase opacity-80">{cat.title}</h4>
-                                    <div className="relative w-full h-20 md:h-28 flex items-center justify-center overflow-hidden">
+                                    <h4 className="text-xs md:text-sm font-black text-slate-800 tracking-widest uppercase group-hover:text-primary transition-colors pl-1">{cat.title}</h4>
+                                    <div className="relative w-full h-20 md:h-28 flex items-center justify-center overflow-hidden bg-slate-50/60 rounded-2xl p-2 group-hover:bg-[#effaf6]/60 transition-colors duration-500">
                                         <motion.img
-                                            initial={{ rotate: 0, scale: 1.3 }}
-                                            whileHover={{ rotate: [-1, 1, 0], scale: 1.5 }}
+                                            initial={{ rotate: 0, scale: 1.1 }}
+                                            whileHover={{ rotate: [-1, 2, 0], scale: 1.25 }}
                                             transition={{ duration: 0.5 }}
                                             src={cat.img}
-                                            className="max-w-full h-16 md:h-24 object-contain transition-transform duration-700 mix-blend-multiply"
+                                            className="max-w-[90%] max-h-[90%] object-contain transition-transform duration-700 mix-blend-multiply"
                                             alt={cat.title}
                                         />
                                     </div>

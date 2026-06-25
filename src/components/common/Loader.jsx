@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Bike } from 'lucide-react';
 
 const Loader = () => {
+    const [isTakingLong, setIsTakingLong] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsTakingLong(true);
+        }, 6000); // Show friendly message if server spin-up takes more than 6s
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <motion.div
             initial={{ opacity: 1 }}
@@ -49,22 +58,34 @@ const Loader = () => {
                         Wavy<span className="text-primary">Go</span>
                     </motion.h2>
 
+                    {/* Indeterminate Looping Progress Bar */}
                     <div className="mt-8 w-48 h-1 bg-white/5 rounded-full overflow-hidden relative">
                         <motion.div
-                            className="absolute inset-y-0 left-0 bg-primary"
-                            initial={{ width: "0%" }}
-                            animate={{ width: "100%" }}
-                            transition={{ duration: 2.5, ease: "easeInOut" }}
+                            className="absolute inset-y-0 bg-primary rounded-full w-1/3"
+                            animate={{ x: ["-100%", "300%"] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                         />
                     </div>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5 }}
-                        className="mt-4 text-slate-500 font-bold uppercase tracking-[0.3em] text-xs"
-                    >
-                        Igniting Your Ride...
-                    </motion.p>
+
+                    {isTakingLong ? (
+                        <motion.p
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-4 text-emerald-400/80 font-bold text-[10px] text-center uppercase tracking-widest px-4 max-w-xs leading-relaxed"
+                        >
+                            Waking up backend server... <br />
+                            <span className="text-slate-500 font-medium text-[9px] lowercase tracking-normal">Takes a minute on free tier hosting</span>
+                        </motion.p>
+                    ) : (
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.5 }}
+                            className="mt-4 text-slate-500 font-bold uppercase tracking-[0.3em] text-xs"
+                        >
+                            Igniting Your Ride...
+                        </motion.p>
+                    )}
                 </motion.div>
             </div>
         </motion.div>

@@ -4,11 +4,11 @@ import { X, Search, MapPin } from 'lucide-react';
 import API from '../../utils/api';
 
 const POPULAR_CITIES = [
-    { name: "Delhi", img: "https://images.weserv.nl/?url=images.unsplash.com/photo-1587474260584-136574528ed5&w=400&h=400&fit=cover" },
-    { name: "Mumbai", img: "https://images.weserv.nl/?url=images.unsplash.com/photo-1566552881560-0be862a7c445&w=400&h=400&fit=cover" },
-    { name: "Bangalore", img: "https://images.weserv.nl/?url=images.unsplash.com/photo-1596176530529-78163a4f7af2&w=400&h=400&fit=cover" },
-    { name: "Pune", img: "https://images.weserv.nl/?url=images.unsplash.com/photo-1562016600-ece13e8ba570&w=400&h=400&fit=cover" },
-    { name: "Jaipur", img: "https://images.weserv.nl/?url=images.unsplash.com/photo-1477587458883-47145ed94245&w=400&h=400&fit=cover" },
+    { name: "Delhi", img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&h=400&fit=crop" },
+    { name: "Mumbai", img: "https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=400&h=400&fit=crop" },
+    { name: "Bangalore", img: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=400&h=400&fit=crop" },
+    { name: "Pune", img: "https://images.unsplash.com/photo-1562016600-ece13e8ba570?w=400&h=400&fit=crop" },
+    { name: "Jaipur", img: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=400&h=400&fit=crop" },
     { name: "Goa", img: "https://upload.wikimedia.org/wikipedia/commons/f/f4/Palolem_beach%2CGoa_-_panoramio.jpg" },
     { name: "Ahmedabad", img: "https://upload.wikimedia.org/wikipedia/commons/4/44/Riverfront_Ahmedabad.jpg" },
     { name: "Chandigarh", img: "https://upload.wikimedia.org/wikipedia/commons/9/9e/New_Chandigarh_Skyline.jpg" },

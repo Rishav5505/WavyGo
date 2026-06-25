@@ -69,16 +69,16 @@ const WhyChooseUs = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.1 }}
                             transition={{ duration: 0.8, delay: i * 0.1 }}
-                            className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] p-6 md:p-10 rounded-[2.5rem] md:rounded-[4rem] border border-[#035c3e]/10 group hover:shadow-[0_40px_80px_-20px_rgba(3,92,62,0.15)] transition-all duration-500 cursor-pointer relative overflow-hidden shadow-xl shadow-slate-200/50"
+                            className="bg-white p-6 md:p-10 rounded-[2.5rem] border border-slate-100 hover:border-primary/20 shadow-[0_15px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_30px_60px_rgba(3,92,62,0.08)] hover:-translate-y-1.5 transition-all duration-500 cursor-pointer relative overflow-hidden flex flex-col group"
                         >
-                            <div className={`w-12 h-12 md:w-16 md:h-16 bg-primary rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 shadow-lg shadow-primary/20 group-hover:scale-110 group-hover:bg-white transition-all duration-500`}>
-                                <usp.icon className="w-5 h-5 md:w-7 md:h-7 text-white group-hover:text-primary transition-colors" />
+                            <div className={`w-12 h-12 md:w-16 md:h-16 bg-primary rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 shadow-lg shadow-primary/10 group-hover:scale-105 transition-all duration-500`}>
+                                <usp.icon className="w-5 h-5 md:w-7 md:h-7 text-white" />
                             </div>
-                            <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-3 md:mb-4 tracking-tighter transition-colors">{usp.title}</h3>
+                            <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-3 md:mb-4 tracking-tighter group-hover:text-primary transition-colors">{usp.title}</h3>
                             <p className="text-slate-600 leading-relaxed font-medium transition-colors mb-6 md:mb-10 text-sm">{usp.desc}</p>
 
-                            <div className="inline-flex items-center gap-3 text-primary font-bold text-[10px] uppercase tracking-widest mt-auto border-b-2 border-primary/20 hover:border-primary pb-2 transition-all">
-                                Discover More <ArrowRight className="w-4 h-4" />
+                            <div className="inline-flex items-center gap-3 text-primary font-bold text-[10px] uppercase tracking-widest mt-auto border-b-2 border-primary/20 hover:border-primary pb-2 transition-all w-fit">
+                                Discover More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </div>
                         </motion.div>
                     ))}

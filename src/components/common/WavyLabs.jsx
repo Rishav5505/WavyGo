@@ -39,12 +39,12 @@ const WavyLabs = () => {
     return (
         <section 
             onMouseMove={handleMouseMove}
-            className="py-6 md:py-10 bg-[#e2f3ee] relative overflow-hidden selection:bg-primary selection:text-white"
+            className="py-10 md:py-16 bg-gradient-to-b from-slate-50 to-[#f0faf7] to-slate-50 relative overflow-hidden selection:bg-primary selection:text-white"
         >
             {/* Labs Background Pattern */}
             <div className="absolute inset-0 opacity-40">
                 <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #035c3e 0.5px, transparent 0)', backgroundSize: '40px 40px' }}></div>
-                <div className="absolute inset-0 bg-gradient-to-b from-[#e2f3ee] via-transparent to-[#e2f3ee]"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-transparent to-slate-50"></div>
             </div>
 
             {/* Glowing Orbs */}
@@ -67,10 +67,10 @@ const WavyLabs = () => {
                     <p className="max-w-xl text-slate-600 font-medium text-xs md:text-sm">Experience the machine's soul. Interact with our flagship fleet.</p>
                 </div>
 
-                <div className="relative aspect-[4/5] md:aspect-[21/9] w-full max-w-6xl mx-auto rounded-[2rem] md:rounded-[3rem] bg-white shadow-[0_40px_80px_-15px_rgba(3,92,62,0.15)] border border-white/50 overflow-hidden group">
+                <div className="relative aspect-[4/5] md:aspect-[21/9] w-full max-w-6xl mx-auto rounded-[2rem] md:rounded-[3rem] bg-white shadow-[0_30px_60px_-15px_rgba(3,92,62,0.06)] border border-slate-100 overflow-hidden group">
                     {/* Interaction UI */}
                     <div className="absolute top-4 left-4 md:top-8 md:left-8 z-20 flex flex-col gap-4">
-                        <div className="p-3 md:p-4 rounded-xl md:rounded-2xl bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl">
+                        <div className="p-3 md:p-4 rounded-xl md:rounded-2xl bg-white/70 backdrop-blur-xl border border-white/50 shadow-xl">
                             <h3 className="text-slate-900 font-black text-[10px] md:text-xs uppercase tracking-widest mb-1">Classic 350</h3>
                             <p className="text-primary text-[8px] md:text-[10px] font-bold tracking-tighter uppercase">Stealth Black Edition</p>
                         </div>
