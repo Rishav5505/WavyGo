@@ -52,7 +52,7 @@ const ClientSection = () => {
                 <div className="text-center mb-10 md:mb-16 px-4">
                     <Reveal center>
                         <p className="text-primary font-bold transition-all duration-300 uppercase tracking-[0.4em] text-[9px] md:text-[11px] mb-3 block opacity-80">
-                            The WavyGo Network
+                            The SafarGo Network
                         </p>
                         <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none uppercase">
                             Our Valued <span className="text-primary">Partners</span>

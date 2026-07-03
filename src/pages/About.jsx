@@ -60,11 +60,11 @@ const About = () => {
                 <div className="container-custom">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                         <div>
-                            <span className="text-primary font-bold uppercase tracking-widest text-xs mb-4 block">The WavyGo Vision</span>
+                            <span className="text-primary font-bold uppercase tracking-widest text-xs mb-4 block">The SafarGo Vision</span>
                             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-8 leading-tight">Elite Bike Rentals <br />Driven by Freedom.</h2>
                             <div className="space-y-6 text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
                                 <p>
-                                    Welcome to <span className="text-slate-900 dark:text-white font-bold">WavyGo</span>, where we believe every ride is an opportunity to explore the unknown. We are India's most modern bike rental platform, connecting riders with premium machines.
+                                    Welcome to <span className="text-slate-900 dark:text-white font-bold">SafarGo</span>, where we believe every ride is an opportunity to explore the unknown. We are India's most modern bike rental platform, connecting riders with premium machines.
                                 </p>
                                 <p>
                                     Founded by motorcycle enthusiasts, we evolved from a small fleet into a professional rental boutique dedicated to creating seamless, safe, and powerful riding experiences across India.
@@ -161,7 +161,7 @@ const About = () => {
                                 id: 1,
                                 image: "/images/insta/1.png",
                                 likes: "1,245",
-                                caption: "Find the BEST BIKE for RENT. Book Now. 🏍️ #wavygo #bikerentals",
+                                caption: "Find the BEST BIKE for RENT. Book Now. 🏍️ #safargo #bikerentals",
                                 time: "2 DAYS AGO"
                             },
                             {
@@ -175,7 +175,7 @@ const About = () => {
                                 id: 3,
                                 image: "/images/insta/3.jpg",
                                 likes: "4,532",
-                                caption: "Rule the roads of Dehradun with WAVYGO. 🏔️ #dehradun #uttarakhand",
+                                caption: "Rule the roads of Dehradun with SAFARGO. 🏔️ #dehradun #uttarakhand",
                                 time: "1 WEEK AGO"
                             },
                             {
@@ -202,12 +202,12 @@ const About = () => {
                                     <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 p-[2px]">
                                         <div className="w-full h-full bg-white rounded-full flex items-center justify-center p-0.5">
                                             <div className="w-full h-full bg-[#035c3e] rounded-full flex items-center justify-center">
-                                                <span className="text-white text-[8px] font-black italic">WG</span>
+                                                <span className="text-white text-[8px] font-black italic">SG</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="flex-1">
-                                        <h4 className="text-xs font-bold text-slate-900 leading-none mb-0.5">wavygo.official</h4>
+                                        <h4 className="text-xs font-bold text-slate-900 leading-none mb-0.5">safargo.official</h4>
                                         <p className="text-[9px] text-slate-500">Original Audio</p>
                                     </div>
                                     <button className="text-slate-900 font-bold text-xs hover:text-slate-500">•••</button>
@@ -232,7 +232,7 @@ const About = () => {
                                     <p className="text-xs font-bold text-slate-900 mb-1">{post.likes} likes</p>
                                     
                                     <p className="text-[10px] md:text-xs text-slate-700 mb-2 leading-relaxed">
-                                        <span className="font-bold text-slate-900 mr-1.5">wavygo.official</span>
+                                        <span className="font-bold text-slate-900 mr-1.5">safargo.official</span>
                                         {post.caption}
                                     </p>
 

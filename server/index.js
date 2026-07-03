@@ -45,7 +45,7 @@ app.use('/api/settings', settingsRoutes);
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.get('/', (req, res) => {
-    res.send('WavyGo API is running...');
+    res.send('SafarGo API is running...');
 });
 
 const PORT = process.env.PORT || 5000;

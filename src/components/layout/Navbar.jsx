@@ -294,7 +294,7 @@ const Navbar = () => {
                                 variants={itemVariants}
                                 className="text-sm font-black text-primary uppercase tracking-[0.2em] mb-5 border-l-4 border-primary pl-3 py-1"
                             >
-                                WavyGo Hub
+                                SafarGo Hub
                             </motion.p>
 
                             <div className="space-y-1">

@@ -59,7 +59,7 @@ const addBookingItems = async (req, res) => {
                         <div style="text-align: center; margin-bottom: 20px;">
                             <h1 style="color: #035c3e; margin: 0;">Ride Requested!</h1>
                         </div>
-                        <p>Hi ${userName}, thanks for choosing WavyGo.</p>
+                        <p>Hi ${userName}, thanks for choosing SafarGo.</p>
                         <p>Your booking request for <strong>${itemTitle}</strong> has been sent to the vendor. You will be notified once they confirm it.</p>
                         <div style="background-color: #f8fefc; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #035c3e10;">
                             <h3 style="margin-top:0; color: #035c3e;">Booking ID: #${createdBooking._id.toString().slice(-6).toUpperCase()}</h3>
@@ -70,9 +70,9 @@ const addBookingItems = async (req, res) => {
                         </div>
                         <p>Vendor <strong>${vendorName}</strong> is reviewing your request.</p>
                         <div style="text-align: center; margin-top: 30px;">
-                            <a href="https://wavygo.com/profile" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold;">Track My Booking</a>
+                            <a href="https://safargo.com/profile" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold;">Track My Booking</a>
                         </div>
-                        <p style="font-size: 12px; color: #777; margin-top: 40px; text-align: center;">Team WavyGo - The Best Bike Rentals In India</p>
+                        <p style="font-size: 12px; color: #777; margin-top: 40px; text-align: center;">Team SafarGo - The Best Bike Rentals In India</p>
                     </div>
                 `
             });
@@ -85,7 +85,7 @@ const addBookingItems = async (req, res) => {
                     subject: 'New Booking Received! 🚀',
                     htmlContent: `
                         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-                            <h2 style="color: #035c3e; text-align: center;">New Booking on WavyGo!</h2>
+                            <h2 style="color: #035c3e; text-align: center;">New Booking on SafarGo!</h2>
                             <p>Hi ${vendorName},</p>
                             <p>You have received a new booking for your machine: <strong>${itemTitle}</strong>.</p>
                             <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -95,7 +95,7 @@ const addBookingItems = async (req, res) => {
                             </div>
                             <p>Please log in to your dashboard to confirm or manage this booking.</p>
                             <div style="text-align: center; margin-top: 30px;">
-                                <a href="https://wavygo.com/vendor/dashboard" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Go to Dashboard</a>
+                                <a href="https://safargo.com/vendor/dashboard" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Go to Dashboard</a>
                             </div>
                         </div>
                     `
@@ -201,7 +201,7 @@ const updateBookingStatus = async (req, res) => {
                                 <p>The status of your booking for <strong>${updatedBooking.itemTitle}</strong> has been updated to <strong>${updatedBooking.status.toUpperCase()}</strong>.</p>
                                 <p>Get ready for your ride!</p>
                                 <div style="text-align: center; margin-top: 30px;">
-                                    <a href="https://wavygo.com/profile" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">View My Bookings</a>
+                                    <a href="https://safargo.com/profile" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">View My Bookings</a>
                                 </div>
                             </div>
                         `

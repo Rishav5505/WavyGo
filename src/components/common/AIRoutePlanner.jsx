@@ -334,7 +334,7 @@ const AIRoutePlanner = ({ onClose }) => {
                                 <span className="text-xs font-black text-white/40 tracking-[0.2em]">CORE ENGINE ACTIVE</span>
                             </div>
                             <div className="h-12 w-px bg-white/10 hidden md:block"></div>
-                            <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] animate-pulse">WavyGo v2.0</p>
+                            <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] animate-pulse">SafarGo v2.0</p>
                         </div>
                     </div>
                 </Reveal>

@@ -14,7 +14,7 @@ const importData = async () => {
 
         const createdUser = await User.create({
             name: 'Admin User',
-            email: 'admin@wavygo.com',
+            email: 'admin@safargo.com',
             password: 'password123',
             isAdmin: true,
         });

@@ -9,9 +9,9 @@ const Logo = ({ className = "", footer = false }) => {
 
     return (
         <Link to="/" className={`flex flex-col items-start leading-none group transition-all duration-300 hover:scale-105 ${className}`}>
-            {/* Main Brand Name - WavyGo (Reduced weight & scale) */}
+            {/* Main Brand Name - SafarGo (Reduced weight & scale) */}
             <h1 className={`font-bold tracking-tight ${primaryColor} ${footer ? 'text-2xl md:text-3xl' : 'text-2xl md:text-4xl'}`}>
-                WavyGo
+                SafarGo
             </h1>
             
             {/* Tagline Box - Rent Ride Explore (Clean & Pro) */}

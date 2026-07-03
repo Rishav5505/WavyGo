@@ -61,9 +61,9 @@ const FloatingActions = () => {
     const handleFallbackInstallClick = () => {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         if (isIOS) {
-            alert('To install WavyGo on iOS:\n\n1. Tap the Share button (square with arrow pointing up) at the bottom.\n2. Scroll down and tap "Add to Home Screen".');
+            alert('To install SafarGo on iOS:\n\n1. Tap the Share button (square with arrow pointing up) at the bottom.\n2. Scroll down and tap "Add to Home Screen".');
         } else {
-            alert('To install WavyGo:\n\nOpen this link directly in Google Chrome. Then tap "Install App" or check the browser menu (⋮) for "Add to Home screen".');
+            alert('To install SafarGo:\n\nOpen this link directly in Google Chrome. Then tap "Install App" or check the browser menu (⋮) for "Add to Home screen".');
         }
     };
 

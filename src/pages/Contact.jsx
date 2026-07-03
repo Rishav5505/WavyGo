@@ -66,7 +66,7 @@ const Contact = () => {
                         {/* Info */}
                         <div className="lg:col-span-4 space-y-6">
                             {[
-                                { icon: Mail, title: "Email Us", details: ["hello@wavygo.com"], color: "bg-primary/10 text-primary" },
+                                { icon: Mail, title: "Email Us", details: ["hello@safargo.com"], color: "bg-primary/10 text-primary" },
                                 { icon: MapPin, title: "Visit Us", details: ["New Delhi, India"], color: "bg-primary/10 text-primary" }
                             ].map((item, i) => (
                                 <div key={i} className="bg-gradient-to-br from-[#d1ede1] to-[#f0f9f6] p-8 rounded-3xl shadow-sm border border-[#035c3e]/10 flex items-start gap-6 group hover:scale-105 transition-all duration-300">

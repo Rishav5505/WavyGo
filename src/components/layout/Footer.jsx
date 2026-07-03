@@ -11,7 +11,7 @@ const Footer = () => {
                     <div className="md:col-span-4 flex flex-col items-start gap-4 md:gap-6">
                         <Link to="/" className="inline-block group transition-transform duration-500 hover:scale-105">
                             <div className="flex items-baseline">
-                                <span className="font-black italic tracking-tighter text-2xl md:text-4xl text-white">Wavy</span>
+                                <span className="font-black italic tracking-tighter text-2xl md:text-4xl text-white">Safar</span>
                                 <span className="font-black italic tracking-tighter text-2xl md:text-4xl text-white -ml-0.5">Go</span>
                             </div>
                             <div className="mt-1">
@@ -60,7 +60,7 @@ const Footer = () => {
                     {/* Mobile App Section */}
                     <div className="md:col-span-4 md:pl-8 flex flex-col justify-start">
                         <h4 className="text-white text-xl md:text-3xl font-black leading-tight mb-4 md:mb-6 tracking-tight">
-                            WavyGo Mobile App
+                            SafarGo Mobile App
                         </h4>
                         <div className="flex flex-wrap gap-2.5">
                             <a href="#" className="transition-transform hover:scale-105">
@@ -84,7 +84,7 @@ const Footer = () => {
                 {/* Bottom Copyright Bar */}
                 <div className="pt-5 border-t border-white/5 text-center">
                     <p className="text-white/60 font-medium text-[9px] md:text-[10px] tracking-tight">
-                        © 2025 WavyGo. All rights Reserved.
+                        © 2025 SafarGo. All rights Reserved.
                     </p>
                 </div>
             </div>

@@ -21,6 +21,8 @@ import SocialSection from '../components/layout/SocialSection';
 import Lightbox from '../components/common/Lightbox';
 import WavyLabs from '../components/common/WavyLabs';
 import CitySelectorModal from '../components/common/CitySelectorModal';
+import ExpeditionStatus from '../components/common/ExpeditionStatus';
+import TripCalculator from '../components/common/TripCalculator';
 
 const Counter = ({ value }) => {
     const [count, setCount] = useState(0);
@@ -196,7 +198,7 @@ const Home = () => {
                                 animate={{ scale: 1 }}
                                 src={heroImages[currentHeroIndex]}
                                 className="w-full h-full object-cover object-[center_35%] md:object-center pointer-events-none brightness-110 contrast-[1.05]"
-                                alt={`WavyGo Experience ${currentHeroIndex + 1}`}
+                                alt={`SafarGo Experience ${currentHeroIndex + 1}`}
                             />
                             {/* Cinematic Vignette - For better text readability */}
                             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/30 transition-all opacity-80"></div>
@@ -377,7 +379,10 @@ const Home = () => {
             </section>
 
             {/* Fleet Section */}
-            <div className="pt-16 pb-12 bg-slate-50 relative z-10 md:-mt-20 -mt-10">
+            <div className="pt-16 pb-12 bg-slate-50 relative z-10 md:-mt-20 -mt-10 overflow-hidden">
+                {/* Ambient Glows */}
+                <div className="absolute top-0 left-0 w-80 h-80 rounded-full blur-[120px] opacity-10 bg-primary pointer-events-none ambient-glow-green"></div>
+                <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-[140px] opacity-10 bg-yellow-500/20 pointer-events-none ambient-glow-gold"></div>
                 <div className="container-custom">
                     <div className="text-center mb-10">
                         <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">
@@ -415,6 +420,8 @@ const Home = () => {
 
             <PopularPackages />
             <WavyLabs />
+            <ExpeditionStatus />
+            <TripCalculator />
             <WhyChooseUs />
 
             {/* Analytics Section */}

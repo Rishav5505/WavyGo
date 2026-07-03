@@ -62,12 +62,12 @@ const sendOTP = async (req, res) => {
         try {
             await sendEmail({
                 to: email,
-                subject: 'WavyGo Verification OTP 🏍️',
+                subject: 'SafarGo Verification OTP 🏍️',
                 htmlContent: `
                     <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f7f6; padding: 50px 0; color: #333; text-align: center;">
                         <div style="max-width: 500px; margin: 0 auto; background-color: #ffffff; padding: 40px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e1e8e5;">
                             <h2 style="color: #035c3e; margin-bottom: 30px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Verify Your Identity</h2>
-                            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 30px;">Hi there! Use the verification code below to complete your registration on WavyGo.</p>
+                            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 30px;">Hi there! Use the verification code below to complete your registration on SafarGo.</p>
                             
                             <div style="background-color: #f8fefc; border: 2px dashed #035c3e50; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
                                 <span style="font-size: 42px; font-weight: 900; color: #035c3e; letter-spacing: 10px; text-shadow: 1px 1px 0 #fff;">${otpValue}</span>
@@ -77,7 +77,7 @@ const sendOTP = async (req, res) => {
                             <p style="font-size: 14px; color: #666;">If you didn't request this, you can safely ignore this email.</p>
                             
                             <div style="margin-top: 40px; border-top: 1px solid #eee; pt: 20px;">
-                                <p style="font-style: italic; font-size: 13px; color: #999;">Best Regards,<br>Team WavyGo - Ride With Passion</p>
+                                <p style="font-style: italic; font-size: 13px; color: #999;">Best Regards,<br>Team SafarGo - Ride With Passion</p>
                             </div>
                         </div>
                     </div>
@@ -128,10 +128,10 @@ const verifyOTPAndRegister = async (req, res) => {
             try {
                 await sendEmail({
                     to: user.email,
-                    subject: 'Welcome to WavyGo! 🏍️',
+                    subject: 'Welcome to SafarGo! 🏍️',
                     htmlContent: `
                         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-                            <h2 style="color: #035c3e; text-align: center;">Welcome to WavyGo, ${user.name}!</h2>
+                            <h2 style="color: #035c3e; text-align: center;">Welcome to SafarGo, ${user.name}!</h2>
                             <p>Thank you for joining India's premium bike rental platform. We're excited to help you on your next adventure.</p>
                             <div style="background-color: #f8fefc; padding: 15px; border-radius: 8px; margin: 20px 0;">
                                 <p style="margin: 0;"><strong>Account Details:</strong></p>
@@ -140,7 +140,7 @@ const verifyOTPAndRegister = async (req, res) => {
                             </div>
                             <p>You can now log in and start exploring our wide range of premium bikes.</p>
                             <div style="text-align: center; margin-top: 30px;">
-                                <a href="https://wavygo.com/login" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Login to Your Account</a>
+                                <a href="https://safargo.com/login" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Login to Your Account</a>
                             </div>
                             <p style="font-size: 12px; color: #777; margin-top: 40px; text-align: center;">If you didn't create this account, please ignore this email.</p>
                         </div>
@@ -281,13 +281,13 @@ const approveVendor = async (req, res) => {
                         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
                             <h2 style="color: #035c3e; text-align: center;">Vendor Approval Successful!</h2>
                             <p>Hi ${user.name},</p>
-                            <p>Great news! Your vendor application for WavyGo has been reviewed and approved by our administration team.</p>
+                            <p>Great news! Your vendor application for SafarGo has been reviewed and approved by our administration team.</p>
                             <p>You can now access your vendor dashboard to list your bikes, manage bookings, and track your revenue.</p>
                             <div style="text-align: center; margin: 30px 0;">
-                                <a href="https://wavygo.com/vendor/dashboard" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Access Vendor Dashboard</a>
+                                <a href="https://safargo.com/vendor/dashboard" style="background-color: #035c3e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Access Vendor Dashboard</a>
                             </div>
                             <p>We're happy to have you as a partner in providing premium rental services!</p>
-                            <p style="font-size: 12px; color: #777; margin-top: 40px; text-align: center;">Best Regards,<br>Team WavyGo</p>
+                            <p style="font-size: 12px; color: #777; margin-top: 40px; text-align: center;">Best Regards,<br>Team SafarGo</p>
                         </div>
                     `
                 });

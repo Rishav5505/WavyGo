@@ -35,12 +35,12 @@ const sendNotification = async (req, res) => {
                 subject: subject,
                 htmlContent: `
                     <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-                        <h2 style="color: #0d9488;">WavyGo Notification</h2>
+                        <h2 style="color: #0d9488;">SafarGo Notification</h2>
                         <div style="margin-top: 20px; line-height: 1.6;">
                             ${message.replace(/\n/g, '<br>')}
                         </div>
                         <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; font-size: 12px; color: #666;">
-                            This is an automated notification from WavyGo. Please do not reply to this email.
+                            This is an automated notification from SafarGo. Please do not reply to this email.
                         </div>
                     </div>
                 `

@@ -11,9 +11,9 @@ export default defineConfig({
       injectRegister: 'auto',
       includeAssets: ['wavygo-brand-logo.png', 'vite.svg', 'icons/icon-192x192.png', 'icons/icon-512x512.png'],
       manifest: {
-        name: 'WavyGo: Premium Bike Rentals',
-        short_name: 'WavyGo',
-        description: 'Book self-drive adventures with WavyGo.',
+        name: 'SafarGo: Premium Bike Rentals',
+        short_name: 'SafarGo',
+        description: 'Book self-drive adventures with SafarGo.',
         theme_color: '#035c3e',
         background_color: '#ffffff',
         display: 'standalone',

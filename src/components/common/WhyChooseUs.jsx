@@ -23,7 +23,7 @@ const usps = [
     {
         title: "Verified Elite Fleet",
         desc: "Every machine undergoes a rigorous 50-point technical inspection.",
-        detail: "We only partner with the best. Each bike in our collection is vetted for mechanical integrity, safety parameters, and cosmetic excellence. If it's on WavyGo, it's ready for the most demanding roads.",
+        detail: "We only partner with the best. Each bike in our collection is vetted for mechanical integrity, safety parameters, and cosmetic excellence. If it's on SafarGo, it's ready for the most demanding roads.",
         icon: ShieldCheck,
         color: "text-primary",
         bg: "bg-primary/5"
@@ -55,7 +55,7 @@ const WhyChooseUs = () => {
             <div className="container-custom">
                 <div className="text-left mb-16">
                     <Reveal>
-                        <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-none mb-6">The WavyGo <br /><span className="text-primary">Advantage</span></h2>
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tighter leading-none mb-6">The SafarGo <br /><span className="text-primary">Advantage</span></h2>
                     </Reveal>
                     <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-[10px] pl-1">Why elite riders choose our network</p>
                 </div>

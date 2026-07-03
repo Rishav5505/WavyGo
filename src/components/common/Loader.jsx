@@ -55,7 +55,7 @@ const Loader = () => {
                         animate={{ opacity: [0.5, 1, 0.5] }}
                         transition={{ duration: 2, repeat: Infinity }}
                     >
-                        Wavy<span className="text-primary">Go</span>
+                        Safar<span className="text-primary">Go</span>
                     </motion.h2>
 
                     {/* Indeterminate Looping Progress Bar */}

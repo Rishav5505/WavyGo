@@ -4,7 +4,7 @@ const sendEmail = async ({ to, subject, htmlContent }) => {
     try {
         const response = await axios.post('https://api.brevo.com/v3/smtp/email', {
             sender: {
-                name: process.env.BREVO_SENDER_NAME || 'WavyGo',
+                name: process.env.BREVO_SENDER_NAME || 'SafarGo',
                 email: process.env.BREVO_SENDER_EMAIL || 'rishavkumar33372@gmail.com'
             },
             to: [{ email: to }],

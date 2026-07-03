@@ -55,7 +55,7 @@ const Maintenance = ({ message }) => {
                 </div>
 
                 <div className="mt-20 pt-10 border-t border-slate-200/50">
-                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">WavyGo Premium Bike Rentals</p>
+                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">SafarGo Premium Bike Rentals</p>
                 </div>
             </motion.div>
         </div>

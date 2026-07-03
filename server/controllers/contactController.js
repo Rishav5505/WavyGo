@@ -31,7 +31,7 @@ const submitContactForm = async (req, res) => {
                             <p style="margin: 0; font-weight: bold;">Message:</p>
                             <p style="margin-top: 10px; white-space: pre-wrap;">${message}</p>
                         </div>
-                        <p style="font-size: 12px; color: #777; margin-top: 40px; text-align: center;">Sent from WavyGo Contact Form</p>
+                        <p style="font-size: 12px; color: #777; margin-top: 40px; text-align: center;">Sent from SafarGo Contact Form</p>
                     </div>
                 `
             });
@@ -112,11 +112,11 @@ const sendReply = async (req, res) => {
         // Send email to user
         await sendEmail({
             to: message.email,
-            subject: `Re: Your inquiry to WavyGo`,
+            subject: `Re: Your inquiry to SafarGo`,
             htmlContent: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
                     <div style="text-align: center; margin-bottom: 30px;">
-                        <h1 style="color: #035c3e; margin: 0;">WavyGo Support</h1>
+                        <h1 style="color: #035c3e; margin: 0;">SafarGo Support</h1>
                         <p style="color: #666; font-size: 14px;">Premium Bike Rentals</p>
                     </div>
                     
@@ -136,8 +136,8 @@ const sendReply = async (req, res) => {
 
                     <div style="border-top: 1px solid #eee; pt-20; text-align: center;">
                         <p style="font-size: 14px; color: #333; margin-bottom: 5px;">Best regards,</p>
-                        <p style="font-weight: bold; color: #035c3e; margin: 0;">The WavyGo Team</p>
-                        <p style="font-size: 12px; color: #999; margin-top: 10px;">Visit us at <a href="https://wavygo.com" style="color: #035c3e;">wavygo.com</a></p>
+                        <p style="font-weight: bold; color: #035c3e; margin: 0;">The SafarGo Team</p>
+                        <p style="font-size: 12px; color: #999; margin-top: 10px;">Visit us at <a href="https://safargo.com" style="color: #035c3e;">safargo.com</a></p>
                     </div>
                 </div>
             `

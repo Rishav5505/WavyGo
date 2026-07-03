@@ -19,7 +19,7 @@ const faqs = [
     },
     {
         question: "What happens in case of a mechanical breakdown?",
-        answer: "WavyGo maintains an elite roadside assistance network. In the rare event of a breakdown, simply call our 24/7 support line. We'll provide mechanical assistance or a replacement vehicle if you're within our primary service zones."
+        answer: "SafarGo maintains an elite roadside assistance network. In the rare event of a breakdown, simply call our 24/7 support line. We'll provide mechanical assistance or a replacement vehicle if you're within our primary service zones."
     },
     {
         question: "Can I take the bike outside city limits?",

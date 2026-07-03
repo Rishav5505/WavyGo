@@ -11,6 +11,8 @@ import Reveal from '../components/common/Reveal';
 import Separator from '../components/common/Separator';
 import Lightbox from '../components/common/Lightbox';
 import { useInView } from 'framer-motion';
+import WeatherWidget from '../components/common/WeatherWidget';
+import PackingList from '../components/common/PackingList';
 
 const Chakrata = () => {
     const [formData, setFormData] = useState({
@@ -221,6 +223,13 @@ const Chakrata = () => {
                     </div>
                 </div>
             </section>
+            
+            {/* Live Weather Vibe Section */}
+            <section className="py-12 md:py-16 bg-slate-50 relative overflow-hidden">
+                <div className="container-custom">
+                    <WeatherWidget location="Chakrata" />
+                </div>
+            </section>
 
             {/* Inclusions */}
             <section className="py-8 md:py-24 bg-white">
@@ -255,6 +264,13 @@ const Chakrata = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Packing List Section */}
+            <div className="py-12 md:py-16 bg-[#effaf6] relative overflow-hidden">
+                <div className="container-custom">
+                    <PackingList />
+                </div>
+            </div>
 
             {/* Booking */}
             <section id="booking" className="py-8 md:py-24 bg-slate-900 text-white relative">

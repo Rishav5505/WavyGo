@@ -6,8 +6,16 @@ import Button from './Button';
 const WavyLabs = () => {
     const [isIgnited, setIsIgnited] = useState(false);
     const [activeHotspot, setActiveHotspot] = useState(null);
-    const audioRef = useRef(null);
     const bikeRef = useRef(null);
+    const audioCtxRef = useRef(null);
+    const audioNodesRef = useRef({
+        oscillator: null,
+        filter: null,
+        gainNode: null,
+        starterOsc: null,
+        noiseNode: null,
+    });
+    const audioIntervalRef = useRef(null);
 
     // Mouse movement for 360-like tilt
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -22,17 +30,169 @@ const WavyLabs = () => {
 
     const hotspots = [
         { id: 'engine', top: '65%', left: '45%', title: 'V-Twin Power', desc: '350cc of raw torque and refined vibrations.' },
-        { id: 'exhaust', top: '75%', left: '75%', title: 'Bass Note', desc: 'Custom tuned exhaust for that signature Wavy thump.' },
+        { id: 'exhaust', top: '75%', left: '75%', title: 'Bass Note', desc: 'Custom tuned exhaust for that signature SafarGo thump.' },
         { id: 'seat', top: '50%', left: '55%', title: 'Cloud Comfort', desc: 'Dual-density foam for those 500km+ days.' },
     ];
 
+    const startAudio = () => {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+
+        const ctx = new AudioContextClass();
+        audioCtxRef.current = ctx;
+
+        // Create main lowpass filter to muffle high frequency buzz and create a deep bass thump
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(90, ctx.currentTime); // Low-pass filter at 90Hz for maximum deep thud
+
+        const mainGain = ctx.createGain();
+        mainGain.gain.setValueAtTime(0, ctx.currentTime);
+
+        filter.connect(mainGain);
+        mainGain.connect(ctx.destination);
+
+        // --- Starter Motor Sound ---
+        const starter = ctx.createOscillator();
+        starter.type = 'sawtooth';
+        starter.frequency.setValueAtTime(170, ctx.currentTime);
+        starter.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 1.1);
+
+        const starterGain = ctx.createGain();
+        starterGain.gain.setValueAtTime(0.06, ctx.currentTime);
+        starterGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.1);
+
+        starter.connect(starterGain);
+        starterGain.connect(ctx.destination);
+        starter.start();
+        starter.stop(ctx.currentTime + 1.1);
+
+        // Starter clicks (white noise)
+        const bufferSize = ctx.sampleRate * 1.1;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = buffer;
+
+        const noiseFilter = ctx.createBiquadFilter();
+        noiseFilter.type = 'bandpass';
+        noiseFilter.frequency.setValueAtTime(900, ctx.currentTime);
+
+        const noiseGain = ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.015, ctx.currentTime);
+        for (let t = 0; t < 1.1; t += 0.14) {
+            noiseGain.gain.setValueAtTime(0.06, ctx.currentTime + t);
+            noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.07);
+        }
+        noiseGain.gain.setValueAtTime(0, ctx.currentTime + 1.1);
+
+        noise.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(ctx.destination);
+        noise.start();
+        noise.stop(ctx.currentTime + 1.1);
+
+        // --- Engine Thump ---
+        const osc = ctx.createOscillator();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(45, ctx.currentTime); // 45Hz is an ultra-low motor frequency
+
+        osc.connect(filter);
+        osc.start();
+
+        audioNodesRef.current = {
+            oscillator: osc,
+            filter: filter,
+            gainNode: mainGain,
+            starterOsc: starter,
+            noiseNode: noise
+        };
+
+        // Smoothly start the engine thump after starter finishes (1.1s)
+        mainGain.gain.setValueAtTime(0, ctx.currentTime);
+        mainGain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + 1.2);
+
+        // Periodic gain envelope to represent standard Royal Enfield idle (approx. 600 RPM = 10Hz cycles)
+        let strokeIndex = 0;
+        audioIntervalRef.current = setInterval(() => {
+            const now = ctx.currentTime;
+            strokeIndex++;
+            
+            // Standard 4-stroke signature thump sequence (thump - pause - subthump - pause)
+            if (strokeIndex % 4 === 0) {
+                // High amplitude thump
+                mainGain.gain.cancelScheduledValues(now);
+                mainGain.gain.setValueAtTime(0.35, now);
+                mainGain.gain.exponentialRampToValueAtTime(0.04, now + 0.08);
+            } else if (strokeIndex % 4 === 2) {
+                // Shorter, softer compression release
+                mainGain.gain.cancelScheduledValues(now);
+                mainGain.gain.setValueAtTime(0.12, now);
+                mainGain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+            } else {
+                // In between strokes have a low humming drag
+                mainGain.gain.cancelScheduledValues(now);
+                mainGain.gain.setValueAtTime(0.05, now);
+                mainGain.gain.exponentialRampToValueAtTime(0.005, now + 0.05);
+            }
+        }, 130); // 130ms = engine cadence
+    };
+
+    const stopAudio = () => {
+        if (audioIntervalRef.current) {
+            clearInterval(audioIntervalRef.current);
+            audioIntervalRef.current = null;
+        }
+
+        const { oscillator, gainNode, starterOsc, noiseNode } = audioNodesRef.current;
+        const ctx = audioCtxRef.current;
+
+        if (ctx && gainNode) {
+            const now = ctx.currentTime;
+            try {
+                // Fade out to avoid abrupt sound clicks
+                gainNode.gain.cancelScheduledValues(now);
+                gainNode.gain.setValueAtTime(gainNode.gain.value, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+                setTimeout(() => {
+                    try {
+                        if (oscillator) oscillator.stop();
+                        if (starterOsc) starterOsc.stop();
+                        if (noiseNode) noiseNode.stop();
+                        if (ctx.state !== 'closed') ctx.close();
+                    } catch (e) {
+                        // Suppress state errors
+                    }
+                }, 500);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            if (audioIntervalRef.current) {
+                clearInterval(audioIntervalRef.current);
+            }
+            const ctx = audioCtxRef.current;
+            if (ctx && ctx.state !== 'closed') {
+                ctx.close();
+            }
+        };
+    }, []);
+
     const toggleIgnition = () => {
-        setIsIgnited(!isIgnited);
-        if (!isIgnited) {
-            // Play ignition sound logic here if file exists
-            // if (audioRef.current) audioRef.current.play();
+        const nextState = !isIgnited;
+        setIsIgnited(nextState);
+        if (nextState) {
+            startAudio();
         } else {
-            // if (audioRef.current) audioRef.current.pause();
+            stopAudio();
         }
     };
 

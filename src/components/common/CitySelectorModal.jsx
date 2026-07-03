@@ -196,7 +196,7 @@ const CitySelectorModal = ({ isOpen, onClose, onSelect, allCities }) => {
 
                         {/* Footer Info */}
                         <div className="p-4 bg-slate-50 text-center border-t border-slate-100">
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">WavyGo • Verified Machines • No Security Deposit</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">SafarGo • Verified Machines • No Security Deposit</p>
                         </div>
                     </motion.div>
                 </div>
