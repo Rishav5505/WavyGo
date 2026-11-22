@@ -1,94 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Bike } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
-const Loader = () => {
-    const [isTakingLong, setIsTakingLong] = useState(false);
+/**
+ * Brief branded intro shown on first load.
+ * Pure CSS so it can never get stuck covering the page, and it stops
+ * capturing clicks the moment it starts fading out.
+ */
+const Loader = ({ visible = true }) => {
+    const [mounted, setMounted] = useState(true);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsTakingLong(true);
-        }, 6000); // Show friendly message if server spin-up takes more than 6s
-        return () => clearTimeout(timer);
-    }, []);
+        if (visible) return undefined;
+        const t = setTimeout(() => setMounted(false), 600);
+        return () => clearTimeout(t);
+    }, [visible]);
+
+    if (!mounted) return null;
 
     return (
-        <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed inset-0 z-[10000] bg-slate-900 flex flex-col items-center justify-center overflow-hidden"
+        <div
+            aria-hidden="true"
+            className={`fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#021f15] transition-opacity duration-500 ease-premium ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         >
-            {/* Animated Background Rings */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                <motion.div
-                    animate={{
-                        scale: [1, 2, 1],
-                        rotate: [0, 360],
-                    }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                    className="w-[500px] h-[500px] border-2 border-white rounded-[40%]"
-                />
-                <motion.div
-                    animate={{
-                        scale: [1.5, 1, 1.5],
-                        rotate: [360, 0],
-                    }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                    className="absolute w-[700px] h-[700px] border-2 border-primary rounded-[45%]"
-                />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.18),transparent_60%)]" />
+
+            <div className="relative flex flex-col items-center">
+                <h2 className="font-display text-4xl md:text-5xl font-bold tracking-[-0.03em] text-white">
+                    Wavy<span className="text-emerald-400">Go</span>
+                </h2>
+                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.35em] text-emerald-100/60">
+                    Rent · Ride · Explore
+                </p>
+
+                <div className="mt-8 h-[2px] w-40 overflow-hidden rounded-full bg-white/10">
+                    <div className="h-full w-1/3 rounded-full bg-gradient-to-r from-emerald-400 to-secondary animate-loader-bar" />
+                </div>
             </div>
-
-            <div className="relative">
-                <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: [0.8, 1.1, 1], opacity: 1 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className="flex flex-col items-center"
-                >
-                    <div className="w-24 h-24 bg-primary/20 rounded-[2rem] flex items-center justify-center mb-6 border border-primary/30 backdrop-blur-xl">
-                        <Bike className="w-12 h-12 text-white" />
-                    </div>
-
-                    <motion.h2
-                        className="text-4xl font-black text-white tracking-tighter"
-                        animate={{ opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                    >
-                        Safar<span className="text-primary">Go</span>
-                    </motion.h2>
-
-                    {/* Indeterminate Looping Progress Bar */}
-                    <div className="mt-8 w-48 h-1 bg-white/5 rounded-full overflow-hidden relative">
-                        <motion.div
-                            className="absolute inset-y-0 bg-primary rounded-full w-1/3"
-                            animate={{ x: ["-100%", "300%"] }}
-                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                        />
-                    </div>
-
-                    {isTakingLong ? (
-                        <motion.p
-                            initial={{ opacity: 0, y: 5 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="mt-4 text-emerald-400/80 font-bold text-[10px] text-center uppercase tracking-widest px-4 max-w-xs leading-relaxed"
-                        >
-                            Waking up backend server... <br />
-                            <span className="text-slate-500 font-medium text-[9px] lowercase tracking-normal">Takes a minute on free tier hosting</span>
-                        </motion.p>
-                    ) : (
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                            className="mt-4 text-slate-500 font-bold uppercase tracking-[0.3em] text-xs"
-                        >
-                            Igniting Your Ride...
-                        </motion.p>
-                    )}
-                </motion.div>
-            </div>
-        </motion.div>
+        </div>
     );
 };
 

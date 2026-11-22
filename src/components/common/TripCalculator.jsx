@@ -150,12 +150,12 @@ const TripCalculator = () => {
                     <div className="lg:col-span-6 flex flex-col justify-between gap-6">
                         {/* Comparison Panels */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
-                            {/* SafarGo Column */}
+                            {/* WavyGo Column */}
                             <div className="bg-[#023e2a] border border-[#035c3e]/30 rounded-[2rem] p-6 text-white flex flex-col justify-between shadow-sm relative overflow-hidden">
                                 <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-xl pointer-events-none"></div>
                                 <div>
                                     <span className="bg-white/10 text-emerald-300 border border-white/10 text-[9px] font-black tracking-widest uppercase px-3 py-1 rounded-full inline-block mb-4">
-                                        SafarGo Ride
+                                        WavyGo Ride
                                     </span>
                                     <h4 className="text-3xl font-black mb-1">
                                         ₹{totalBikeCost.toLocaleString('en-IN')}
@@ -219,7 +219,7 @@ const TripCalculator = () => {
                             </div>
 
                             <div className="bg-slate-950 text-white rounded-2xl px-4 py-3 text-center shrink-0 min-w-[70px] shadow-lg group-hover:scale-105 transition-transform duration-300">
-                                <span className="block text-[8px] font-black tracking-widest uppercase text-yellow-400">Save</span>
+                                <span className="block text-[10px] font-black tracking-widest uppercase text-yellow-400">Save</span>
                                 <span className="text-xl md:text-2xl font-black leading-none">{savingsPercent}%</span>
                             </div>
                         </div>

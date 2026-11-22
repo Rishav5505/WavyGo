@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --primary-rgb: 15, 118, 110;
-  --secondary-rgb: 245, 158, 11;
+  --primary-rgb: 3, 92, 62;
+  --secondary-rgb: 250, 204, 21;
 }
 
 @layer base {
@@ -16,6 +14,18 @@
 
   body {
     @apply font-sans antialiased text-slate-900 bg-slate-50 selection:bg-primary selection:text-white;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--primary-rgb));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  img {
+    @apply select-none;
   }
 
 
@@ -27,6 +37,7 @@
   h5,
   h6 {
     @apply font-display text-slate-900 tracking-tight;
+    text-wrap: balance;
   }
 
   * {
@@ -132,4 +143,28 @@
 
 .ambient-glow-gold {
   background: radial-gradient(circle at center, rgba(250, 204, 21, 0.08) 0%, rgba(250, 204, 21, 0) 70%);
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Premium grain + hairline helpers */
+.hairline {
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary;
+}
+
+.eyebrow::before {
+  content: '';
+  @apply block h-px w-6 bg-primary/50;
 }

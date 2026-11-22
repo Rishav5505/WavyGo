@@ -207,7 +207,7 @@ const RoutePlanner = () => {
                                                         </div>
                                                         <div>
                                                             <h5 className="text-slate-900 font-black text-sm uppercase tracking-tight mb-1">{stop.name}</h5>
-                                                            <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[8px] font-black uppercase tracking-widest">{stop.type}</span>
+                                                            <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-black uppercase tracking-widest">{stop.type}</span>
                                                         </div>
                                                     </div>
                                                     <p className="text-slate-500 text-[11px] leading-relaxed mb-4">{stop.desc}</p>

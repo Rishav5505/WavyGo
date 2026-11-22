@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import {
@@ -29,9 +29,11 @@ const Counter = ({ value }) => {
     const countRef = useRef(null);
     const [hasAnimated, setHasAnimated] = useState(false);
 
-    const numericValue = parseInt(value.replace(/,/g, '').replace('+', ''));
-    const isDecimal = value.includes('.');
-    const suffix = value.includes('+') ? '+' : '';
+    // e.g. "10,000+" -> 10000 + "+", "4.9/5" -> 4.9 + "/5"
+    const match = value.replace(/,/g, '').match(/^([\d.]+)(.*)$/);
+    const numericValue = match ? parseFloat(match[1]) : 0;
+    const suffix = match ? match[2] : '';
+    const isDecimal = match ? match[1].includes('.') : false;
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -70,6 +72,7 @@ const Counter = ({ value }) => {
 };
 
 const Home = () => {
+    const navigate = useNavigate();
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
@@ -141,10 +144,10 @@ const Home = () => {
 
     // 4 Premium Cinematic Hero Images (Website Style)
     const heroImages = [
-        "https://www.athensbikerentals.in/assets/web/assets/images/main-slider-01.jpg",
+        "https://images.unsplash.com/photo-1622185135505-2d795003994a?auto=format&fit=crop&q=80&w=1920",
         "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=1920",
-        "https://twowheelhimalayas.com/wp-content/uploads/2025/12/20230729_112918-scaled.jpg",
-        "https://twowheelhimalayas.com/wp-content/uploads/2025/12/20230731_132747-scaled.jpg"
+        "/kedarnath-hero.jpg",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1920"
     ];
 
     useEffect(() => {
@@ -170,10 +173,10 @@ const Home = () => {
     ];
 
     const galleryImages = [
-        "https://images.unsplash.com/photo-1558981403-c5f91cbba527?q=80&w=800",
+        "https://images.unsplash.com/photo-1558981285-6f0c94958bb6?q=80&w=800",
         "https://images.unsplash.com/photo-1622185135505-2d795003994a?q=80&w=800",
         "https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?q=80&w=800",
-        "https://images.unsplash.com/photo-1449495169669-7b118f960237?q=80&w=800",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800",
     ];
 
     return (
@@ -194,18 +197,16 @@ const Home = () => {
                             className="absolute inset-0"
                         >
                             <motion.img
-                                initial={{ scale: 1 }}
+                                initial={{ scale: 1.08 }}
                                 animate={{ scale: 1 }}
+                                transition={{ duration: 7, ease: "easeOut" }}
                                 src={heroImages[currentHeroIndex]}
-                                className="w-full h-full object-cover object-[center_35%] md:object-center pointer-events-none brightness-110 contrast-[1.05]"
-                                alt={`SafarGo Experience ${currentHeroIndex + 1}`}
+                                className="w-full h-full object-cover object-[center_35%] md:object-center pointer-events-none"
+                                alt={`WavyGo Experience ${currentHeroIndex + 1}`}
                             />
                             {/* Cinematic Vignette - For better text readability */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/30 transition-all opacity-80"></div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-
-                            {/* Premium Lens Flare Effect */}
-                            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[150px] pointer-events-none"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#021f15]/75 via-[#021f15]/25 to-black/40"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-black/30"></div>
                         </motion.div>
                     </AnimatePresence>
                 </div>
@@ -216,20 +217,20 @@ const Home = () => {
 
                                         {/* Kona Left: Refined Premium Search Card */}
                         <motion.div
-                            initial={{ opacity: 0, x: -80, rotateY: 15 }}
-                            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, ease: "circOut" }}
-                            className="w-full max-w-sm lg:max-w-[440px] bg-white/75 backdrop-blur-2xl rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-11 shadow-[0_50px_100px_-25px_rgba(3,92,62,0.12)] border border-white/60"
+                            initial={{ opacity: 0, y: 24 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                            className="w-full max-w-sm lg:max-w-[440px] bg-white/[0.92] backdrop-blur-2xl rounded-[2rem] p-6 md:p-10 shadow-premium-lg ring-1 ring-white/70"
                         >
-                            <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2 tracking-tighter leading-tight md:leading-none">
-                                Looking for <span className="text-primary">Best</span> <br />Bike Rentals?
+                            <span className="eyebrow mb-4">Self-drive rentals</span>
+                            <h1 className="text-[2rem] md:text-[2.6rem] font-extrabold text-slate-900 mb-3 tracking-[-0.03em] leading-[1.05]">
+                                Premium bikes,<br /><span className="text-primary">ready when you are.</span>
                             </h1>
-                            <p className="text-primary font-bold uppercase tracking-[0.3em] text-[8px] md:text-[9px] mb-5 md:mb-10 pl-2 border-l-4 border-primary/30">Book Self-Drive Adventure</p>
+                            <p className="text-slate-500 text-sm md:text-[15px] leading-relaxed mb-6 md:mb-8">Verified machines, transparent pricing and 24/7 roadside support across India.</p>
 
                             <form className="space-y-4 md:space-y-6">
                                 <div className="space-y-1 group relative z-[100]">
-                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-wider ml-1">Destination</label>
+                                    <label className="text-[11px] font-semibold uppercase text-slate-500 tracking-[0.14em] ml-1">Destination</label>
                                     <div className="relative rounded-2xl">
                                         <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors z-10" />
                                         <input
@@ -253,7 +254,7 @@ const Home = () => {
                                 {/* Date Picker Section - Custom Format for Date + Time Visibility */}
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-1.5">
-                                        <label className="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-1">Pickup</label>
+                                        <label className="text-[11px] font-semibold uppercase text-slate-500 tracking-[0.14em] ml-1">Pickup</label>
                                         <div 
                                             className="relative group overflow-hidden cursor-pointer"
                                             onClick={() => pickupInputRef.current?.showPicker()}
@@ -270,7 +271,7 @@ const Home = () => {
                                                 className="absolute inset-0 opacity-0 cursor-pointer z-20"
                                             />
 
-                                            <div className="w-full bg-slate-50/70 border border-slate-200/80 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[9px] md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
+                                            <div className="w-full bg-slate-50/70 border border-slate-200/80 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[11px] md:text-[13px] font-semibold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
                                                 {new Date(pickupDate).toLocaleString('en-IN', {
                                                     day: '2-digit',
                                                     month: '2-digit',
@@ -284,7 +285,7 @@ const Home = () => {
                                     </div>
 
                                     <div className="space-y-1.5">
-                                        <label className="text-[11px] font-bold uppercase text-slate-400 tracking-wider ml-1">Dropoff</label>
+                                        <label className="text-[11px] font-semibold uppercase text-slate-500 tracking-[0.14em] ml-1">Dropoff</label>
                                         <div 
                                             className="relative group overflow-hidden cursor-pointer"
                                             onClick={() => dropoffInputRef.current?.showPicker()}
@@ -302,7 +303,7 @@ const Home = () => {
                                             />
 
                                             {/* Visible Custom Formatted Display */}
-                                            <div className="w-full bg-slate-50/70 border border-slate-200/80 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[9px] md:text-[13px] font-bold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
+                                            <div className="w-full bg-slate-50/70 border border-slate-200/80 rounded-xl py-4 pl-10 md:pl-14 pr-2 md:pr-4 text-[11px] md:text-[13px] font-semibold text-slate-700 pointer-events-none flex items-center min-h-[52px]">
                                                 {new Date(dropoffDate).toLocaleString('en-IN', {
                                                     day: '2-digit',
                                                     month: '2-digit',
@@ -316,16 +317,13 @@ const Home = () => {
                                     </div>
                                 </div>
 
-                                <Link to={`/packages`} state={{ selectedCity: destination }}>
-                                    <motion.div
-                                        whileHover={{ scale: 1.01 }}
-                                        whileTap={{ scale: 0.99 }}
-                                    >
-                                        <Button className="w-full h-14 md:h-16 rounded-2xl bg-gradient-to-r from-primary to-primary-light text-white font-black text-base md:text-lg uppercase tracking-[0.3em] md:tracking-[0.4em] shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all mt-2 md:mt-4 flex items-center justify-center border-none">
-                                            SEARCH
-                                        </Button>
-                                    </motion.div>
-                                </Link>
+                                <Button
+                                    type="submit"
+                                    onClick={(e) => { e.preventDefault(); navigate('/packages', { state: { selectedCity: destination } }); }}
+                                    className="w-full h-14 md:h-[60px] rounded-2xl bg-gradient-to-r from-primary to-primary-light text-white font-bold text-base tracking-wide mt-2"
+                                >
+                                    <Search className="w-5 h-5" /> Search bikes <ArrowRight className="w-4 h-4 opacity-70" />
+                                </Button>
                             </form>
                         </motion.div>
 
@@ -444,7 +442,7 @@ const Home = () => {
                                 <h3 className="text-lg md:text-2xl font-black text-white tracking-tighter leading-none mb-1">
                                     <Counter value={stat.value} />
                                 </h3>
-                                <p className="text-white/60 font-extrabold uppercase tracking-widest md:tracking-[0.2em] text-[6px] md:text-[7.5px] mt-0.5">{stat.label}</p>
+                                <p className="text-white/60 font-extrabold uppercase tracking-widest md:tracking-[0.2em] text-[10px] md:text-[10px] mt-0.5">{stat.label}</p>
                             </motion.div>
                         ))}
                     </div>

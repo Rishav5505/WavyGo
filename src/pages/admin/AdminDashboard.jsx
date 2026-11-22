@@ -22,11 +22,11 @@ const StatCard = ({ label, value, icon: Icon, color, trend, onClick }) => (
             <Icon className="w-5 h-5 md:w-6 md:h-6" />
         </div>
 
-        <div className="relative z-10 font-bold text-slate-400 text-[8px] md:text-[10px] uppercase tracking-widest mb-1">{label}</div>
+        <div className="relative z-10 font-bold text-slate-400 text-[10px] md:text-[10px] uppercase tracking-widest mb-1">{label}</div>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end relative z-10 gap-2">
             <h3 className="text-xl md:text-3xl font-black text-slate-900 tracking-tight">{value}</h3>
             {trend && (
-                <div className="flex items-center gap-1 text-emerald-500 bg-emerald-50 px-1.5 md:px-2 py-0.5 md:py-1 rounded-lg text-[8px] md:text-[10px] font-black whitespace-nowrap">
+                <div className="flex items-center gap-1 text-emerald-500 bg-emerald-50 px-1.5 md:px-2 py-0.5 md:py-1 rounded-lg text-[10px] md:text-[10px] font-black whitespace-nowrap">
                     <ArrowUpRight className="w-2 md:w-3 h-2 md:h-3" />
                     {trend}
                 </div>
@@ -120,7 +120,7 @@ const AdminDashboard = () => {
                             />
                         </div>
                         <div>
-                            <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase leading-none mb-0.5 md:mb-1">Chakrata</p>
+                            <p className="text-[10px] md:text-[10px] font-black text-slate-400 uppercase leading-none mb-0.5 md:mb-1">Chakrata</p>
                             <p className="text-xs md:text-sm font-black text-slate-800">18°C</p>
                         </div>
                     </div>
@@ -279,17 +279,17 @@ const AdminDashboard = () => {
                         <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                             <div className="flex items-center gap-6 md:gap-10">
                                 <div>
-                                    <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Net Margin</p>
+                                    <p className="text-[10px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Net Margin</p>
                                     <div className="flex items-center gap-2">
                                         <p className="font-black text-slate-900 text-base md:text-lg">24.5%</p>
-                                        <span className="text-[8px] md:text-[10px] font-bold text-emerald-500">+2% pts</span>
+                                        <span className="text-[10px] md:text-[10px] font-bold text-emerald-500">+2% pts</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Drop-off Rate</p>
+                                    <p className="text-[10px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Drop-off Rate</p>
                                     <div className="flex items-center gap-2">
                                         <p className="font-black text-slate-900 text-base md:text-lg">4.2%</p>
-                                        <span className="text-[8px] md:text-[10px] font-bold text-rose-500">-1% pts</span>
+                                        <span className="text-[10px] md:text-[10px] font-bold text-rose-500">-1% pts</span>
                                     </div>
                                 </div>
                             </div>
@@ -337,7 +337,7 @@ const AdminDashboard = () => {
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="font-bold text-slate-900 group-hover:text-primary transition-colors truncate text-sm md:text-base">{booking.userName}</p>
-                                                <p className="text-[8px] md:text-[10px] font-bold text-slate-400 flex items-center gap-1 mt-0.5 uppercase tracking-wider truncate">
+                                                <p className="text-[10px] md:text-[10px] font-bold text-slate-400 flex items-center gap-1 mt-0.5 uppercase tracking-wider truncate">
                                                     {booking.packageId?.title || 'Private Journey'}
                                                 </p>
                                             </div>
@@ -413,7 +413,7 @@ const AdminDashboard = () => {
                                 <div className="p-2 md:p-3 bg-white rounded-xl group-hover:bg-white/10 transition-colors">
                                     <Plus className="w-4 h-4 md:w-5 md:h-5 text-primary group-hover:text-white" />
                                 </div>
-                                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.1em]">New Package</span>
+                                <span className="text-[10px] md:text-[10px] font-black uppercase tracking-[0.1em]">New Package</span>
                             </button>
                             <button
                                 onClick={() => navigate('/admin/packages')}
@@ -422,7 +422,7 @@ const AdminDashboard = () => {
                                 <div className="p-2 md:p-3 bg-white rounded-xl group-hover:bg-white/10 transition-colors">
                                     <Map className="w-4 h-4 md:w-5 md:h-5 text-primary group-hover:text-white" />
                                 </div>
-                                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.1em]">Inventory</span>
+                                <span className="text-[10px] md:text-[10px] font-black uppercase tracking-[0.1em]">Inventory</span>
                             </button>
                             <button
                                 onClick={() => navigate('/admin/bookings')}
@@ -431,7 +431,7 @@ const AdminDashboard = () => {
                                 <div className="p-2 md:p-3 bg-white rounded-xl group-hover:bg-white/10 transition-colors">
                                     <MousePointer2 className="w-4 h-4 md:w-5 md:h-5 text-primary group-hover:text-white" />
                                 </div>
-                                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.1em]">Review</span>
+                                <span className="text-[10px] md:text-[10px] font-black uppercase tracking-[0.1em]">Review</span>
                             </button>
                             <button
                                 onClick={() => navigate('/admin/settings')}
@@ -440,7 +440,7 @@ const AdminDashboard = () => {
                                 <div className="p-2 md:p-3 bg-white rounded-xl group-hover:bg-white/10 transition-colors">
                                     <Zap className="w-4 h-4 md:w-5 md:h-5 text-amber-500 group-hover:text-white" />
                                 </div>
-                                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.1em]">Settings</span>
+                                <span className="text-[10px] md:text-[10px] font-black uppercase tracking-[0.1em]">Settings</span>
                             </button>
                         </div>
                     </div>

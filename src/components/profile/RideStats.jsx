@@ -77,14 +77,14 @@ const RideStats = () => {
                         <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl ${stat.bg} ${stat.color} flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform`}>
                             <stat.icon className="w-5 h-5 md:w-6 md:h-6" />
                         </div>
-                        <p className="text-[8px] md:text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">{stat.label}</p>
+                        <p className="text-[10px] md:text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">{stat.label}</p>
                         <div className="flex items-baseline gap-1 mb-3 md:mb-4">
                             <h4 className="text-xl md:text-3xl font-black text-slate-900 tracking-tighter">{stat.value}</h4>
-                            <span className="text-[8px] md:text-xs font-bold text-slate-400 uppercase">{stat.unit}</span>
+                            <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase">{stat.unit}</span>
                         </div>
                         <div className="flex items-center gap-1.5 md:gap-2 pt-3 md:pt-4 border-t border-slate-50">
                             <TrendingUp className="w-2.5 h-2.5 md:w-3 md:h-3 text-green-500" />
-                            <span className="text-[7px] md:text-[9px] font-bold text-slate-500 uppercase tracking-wider line-clamp-1">{stat.trend}</span>
+                            <span className="text-[10px] md:text-[9px] font-bold text-slate-500 uppercase tracking-wider line-clamp-1">{stat.trend}</span>
                         </div>
                     </motion.div>
                 ))}
@@ -114,7 +114,7 @@ const RideStats = () => {
                     </div>
                     <div className="flex justify-between mt-4">
                         {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
-                            <span key={day} className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">{day}</span>
+                            <span key={day} className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{day}</span>
                         ))}
                     </div>
                 </div>

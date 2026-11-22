@@ -42,7 +42,7 @@ const GEAR_ITEMS = [
         id: 'gopro',
         name: 'GoPro Hero 12',
         price: 500,
-        image: 'https://images.unsplash.com/photo-1542614392-1c73ec541f53?q=80&w=400',
+        image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400',
         icon: Camera,
         desc: '4K stabilized footage'
     }
@@ -346,7 +346,7 @@ const Booking = () => {
                                                                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mb-3">{item.desc}</p>
                                                                     <div className="flex items-baseline gap-1">
                                                                         <span className="text-primary font-black text-lg tracking-tight">₹{item.price}</span>
-                                                                        <span className="text-[8px] text-slate-300 font-black uppercase">/ Journey</span>
+                                                                        <span className="text-[10px] text-slate-300 font-black uppercase">/ Journey</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -481,7 +481,7 @@ const Booking = () => {
                                                                             className="flex-shrink-0 bg-white border border-slate-100 px-4 py-3 rounded-xl hover:border-emerald-600/30 transition-all text-left"
                                                                         >
                                                                             <p className="text-emerald-900 font-black text-[10px] uppercase mb-0.5">{c.code}</p>
-                                                                            <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">
+                                                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                                                                                 {c.discountType === 'percentage' ? `${c.discountValue}% OFF` : `₹${c.discountValue} OFF`}
                                                                             </p>
                                                                         </button>

@@ -34,11 +34,11 @@ const About = () => {
             <Navbar />
 
             {/* Premium Hero Section - Brand Green */}
-            <section className="relative pt-20 pb-24 md:pt-28 md:pb-36 bg-[#035c3e] flex items-center justify-center overflow-hidden">
+            <section className="relative pt-36 pb-24 md:pt-48 md:pb-36 bg-[#035c3e] flex items-center justify-center overflow-hidden">
                 <div className="relative z-10 text-center text-white px-4">
                     <Reveal center width="100%">
                         <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-tighter leading-none uppercase">
-                            <span className="text-slate-900">Our</span> <span className="text-white">Story</span>
+                            <span className="text-emerald-200/80">Our</span> <span className="text-white">Story</span>
                         </h1>
                     </Reveal>
                     <motion.div
@@ -60,11 +60,11 @@ const About = () => {
                 <div className="container-custom">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                         <div>
-                            <span className="text-primary font-bold uppercase tracking-widest text-xs mb-4 block">The SafarGo Vision</span>
+                            <span className="text-primary font-bold uppercase tracking-widest text-xs mb-4 block">The WavyGo Vision</span>
                             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-8 leading-tight">Elite Bike Rentals <br />Driven by Freedom.</h2>
                             <div className="space-y-6 text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
                                 <p>
-                                    Welcome to <span className="text-slate-900 dark:text-white font-bold">SafarGo</span>, where we believe every ride is an opportunity to explore the unknown. We are India's most modern bike rental platform, connecting riders with premium machines.
+                                    Welcome to <span className="text-slate-900 dark:text-white font-bold">WavyGo</span>, where we believe every ride is an opportunity to explore the unknown. We are India's most modern bike rental platform, connecting riders with premium machines.
                                 </p>
                                 <p>
                                     Founded by motorcycle enthusiasts, we evolved from a small fleet into a professional rental boutique dedicated to creating seamless, safe, and powerful riding experiences across India.
@@ -138,7 +138,7 @@ const About = () => {
                                     <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                                 </div>
                                 <h3 className="text-xl md:text-3xl font-black text-slate-900 mb-1 md:mb-2">{stat.value}</h3>
-                                <p className="text-slate-500 md:text-slate-400 font-bold uppercase tracking-wider md:tracking-widest text-[8px] md:text-[10px]">{stat.label}</p>
+                                <p className="text-slate-500 md:text-slate-400 font-bold uppercase tracking-wider md:tracking-widest text-[10px] md:text-[10px]">{stat.label}</p>
                             </div>
                         ))}
                     </div>
@@ -161,7 +161,7 @@ const About = () => {
                                 id: 1,
                                 image: "/images/insta/1.png",
                                 likes: "1,245",
-                                caption: "Find the BEST BIKE for RENT. Book Now. 🏍️ #safargo #bikerentals",
+                                caption: "Find the BEST BIKE for RENT. Book Now. 🏍️ #wavygo #bikerentals",
                                 time: "2 DAYS AGO"
                             },
                             {
@@ -175,7 +175,7 @@ const About = () => {
                                 id: 3,
                                 image: "/images/insta/3.jpg",
                                 likes: "4,532",
-                                caption: "Rule the roads of Dehradun with SAFARGO. 🏔️ #dehradun #uttarakhand",
+                                caption: "Rule the roads of Dehradun with WAVYGO. 🏔️ #dehradun #uttarakhand",
                                 time: "1 WEEK AGO"
                             },
                             {
@@ -202,7 +202,7 @@ const About = () => {
                                     <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 p-[2px]">
                                         <div className="w-full h-full bg-white rounded-full flex items-center justify-center p-0.5">
                                             <div className="w-full h-full bg-[#035c3e] rounded-full flex items-center justify-center">
-                                                <span className="text-white text-[8px] font-black italic">SG</span>
+                                                <span className="text-white text-[10px] font-black italic">SG</span>
                                             </div>
                                         </div>
                                     </div>
@@ -236,7 +236,7 @@ const About = () => {
                                         {post.caption}
                                     </p>
 
-                                    <p className="text-[8px] md:text-[9px] text-slate-400 font-medium uppercase tracking-widest">{post.time}</p>
+                                    <p className="text-[10px] md:text-[9px] text-slate-400 font-medium uppercase tracking-widest">{post.time}</p>
                                 </div>
                             </div>
                         ))}

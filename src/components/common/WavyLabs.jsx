@@ -30,7 +30,7 @@ const WavyLabs = () => {
 
     const hotspots = [
         { id: 'engine', top: '65%', left: '45%', title: 'V-Twin Power', desc: '350cc of raw torque and refined vibrations.' },
-        { id: 'exhaust', top: '75%', left: '75%', title: 'Bass Note', desc: 'Custom tuned exhaust for that signature SafarGo thump.' },
+        { id: 'exhaust', top: '75%', left: '75%', title: 'Bass Note', desc: 'Custom tuned exhaust for that signature WavyGo thump.' },
         { id: 'seat', top: '50%', left: '55%', title: 'Cloud Comfort', desc: 'Dual-density foam for those 500km+ days.' },
     ];
 
@@ -218,7 +218,7 @@ const WavyLabs = () => {
                         className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 mb-2"
                     >
                         <Zap className="w-3 h-3 text-primary" />
-                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-primary">Experimental Feature</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Experimental Feature</span>
                     </motion.div>
                     
                     <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tighter uppercase mb-2">
@@ -232,7 +232,7 @@ const WavyLabs = () => {
                     <div className="absolute top-4 left-4 md:top-8 md:left-8 z-20 flex flex-col gap-4">
                         <div className="p-3 md:p-4 rounded-xl md:rounded-2xl bg-white/70 backdrop-blur-xl border border-white/50 shadow-xl">
                             <h3 className="text-slate-900 font-black text-[10px] md:text-xs uppercase tracking-widest mb-1">Classic 350</h3>
-                            <p className="text-primary text-[8px] md:text-[10px] font-bold tracking-tighter uppercase">Stealth Black Edition</p>
+                            <p className="text-primary text-[10px] md:text-[10px] font-bold tracking-tighter uppercase">Stealth Black Edition</p>
                         </div>
                     </div>
 
@@ -252,7 +252,7 @@ const WavyLabs = () => {
                             <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all duration-500 shadow-xl ${isIgnited ? 'bg-rose-500 shadow-[0_0_30px_rgba(244,63,94,0.4)]' : 'bg-white border border-slate-200 hover:border-primary'}`}>
                                 <Volume2 className={`w-5 h-5 md:w-6 md:h-6 ${isIgnited ? 'text-white' : 'text-slate-400 group-hover:text-primary'}`} />
                             </div>
-                            <span className="text-[7px] md:text-[9px] font-black uppercase tracking-widest text-slate-500">{isIgnited ? 'Stop' : 'Ignite'}</span>
+                            <span className="text-[10px] md:text-[9px] font-black uppercase tracking-widest text-slate-500">{isIgnited ? 'Stop' : 'Ignite'}</span>
                         </motion.button>
                         
                         <div className="w-px h-10 md:h-12 bg-slate-200"></div>
@@ -264,7 +264,7 @@ const WavyLabs = () => {
                             <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white border border-slate-200 flex items-center justify-center hover:border-primary transition-all shadow-xl">
                                 <RotateCcw className="w-5 h-5 md:w-6 md:h-6 text-slate-400 group-hover:text-primary" />
                             </div>
-                            <span className="text-[7px] md:text-[9px] font-black uppercase tracking-widest text-slate-500">Reset</span>
+                            <span className="text-[10px] md:text-[9px] font-black uppercase tracking-widest text-slate-500">Reset</span>
                         </button>
                     </div>
 
@@ -343,11 +343,11 @@ const WavyLabs = () => {
                     {/* Status Console */}
                     <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-20 flex flex-col items-end gap-1.5 md:gap-2 text-right">
                         <div className="flex items-center gap-1.5 md:gap-2">
-                            <span className="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-widest">Status</span>
+                            <span className="text-[10px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Status</span>
                             <div className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${isIgnited ? 'bg-primary animate-pulse' : 'bg-slate-300'}`}></div>
                         </div>
                         <div className="bg-slate-100 px-2 py-1 md:px-3 md:py-1 rounded-lg border border-slate-200">
-                            <span className="text-[7px] md:text-[9px] font-mono text-primary tracking-tighter">
+                            <span className="text-[10px] md:text-[9px] font-mono text-primary tracking-tighter">
                                 {isIgnited ? 'RPM: 1250' : 'SYSTEM: IDLE'}
                             </span>
                         </div>

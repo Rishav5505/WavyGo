@@ -26,7 +26,7 @@ const VendorStatCard = ({ label, value, icon: Icon, color, trend }) => (
         <div className="flex items-end justify-between gap-1 flex-wrap">
             <h3 className="text-lg md:text-2xl font-black text-slate-900 tracking-tight leading-none">{value}</h3>
             {trend && (
-                <span className="text-[8px] md:text-[10px] font-black text-emerald-500 bg-emerald-50 px-1.5 py-0.5 rounded-md">
+                <span className="text-[10px] md:text-[10px] font-black text-emerald-500 bg-emerald-50 px-1.5 py-0.5 rounded-md">
                     {trend}
                 </span>
             )}
@@ -231,7 +231,7 @@ const VendorDashboard = () => {
                         <div className="min-w-0">
                             <div className="flex items-center gap-1.5 mb-0.5 md:mb-1">
                                 <h1 className="text-sm md:text-2xl font-black text-slate-900 leading-none truncate max-w-[100px] md:max-w-none">{vendorName}</h1>
-                                <span className="px-1.5 py-0.5 bg-emerald-50 text-primary text-[7px] md:text-[9px] font-black uppercase rounded-md border border-emerald-100">{vendorLocation}</span>
+                                <span className="px-1.5 py-0.5 bg-emerald-50 text-primary text-[10px] md:text-[9px] font-black uppercase rounded-md border border-emerald-100">{vendorLocation}</span>
                             </div>
                             <p className="text-slate-500 font-bold text-[10px] md:text-sm leading-none">{vendorPhone}</p>
                             <p className="hidden md:block text-slate-400 font-medium text-xs truncate max-w-[200px] mt-2">{vendorEmail}</p>

@@ -65,7 +65,7 @@ const BlogSection = () => {
 
                             <div className="p-3 md:p-8 flex flex-col h-full">
                                 <div className="flex-grow">
-                                    <span className="text-primary font-bold uppercase tracking-wider text-[7px] md:text-[10px] mb-1 md:mb-2 block">
+                                    <span className="text-primary font-bold uppercase tracking-wider text-[10px] md:text-[10px] mb-1 md:mb-2 block">
                                         {blog.date}
                                     </span>
                                     <h3 className="text-[11px] md:text-xl font-extrabold text-slate-900 mb-1 md:mb-2 leading-tight group-hover:text-primary transition-colors line-clamp-3 md:line-clamp-2">
@@ -75,7 +75,7 @@ const BlogSection = () => {
                                         {blog.desc}
                                     </p>
                                 </div>
-                                <button className="w-fit bg-primary/10 text-primary font-bold px-3 md:px-6 py-1.5 md:py-2.5 rounded-md md:rounded-xl text-[8px] md:text-base hover:bg-primary hover:text-white transition-all inline-flex items-center gap-1 md:gap-2">
+                                <button className="w-fit bg-primary/10 text-primary font-bold px-3 md:px-6 py-1.5 md:py-2.5 rounded-md md:rounded-xl text-[10px] md:text-base hover:bg-primary hover:text-white transition-all inline-flex items-center gap-1 md:gap-2">
                                     Read More
                                 </button>
                             </div>

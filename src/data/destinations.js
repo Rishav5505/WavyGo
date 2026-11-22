@@ -9,7 +9,7 @@ export const destinationsData = {
         altitude: "2,118 meters",
         winterTemp: "0°C to 10°C",
         images: {
-            hero: "https://images.unsplash.com/photo-5196813937844-d120267933ba?auto=format&fit=crop&q=80&w=1600",
+            hero: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=1600",
         },
         packageSummary: {
             duration: "4 Days / 3 Nights",

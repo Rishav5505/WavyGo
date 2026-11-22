@@ -224,19 +224,19 @@ const AdminVendors = () => {
                                 {/* Performance Stats */}
                                 <div className="grid grid-cols-3 gap-8 lg:gap-12 flex-1 md:bg-slate-50/50 md:p-6 rounded-[2rem] border-slate-100">
                                     <div className="text-center">
-                                        <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1.5 flex items-center justify-center gap-1">
+                                        <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1.5 flex items-center justify-center gap-1">
                                             <Bike className="w-2.5 h-2.5" /> Bikes
                                         </p>
                                         <p className="text-lg font-black text-slate-900">{vendor.bikes}</p>
                                     </div>
                                     <div className="text-center">
-                                        <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1.5 flex items-center justify-center gap-1">
+                                        <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1.5 flex items-center justify-center gap-1">
                                             <TrendingUp className="w-2.5 h-2.5" /> Bookings
                                         </p>
                                         <p className="text-lg font-black text-slate-900">{vendor.bookings}</p>
                                     </div>
                                     <div className="text-center">
-                                        <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1.5 flex items-center justify-center gap-1">
+                                        <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1.5 flex items-center justify-center gap-1">
                                             <IndianRupee className="w-2.5 h-2.5" /> Revenue
                                         </p>
                                         <p className="text-lg font-black text-primary">₹{vendor.revenue.toLocaleString()}</p>

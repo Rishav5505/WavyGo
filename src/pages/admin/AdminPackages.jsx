@@ -198,13 +198,13 @@ const AdminPackages = () => {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100">
-                                    <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">Price</p>
+                                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Price</p>
                                     <p className="font-bold text-slate-900 flex items-center gap-1 text-sm">
                                         <IndianRupee className="w-3 h-3 text-slate-400" /> {pkg.price.toLocaleString()}
                                     </p>
                                 </div>
                                 <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100">
-                                    <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">Duration</p>
+                                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Duration</p>
                                     <p className="font-bold text-slate-600 flex items-center gap-1 text-sm">
                                         <Clock className="w-3 h-3 text-slate-400" /> {pkg.duration}
                                     </p>

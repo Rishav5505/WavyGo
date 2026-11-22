@@ -243,7 +243,7 @@ const Packages = () => {
             <Navbar />
 
             {/* Header / Hero Section - WavyGo Green Theme */}
-            <section className="relative pt-12 pb-24 md:pt-20 md:pb-36 bg-[#035c3e] text-center text-white overflow-hidden">
+            <section className="relative pt-32 pb-24 md:pt-44 md:pb-36 bg-[#035c3e] text-center text-white overflow-hidden">
                 <div className="container-custom relative z-10 px-4">
                     {targetCity && (
                         <motion.div
@@ -256,7 +256,7 @@ const Packages = () => {
                         </motion.div>
                     )}
                     <Reveal center width="100%">
-                        <h1 className="text-4xl md:text-[5rem] font-black mb-3 md:mb-4 tracking-tighter leading-tight md:leading-none uppercase">
+                        <h1 className="text-4xl md:text-[5rem] font-black text-emerald-200/80 mb-3 md:mb-4 tracking-tighter leading-tight md:leading-none uppercase">
                             {selectedCity ? selectedCity.split(',')[0].trim() : "Rental"} <span className="text-white">Fleet</span>
                         </h1>
                     </Reveal>
@@ -420,7 +420,7 @@ const Packages = () => {
                                                                 <Clock className="w-3.5 h-3.5 text-primary" />
                                                             </div>
                                                             <div className="flex flex-col">
-                                                                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Duration</span>
+                                                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Duration</span>
                                                                 <span className="text-[10px] font-bold text-slate-700 leading-none truncate">{pkg.duration}</span>
                                                             </div>
                                                         </div>
@@ -429,7 +429,7 @@ const Packages = () => {
                                                                 <ArrowUpRight className="w-3.5 h-3.5 text-primary" />
                                                             </div>
                                                             <div className="flex flex-col">
-                                                                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Type</span>
+                                                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type</span>
                                                                 <span className="text-[10px] font-bold text-slate-700 leading-none">Self-Drive</span>
                                                             </div>
                                                         </div>
@@ -515,7 +515,7 @@ const Packages = () => {
                                                 animate={{ width: selectedCompare.length === 1 ? '50%' : '100%' }}
                                             />
                                         </div>
-                                        <span className="text-slate-500 text-[8px] font-bold uppercase tracking-widest">{selectedCompare.length}/2</span>
+                                        <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">{selectedCompare.length}/2</span>
                                     </div>
                                 </div>
                             </div>
@@ -601,12 +601,12 @@ const Packages = () => {
                                                         className="w-full h-full object-contain mix-blend-multiply scale-100 md:scale-110 group-hover:scale-125 transition-transform duration-700"
                                                         alt={bike.title}
                                                     />
-                                                    <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-white/80 backdrop-blur-md px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[6px] md:text-[8px] font-black text-primary border border-primary/20 shadow-sm uppercase tracking-widest">
+                                                    <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-white/80 backdrop-blur-md px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-[10px] font-black text-primary border border-primary/20 shadow-sm uppercase tracking-widest">
                                                         {bike.category}
                                                     </div>
                                                 </div>
                                                 <h3 className="text-[10px] md:text-2xl font-black text-slate-900 uppercase tracking-tighter mb-0.5 leading-tight line-clamp-1">{bike.title}</h3>
-                                                <p className="text-[7px] md:text-[9px] font-bold text-slate-400 uppercase tracking-widest">{bike.location}</p>
+                                                <p className="text-[10px] md:text-[9px] font-bold text-slate-400 uppercase tracking-widest">{bike.location}</p>
                                             </div>
                                             {/* Specs Rows */}
                                             <div className="w-full space-y-1 md:space-y-0">
@@ -618,7 +618,7 @@ const Packages = () => {
                                                     { label: 'Rating', value: `${bike.rating}`, type: 'highlight' }
                                                 ].map((row, i) => (
                                                     <div key={i} className="h-12 md:h-16 flex flex-col md:flex-row items-center justify-center md:border-b border-slate-900/10 last:border-0 relative">
-                                                        <span className="md:hidden text-[6px] font-black text-slate-300 uppercase tracking-widest">{row.label}</span>
+                                                        <span className="md:hidden text-[10px] font-black text-slate-300 uppercase tracking-widest">{row.label}</span>
 
                                                         {row.type === 'text' && (
                                                             <span className="text-xs md:text-lg font-black text-slate-800 tracking-tight">{row.value}</span>
@@ -640,7 +640,7 @@ const Packages = () => {
                                             </div>
 
                                             <Link to={`/bike/${bike._id}`} className="mt-4 md:mt-8 w-full">
-                                                <Button className="w-full h-10 md:h-14 rounded-xl md:rounded-2xl bg-slate-950 text-white shadow-xl hover:bg-primary transition-all font-black uppercase tracking-widest text-[7px] md:text-[9px] flex items-center justify-center gap-2">
+                                                <Button className="w-full h-10 md:h-14 rounded-xl md:rounded-2xl bg-slate-950 text-white shadow-xl hover:bg-primary transition-all font-black uppercase tracking-widest text-[10px] md:text-[9px] flex items-center justify-center gap-2">
                                                     Book <Check className="w-3 h-3" />
                                                 </Button>
                                             </Link>
@@ -689,16 +689,17 @@ const Packages = () => {
             {/* AI Planner Floating Button */}
             {!showAiPlanner && (
                 <motion.button
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setShowAiPlanner(true)}
-                    className="fixed bottom-[180px] md:bottom-[100px] right-6 z-[900] bg-slate-950 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 border border-white/10 group overflow-hidden"
+                    aria-label="AI Trip Planner"
+                    className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-[900] bg-slate-950 text-white h-11 w-11 md:w-auto justify-center md:px-5 rounded-full shadow-premium-lg flex items-center gap-3 border border-white/10 group overflow-hidden"
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <SparklesIcon className="w-5 h-5 text-primary animate-pulse" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] relative z-10">AI Trip Planner</span>
+                    <span className="hidden md:inline text-sm font-semibold relative z-10">AI Trip Planner</span>
                 </motion.button>
             )}
 

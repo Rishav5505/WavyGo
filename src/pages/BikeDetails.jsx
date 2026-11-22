@@ -138,7 +138,7 @@ const BikeDetails = () => {
 
                             <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-20 bg-white/80 backdrop-blur-md px-4 md:px-6 py-2 md:py-2.5 rounded-full border border-slate-200 shadow-sm flex items-center gap-2 pointer-events-none">
                                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#035c3e] animate-pulse"></div>
-                                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-[#035c3e] whitespace-nowrap">Drag to Rotate 360°</span>
+                                <span className="text-[10px] md:text-[10px] font-black uppercase tracking-widest text-[#035c3e] whitespace-nowrap">Drag to Rotate 360°</span>
                             </div>
                         </div>
 

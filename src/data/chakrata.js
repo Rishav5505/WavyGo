@@ -11,7 +11,7 @@ export const chakrataData = {
     winterTemp: "0°C to 10°C (Dec-Feb)",
 
     images: {
-        hero: "https://images.unsplash.com/photo-1589363354966-22a36d2994e4?auto=format&fit=crop&q=80&w=1200",
+        hero: "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1200",
         others: [
             "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=800",
@@ -57,7 +57,7 @@ export const chakrataData = {
         {
             name: "Deoban",
             description: "Forest of gods with panoramic Himalayan views and dense Deodar forests",
-            image: "https://images.unsplash.com/photo-1589363354966-22a36d2994e4?auto=format&fit=crop&q=80&w=600"
+            image: "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=600"
         },
         {
             name: "Kanasar",

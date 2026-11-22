@@ -208,7 +208,7 @@ const AIRoutePlanner = ({ onClose }) => {
                                         ></motion.div>
                                         <div className="absolute inset-0 flex flex-col items-center justify-center">
                                             <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-primary animate-pulse mb-2" />
-                                            <span className="text-[7.5px] md:text-[9px] font-black text-slate-400 tracking-widest uppercase animate-pulse">Scanning</span>
+                                            <span className="text-[10px] md:text-[9px] font-black text-slate-400 tracking-widest uppercase animate-pulse">Scanning</span>
                                         </div>
                                     </div>
                                     <div className="space-y-3">
@@ -238,7 +238,7 @@ const AIRoutePlanner = ({ onClose }) => {
                                             <Navigation className="w-16 h-16 md:w-24 md:h-24 text-white rotate-12" />
                                         </div>
                                         <div className="relative z-10">
-                                            <span className="text-[8px] md:text-[10px] font-black text-white/60 uppercase tracking-[0.3em] mb-2 md:mb-4 block">Recommended Route</span>
+                                            <span className="text-[10px] md:text-[10px] font-black text-white/60 uppercase tracking-[0.3em] mb-2 md:mb-4 block">Recommended Route</span>
                                             <h3 className="text-2xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none mb-3 md:mb-4">{plan.name}</h3>
                                             <p className="text-white/80 font-medium text-[10px] md:text-sm leading-relaxed max-w-sm">{plan.description}</p>
                                         </div>
@@ -334,7 +334,7 @@ const AIRoutePlanner = ({ onClose }) => {
                                 <span className="text-xs font-black text-white/40 tracking-[0.2em]">CORE ENGINE ACTIVE</span>
                             </div>
                             <div className="h-12 w-px bg-white/10 hidden md:block"></div>
-                            <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] animate-pulse">SafarGo v2.0</p>
+                            <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] animate-pulse">WavyGo v2.0</p>
                         </div>
                     </div>
                 </Reveal>

@@ -99,11 +99,11 @@ const PopularPackages = () => {
                         >
                             {/* Proximity & Availability Badge */}
                             <div className="absolute top-2 left-2 md:top-4 md:left-4 z-20 flex flex-col gap-1">
-                                <div className="bg-white/60 backdrop-blur-2xl px-2.5 py-1.5 md:px-5 md:py-2.5 rounded-xl md:rounded-2xl text-[8px] md:text-[10px] font-bold text-primary shadow-xl border border-white/40 flex items-center gap-1.5 md:gap-2">
+                                <div className="bg-white/60 backdrop-blur-2xl px-2.5 py-1.5 md:px-5 md:py-2.5 rounded-xl md:rounded-2xl text-[10px] md:text-[10px] font-bold text-primary shadow-xl border border-white/40 flex items-center gap-1.5 md:gap-2">
                                     <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary animate-pulse"></div>
                                     <MapPin className="w-2.5 h-2.5 md:w-3.5 md:h-3.5" /> <span className="hidden sm:inline">0.8 KM AWAY</span><span className="inline sm:hidden">0.8 KM</span>
                                 </div>
-                                <div className="bg-rose-500/10 backdrop-blur-xl px-2.5 py-1.5 md:px-4 md:py-2 rounded-xl md:rounded-2xl text-[8px] md:text-xs font-bold text-rose-600 shadow-lg border border-rose-100/50 flex items-center gap-1.5 md:gap-2 invisible group-hover:visible translate-x-4 group-hover:translate-x-0 transition-all">
+                                <div className="bg-rose-500/10 backdrop-blur-xl px-2.5 py-1.5 md:px-4 md:py-2 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold text-rose-600 shadow-lg border border-rose-100/50 flex items-center gap-1.5 md:gap-2 invisible group-hover:visible translate-x-4 group-hover:translate-x-0 transition-all">
                                     <Clock className="w-2.5 h-2.5 md:w-3 md:h-3" /> 2 Left
                                 </div>
                             </div>
@@ -125,7 +125,7 @@ const PopularPackages = () => {
                                                     <Star key={i} className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 ${i < 4 ? 'text-secondary fill-secondary' : 'text-slate-200 fill-slate-200'}`} />
                                                 ))}
                                             </div>
-                                            <span className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] whitespace-nowrap">{pkg.rating} <span className="hidden sm:inline">Rating</span></span>
+                                            <span className="text-[10px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] whitespace-nowrap">{pkg.rating} <span className="hidden sm:inline">Rating</span></span>
                                         </div>
                                         <h3 className="text-sm md:text-2xl font-black text-slate-900 tracking-tight leading-tight group-hover:text-primary transition-colors line-clamp-2">{pkg.title}</h3>
                                     </div>
@@ -137,7 +137,7 @@ const PopularPackages = () => {
                                             <Zap className="w-3 h-3 md:w-4 md:h-4 text-primary" />
                                         </div>
                                         <div className="flex flex-col min-w-0">
-                                            <span className="text-[7px] md:text-[9px] font-bold text-slate-400 uppercase tracking-widest truncate">Engine</span>
+                                            <span className="text-[10px] md:text-[9px] font-bold text-slate-400 uppercase tracking-widest truncate">Engine</span>
                                             <span className="text-[10px] md:text-xs font-semibold text-slate-700 leading-none truncate">Petrol</span>
                                         </div>
                                     </div>
@@ -146,7 +146,7 @@ const PopularPackages = () => {
                                             <ArrowUpRight className="w-3 h-3 md:w-4 md:h-4 text-primary" />
                                         </div>
                                         <div className="flex flex-col min-w-0">
-                                            <span className="text-[7px] md:text-[9px] font-bold text-slate-400 uppercase tracking-widest truncate">Start</span>
+                                            <span className="text-[10px] md:text-[9px] font-bold text-slate-400 uppercase tracking-widest truncate">Start</span>
                                             <span className="text-[10px] md:text-xs font-semibold text-slate-700 leading-none truncate">Button</span>
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@ const PopularPackages = () => {
                                 <div className="mt-auto flex flex-col gap-2.5 md:gap-4">
                                     <div className="flex items-center justify-between pt-2 md:pt-4 border-t border-slate-100">
                                         <div className="flex flex-col">
-                                            <span className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5 md:mb-1">Price/Day</span>
+                                            <span className="text-[10px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5 md:mb-1">Price/Day</span>
                                             <div className="flex items-baseline gap-0.5 md:gap-1">
                                                 <span className="text-base md:text-2xl font-bold text-primary">₹{pkg.price}</span>
                                             </div>
@@ -167,7 +167,7 @@ const PopularPackages = () => {
 
                                     <Link to={pkg.link}>
                                         <Button className="w-full h-10 md:h-12 rounded-lg md:rounded-xl bg-slate-900 text-white shadow-xl hover:bg-primary transition-all flex items-center justify-center gap-2 md:gap-3 group/btn overflow-hidden">
-                                            <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] z-10">Rent<span className="hidden sm:inline"> This Machine</span></span>
+                                            <span className="text-[10px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] z-10">Rent<span className="hidden sm:inline"> This Machine</span></span>
                                             <ArrowRight className="w-3 h-3 md:w-4 md:h-4 group-hover/btn:translate-x-1 transition-transform z-10" />
                                         </Button>
                                     </Link>

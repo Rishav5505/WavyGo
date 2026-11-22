@@ -58,7 +58,7 @@ const WavyPride = () => {
                 
                 <div className="relative z-10 max-w-2xl">
                     <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-4 md:mb-6">
-                        <div className="flex items-center gap-1.5 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-primary/10 text-primary text-[8px] md:text-[10px] font-black uppercase tracking-widest border border-primary/20 shadow-sm">
+                        <div className="flex items-center gap-1.5 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-primary/10 text-primary text-[10px] md:text-[10px] font-black uppercase tracking-widest border border-primary/20 shadow-sm">
                             <Award className="w-3 md:w-3.5 h-3 md:h-3.5" /> Silver Elite Member
                         </div>
                     </div>
@@ -94,7 +94,7 @@ const WavyPride = () => {
                 {TIERS.map((tier) => (
                     <div key={tier.id} className={`relative p-4 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-2 transition-all duration-500 hover:-translate-y-2 ${tier.id === 'silver' ? `bg-white ${tier.border} shadow-2xl shadow-slate-200` : `bg-slate-50/50 ${tier.border} opacity-80`} ${tier.id === 'gold' && 'col-span-2 md:col-span-1'}`}>
                         {tier.id === 'silver' && (
-                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-950 text-white px-3 py-1 rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-widest border border-white/20 whitespace-nowrap z-10">
+                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-950 text-white px-3 py-1 rounded-full text-[10px] md:text-[9px] font-black uppercase tracking-widest border border-white/20 whitespace-nowrap z-10">
                                 Current
                             </div>
                         )}
@@ -104,11 +104,11 @@ const WavyPride = () => {
                         </div>
                         
                         <h3 className={`text-xs md:text-xl font-black uppercase italic mb-0.5 tracking-tight ${tier.color}`}>{tier.name}</h3>
-                        <p className="text-[7px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 md:mb-6">{tier.points} Pts</p>
+                        <p className="text-[10px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 md:mb-6">{tier.points} Pts</p>
                         
                         <ul className="space-y-2 md:space-y-4">
                             {tier.benefits.slice(0, tier.id === 'gold' && activeTab !== 'gold_details' ? 2 : 10).map((benefit, i) => (
-                                <li key={i} className="flex items-center gap-2 text-[8px] md:text-xs font-bold text-slate-600">
+                                <li key={i} className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-slate-600">
                                     <div className={`w-1 h-1 rounded-full shrink-0 ${tier.id === 'silver' ? 'bg-primary' : 'bg-slate-300'}`} />
                                     <span className="line-clamp-1">{benefit}</span>
                                 </li>
@@ -146,7 +146,7 @@ const WavyPride = () => {
                                             </div>
                                             <div>
                                                 <p className="text-[10px] md:text-sm font-bold text-slate-800 leading-tight mb-1">{reward.title}</p>
-                                                <p className="text-[8px] md:text-[10px] font-black text-amber-600 uppercase tracking-widest">{reward.pts} Pts</p>
+                                                <p className="text-[10px] md:text-[10px] font-black text-amber-600 uppercase tracking-widest">{reward.pts} Pts</p>
                                             </div>
                                         </div>
                                         <ArrowRight className="hidden md:block w-4 h-4 text-slate-300 group-hover:text-primary transition-colors" />

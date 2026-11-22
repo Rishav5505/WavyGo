@@ -110,7 +110,7 @@ const TopDestinations = () => {
                                     </div>
 
                                     {city.isPopular && (
-                                        <div className="absolute top-8 right-8 bg-emerald-600 text-white text-[8px] font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-xl shadow-emerald-900/30">
+                                        <div className="absolute top-8 right-8 bg-emerald-600 text-white text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-xl shadow-emerald-900/30">
                                             Popular
                                         </div>
                                     )}

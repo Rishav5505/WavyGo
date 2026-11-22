@@ -42,11 +42,11 @@ const Contact = () => {
             <Navbar />
 
             {/* Header */}
-            <section className="relative pt-20 pb-20 md:pt-28 md:pb-24 bg-[#035c3e] flex items-center justify-center text-center overflow-hidden">
+            <section className="relative pt-36 pb-20 md:pt-48 md:pb-24 bg-[#035c3e] flex items-center justify-center text-center overflow-hidden">
                 <div className="container-custom relative z-10">
                     <Reveal center width="100%">
                         <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-[-0.05em] uppercase leading-none">
-                            <span className="text-slate-900">Contact</span> <span className="text-white">Us</span>
+                            <span className="text-emerald-200/80">Contact</span> <span className="text-white">Us</span>
                         </h1>
                     </Reveal>
                     <motion.p
@@ -124,7 +124,7 @@ const Contact = () => {
                                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Message</label>
                                         <textarea rows="5" name="message" value={formData.message} onChange={handleChange} required className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-6 text-slate-900 focus:outline-none focus:border-primary font-medium resize-none" placeholder="Tell us how we can help..."></textarea>
                                     </div>
-                                    <Button disabled={status.loading} className="w-full py-5 rounded-xl font-black text-lg flex items-center justify-center gap-3 bg-primary hover:bg-[#024a32] transition-colors shadow-lg shadow-primary/20 uppercase tracking-widest disabled:opacity-70">
+                                    <Button type="submit" disabled={status.loading} className="w-full py-5 rounded-xl font-black text-lg flex items-center justify-center gap-3 bg-primary hover:bg-[#024a32] transition-colors shadow-lg shadow-primary/20 uppercase tracking-widest disabled:opacity-70">
                                         {status.loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>Send Message <Send className="w-5 h-5" /></>}
                                     </Button>
                                 </form>
