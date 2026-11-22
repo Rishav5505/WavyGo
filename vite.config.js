@@ -33,7 +33,23 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,jpg,jpeg,svg,webmanifest}']
+        // Precache only the app shell (code), not ~30MB of images, so new
+        // versions install fast and users never get stuck on an old build.
+        globPatterns: ['**/*.{js,css,html,ico,svg,webmanifest}', 'icons/*.png'],
+        skipWaiting: true,
+        clientsClaim: true,
+        cleanupOutdatedCaches: true,
+        navigateFallback: '/index.html',
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.destination === 'image',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images',
+              expiration: { maxEntries: 150, maxAgeSeconds: 60 * 60 * 24 * 30 },
+            },
+          },
+        ],
       },
       devOptions: {
         enabled: true

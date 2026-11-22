@@ -4,16 +4,8 @@ import './index.css'
 import App from './App.jsx'
 import { registerSW } from 'virtual:pwa-register'
 
-const updateSW = registerSW({
-  onNeedRefresh() {
-    if (confirm('New content available. Reload?')) {
-      updateSW(true)
-    }
-  },
-  onOfflineReady() {
-    console.log('App ready to work offline')
-  },
-})
+// Auto-update: a new deploy activates immediately and the page reloads once.
+registerSW({ immediate: true })
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
